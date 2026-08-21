@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data
+data/raw/*
+data/processed/*
+data/external/*
+
+# ML models / artifacts
+models/*
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/

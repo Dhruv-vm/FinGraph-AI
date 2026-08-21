@@ -1,0 +1,6 @@
+README.md
+pyproject.toml
+src/fingraph_ai.egg-info/PKG-INFO
+src/fingraph_ai.egg-info/SOURCES.txt
+src/fingraph_ai.egg-info/dependency_links.txt
+src/fingraph_ai.egg-info/top_level.txt

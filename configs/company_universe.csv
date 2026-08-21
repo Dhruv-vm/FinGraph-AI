@@ -1,0 +1,16 @@
+ticker,company,sector,cik
+AAPL,Apple,Technology,0000320193
+MSFT,Microsoft,Technology,0000789019
+NVDA,NVIDIA,Semiconductors,0001045810
+GOOGL,Alphabet,Technology,0001652044
+AMZN,Amazon,Consumer Technology,0001018724
+META,Meta Platforms,Technology,0001326801
+TSLA,Tesla,Automotive,0001318605
+JPM,JPMorgan Chase,Finance,0000019617
+JNJ,Johnson & Johnson,Healthcare,0000200406
+XOM,Exxon Mobil,Energy,0000034088
+WMT,Walmart,Consumer,0000104169
+KO,Coca-Cola,Consumer,0000021344
+CAT,Caterpillar,Industrials,0000018230
+NFLX,Netflix,Media,0001065280
+V,Visa,Finance,0001403161

@@ -46,3 +46,6 @@ out/
 # Temporary files
 tmp/
 temp/
+
+# Python build metadata
+*.egg-info/

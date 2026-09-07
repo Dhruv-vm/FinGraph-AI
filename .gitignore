@@ -49,3 +49,23 @@ temp/
 
 # Python build metadata
 *.egg-info/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Environment
+.venv/
+venv/
+.env
+
+# Data / local databases
+data/raw/
+data/processed/
+*.db
+*.sqlite
+
+# Vector / graph local storage
+.qdrant/
+chroma/

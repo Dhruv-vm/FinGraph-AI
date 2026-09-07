@@ -2,14 +2,27 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta
 from typing import Any
-from src.data.storage.local import save_json
+
 from src.data.features.unified import extract_unified_features
-from src.data.graph.snapshot import build_temporal_snapshot
 from src.data.graph.schema import TemporalGraph
+from src.data.graph.snapshot import build_temporal_snapshot
+from src.data.storage.local import save_json
+
+
+# ============================================================
+# DATE UTILITIES
+# ============================================================
 
 
 def _parse_date(value: str) -> datetime:
+    """Parse an ISO-formatted date/time string."""
+
     return datetime.fromisoformat(value)
+
+
+# ============================================================
+# TARGET GENERATION
+# ============================================================
 
 
 def _future_market_return(
@@ -19,80 +32,213 @@ def _future_market_return(
     horizon_days: int,
 ) -> float | None:
     """
-    Calculate future return after the snapshot date.
+    Calculate the forward market return used as the prediction
+    target for a point-in-time snapshot.
 
-    This function is intentionally used only for the target.
-    It must never be used during feature extraction.
+    Temporal semantics
+    ------------------
+    Reference price:
+        Latest market closing price available on or before
+        the snapshot date.
+
+    Target price:
+        Latest available market closing price within the
+        forward horizon.
+
+    IMPORTANT
+    ---------
+    Future market observations are used ONLY to construct
+    target_return and target_direction.
+
+    They must never be passed to feature extraction.
     """
 
-    cutoff = _parse_date(as_of)
+    ticker = ticker.upper()
 
-    future_nodes = [
-        node
-        for node in graph.nodes
-        if node.node_type == "market"
-        and node.properties.get("ticker") == ticker
-        and node.event_time
-        and _parse_date(node.event_time[:10]) > cutoff
-    ]
-
-    future_nodes.sort(
-        key=lambda node: node.event_time or ""
+    cutoff = _parse_date(
+        as_of[:10]
     )
 
-    if not future_nodes:
-        return None
+    # --------------------------------------------------------
+    # Find the latest market observation available at snapshot
+    # --------------------------------------------------------
 
-    current_nodes = [
-        node
-        for node in graph.nodes
-        if node.node_type == "market"
-        and node.properties.get("ticker") == ticker
-        and node.event_time
-        and node.event_time[:10] <= as_of
-    ]
+    current_nodes = []
+
+    for node in graph.nodes:
+
+        if node.node_type != "market":
+            continue
+
+        node_ticker = str(
+            node.properties.get(
+                "ticker",
+                "",
+            )
+        ).upper()
+
+        if node_ticker != ticker:
+            continue
+
+        if not node.event_time:
+            continue
+
+        event_date = _parse_date(
+            node.event_time[:10]
+        )
+
+        if event_date <= cutoff:
+            current_nodes.append(
+                node
+            )
+
+    if not current_nodes:
+        return None
 
     current_nodes.sort(
         key=lambda node: node.event_time or ""
     )
 
-    if not current_nodes:
+    current_node = current_nodes[-1]
+
+    current_close = (
+        current_node.properties.get(
+            "close"
+        )
+    )
+
+    if (
+        current_close is None
+        or current_close <= 0
+    ):
         return None
 
-    current_close = current_nodes[-1].properties.get("close")
+    # --------------------------------------------------------
+    # Define forward horizon
+    # --------------------------------------------------------
 
-    if current_close is None or current_close == 0:
+    target_date = (
+        cutoff
+        + timedelta(
+            days=horizon_days
+        )
+    )
+
+    # --------------------------------------------------------
+    # Find future market observations inside horizon
+    # --------------------------------------------------------
+
+    future_nodes = []
+
+    for node in graph.nodes:
+
+        if node.node_type != "market":
+            continue
+
+        node_ticker = str(
+            node.properties.get(
+                "ticker",
+                "",
+            )
+        ).upper()
+
+        if node_ticker != ticker:
+            continue
+
+        if not node.event_time:
+            continue
+
+        event_date = _parse_date(
+            node.event_time[:10]
+        )
+
+        if (
+            event_date > cutoff
+            and event_date <= target_date
+        ):
+            future_nodes.append(
+                node
+            )
+
+    if not future_nodes:
         return None
 
-    target_date = cutoff + timedelta(days=horizon_days)
+    future_nodes.sort(
+        key=lambda node: node.event_time or ""
+    )
 
-    eligible = [
-        node
-        for node in future_nodes
-        if _parse_date(node.event_time[:10]) <= target_date
-    ]
+    # --------------------------------------------------------
+    # Use the final available trading observation inside the
+    # requested forecast horizon.
+    # --------------------------------------------------------
 
-    if not eligible:
+    target_node = future_nodes[-1]
+
+    future_close = (
+        target_node.properties.get(
+            "close"
+        )
+    )
+
+    if (
+        future_close is None
+        or future_close <= 0
+    ):
         return None
 
-    target_node = eligible[-1]
-    future_close = target_node.properties.get("close")
+    # --------------------------------------------------------
+    # Forward return
+    # --------------------------------------------------------
 
-    if future_close is None:
-        return None
+    return (
+        float(future_close)
+        / float(current_close)
+    ) - 1.0
 
-    return (future_close / current_close) - 1
+
+# ============================================================
+# FEATURE FLATTENING
+# ============================================================
+
 
 def _flatten_features(
     features: dict[str, Any],
 ) -> dict[str, Any]:
-    """Convert nested feature groups into ML-friendly columns."""
+    """
+    Convert nested unified feature groups into flat ML columns.
 
-    market = features.get("market", {})
-    market_v2 = features.get("market_v2", {})
-    sec = features.get("sec", {})
-    news = features.get("news", {})
-    macro = features.get("macro", {})
+    The resulting dictionary is directly suitable for conversion
+    into a pandas DataFrame.
+    """
+
+    market = features.get(
+        "market",
+        {},
+    )
+
+    market_v2 = features.get(
+        "market_v2",
+        {},
+    )
+
+    sec = features.get(
+        "sec",
+        {},
+    )
+
+    news = features.get(
+        "news",
+        {},
+    )
+
+    macro = features.get(
+        "macro",
+        {},
+    )
+
+    # --------------------------------------------------------
+    # Macro values
+    # --------------------------------------------------------
 
     macro_values = macro.get(
         "macro_values",
@@ -109,7 +255,16 @@ def _flatten_features(
         {},
     )
 
+    # --------------------------------------------------------
+    # Flatten feature groups
+    # --------------------------------------------------------
+
     return {
+
+        # ====================================================
+        # Entity Metadata
+        # ====================================================
+
         "entity_id": features.get(
             "entity_id"
         ),
@@ -126,9 +281,9 @@ def _flatten_features(
             "as_of"
         ),
 
-        # =========================
+        # ====================================================
         # Original Market Features
-        # =========================
+        # ====================================================
 
         "market_event_count": market.get(
             "market_event_count"
@@ -150,9 +305,9 @@ def _flatten_features(
             "cumulative_return"
         ),
 
-        # =========================
+        # ====================================================
         # Market V2 Features
-        # =========================
+        # ====================================================
 
         "return_5d": market_v2.get(
             "return_5d"
@@ -182,9 +337,9 @@ def _flatten_features(
             "volatility_20d"
         ),
 
-        # =========================
+        # ====================================================
         # SEC V1 Features
-        # =========================
+        # ====================================================
 
         "sec_filing_count": sec.get(
             "sec_filing_count"
@@ -206,9 +361,9 @@ def _flatten_features(
             "sec_other_count"
         ),
 
-        # =========================
+        # ====================================================
         # SEC V3 Recent Activity
-        # =========================
+        # ====================================================
 
         "sec_filings_5d": sec.get(
             "sec_filings_5d"
@@ -234,9 +389,9 @@ def _flatten_features(
             "sec_8k_recent"
         ),
 
-        # =========================
+        # ====================================================
         # SEC V3 Dynamics
-        # =========================
+        # ====================================================
 
         "sec_filing_velocity": sec.get(
             "sec_filing_velocity"
@@ -254,9 +409,9 @@ def _flatten_features(
             "sec_10q_ratio"
         ),
 
-        # =========================
+        # ====================================================
         # SEC V3 Recency
-        # =========================
+        # ====================================================
 
         "days_since_last_filing": sec.get(
             "days_since_last_filing"
@@ -274,9 +429,9 @@ def _flatten_features(
             "days_since_last_8k"
         ),
 
-        # =========================
+        # ====================================================
         # News V1 Features
-        # =========================
+        # ====================================================
 
         "news_event_count": news.get(
             "news_event_count"
@@ -302,9 +457,9 @@ def _flatten_features(
             "unique_news_sources"
         ),
 
-        # =========================
+        # ====================================================
         # News V2 Features
-        # =========================
+        # ====================================================
 
         "sentiment_std": news.get(
             "sentiment_std"
@@ -330,9 +485,9 @@ def _flatten_features(
             "source_diversity"
         ),
 
-        # =========================
+        # ====================================================
         # Macro Features
-        # =========================
+        # ====================================================
 
         "macro_series_count": macro.get(
             "macro_series_count"
@@ -346,6 +501,13 @@ def _flatten_features(
             "value"
         ),
     }
+
+
+# ============================================================
+# DATASET CONSTRUCTION
+# ============================================================
+
+
 def build_company_dataset(
     graph: TemporalGraph | dict[str, Any],
     ticker: str,
@@ -355,13 +517,34 @@ def build_company_dataset(
     """
     Build ML-ready point-in-time examples for one company.
 
-    Features come strictly from information available at each
-    snapshot date.
+    For each snapshot:
 
-    The future return is used only as the prediction target.
+        historical information
+                |
+                v
+        temporal graph snapshot
+                |
+                v
+        feature extraction
+                |
+                v
+        ML feature vector
+
+    Future market information is used exclusively for:
+
+        target_return
+        target_direction
+
+    This preserves the temporal separation required for
+    point-in-time financial prediction.
     """
 
+    # --------------------------------------------------------
+    # Convert dictionary graph to TemporalGraph
+    # --------------------------------------------------------
+
     if isinstance(graph, dict):
+
         from src.data.graph.schema import (
             GraphEdge,
             GraphNode,
@@ -372,9 +555,16 @@ def build_company_dataset(
                 GraphNode(
                     node_id=node["node_id"],
                     node_type=node["node_type"],
-                    properties=node.get("properties", {}),
-                    event_time=node.get("event_time"),
-                    available_time=node.get("available_time"),
+                    properties=node.get(
+                        "properties",
+                        {},
+                    ),
+                    event_time=node.get(
+                        "event_time"
+                    ),
+                    available_time=node.get(
+                        "available_time"
+                    ),
                 )
                 for node in graph["nodes"]
             ],
@@ -384,17 +574,36 @@ def build_company_dataset(
                     source=edge["source"],
                     target=edge["target"],
                     relationship=edge["relationship"],
-                    event_time=edge.get("event_time"),
-                    available_time=edge.get("available_time"),
-                    properties=edge.get("properties", {}),
+                    event_time=edge.get(
+                        "event_time"
+                    ),
+                    available_time=edge.get(
+                        "available_time"
+                    ),
+                    properties=edge.get(
+                        "properties",
+                        {},
+                    ),
                 )
                 for edge in graph["edges"]
             ],
         )
 
-    company_id = f"company:{ticker.upper()}"
+    # --------------------------------------------------------
+    # Company identifier
+    # --------------------------------------------------------
 
-    V2_FEATURE_COLUMNS = [
+    ticker = ticker.upper()
+
+    company_id = (
+        f"company:{ticker}"
+    )
+
+    # --------------------------------------------------------
+    # Market V2 warm-up requirements
+    # --------------------------------------------------------
+
+    required_market_features = [
         "return_5d",
         "return_20d",
         "return_60d",
@@ -404,62 +613,126 @@ def build_company_dataset(
         "volatility_20d",
     ]
 
-    dataset = []
+    dataset: list[dict[str, Any]] = []
 
-    for as_of in sorted(snapshot_dates):
+    # --------------------------------------------------------
+    # Normalize snapshot dates
+    # --------------------------------------------------------
+
+    normalized_dates = sorted(
+        {
+            str(date)[:10]
+            for date in snapshot_dates
+        }
+    )
+
+    # --------------------------------------------------------
+    # Process snapshots chronologically
+    # --------------------------------------------------------
+
+    for as_of in normalized_dates:
+
+        # ====================================================
+        # Build point-in-time graph snapshot
+        # ====================================================
+
         snapshot = build_temporal_snapshot(
             graph,
             as_of,
         )
 
+        # ====================================================
+        # Extract point-in-time features
+        # ====================================================
+
         try:
+
             features = extract_unified_features(
                 snapshot,
                 company_id,
             )
+
         except ValueError:
+
+            # Insufficient historical information.
             continue
 
+        # ====================================================
+        # Flatten features
+        # ====================================================
+
+        row = _flatten_features(
+            features
+        )
+
+        # ----------------------------------------------------
+        # Explicit metadata
+        # ----------------------------------------------------
+
+        row["entity_id"] = company_id
+
+        row["ticker"] = ticker
+
+        row["as_of"] = as_of
+
+        # ====================================================
+        # Market warm-up validation
+        # ====================================================
+
+        if any(
+            row.get(feature) is None
+            for feature in required_market_features
+        ):
+            continue
+
+        # ====================================================
+        # Future target generation
+        # ====================================================
+
         future_return = _future_market_return(
-            graph,
-            ticker.upper(),
-            as_of,
-            horizon_days,
+            graph=graph,
+            ticker=ticker,
+            as_of=as_of,
+            horizon_days=horizon_days,
         )
 
         if future_return is None:
             continue
 
-        row = _flatten_features(features)
+        # ====================================================
+        # Prediction targets
+        # ====================================================
 
-        # Always store the dataset snapshot date as YYYY-MM-DD.
-        # Prevents mixed timezone-aware / timezone-naive values.
-        row["as_of"] = as_of[:10]
-
-        # Skip warm-up rows where V2 features
-        # do not have enough historical data.
-        if any(
-            row.get(column) is None
-            for column in V2_FEATURE_COLUMNS
-        ):
-            continue
-
-        row["target_return"] = future_return
-
-        row["target_direction"] = (
-            1
-            if future_return > 0
-            else 0
+        row["target_return"] = float(
+            future_return
         )
 
-        dataset.append(row)
+        row["target_direction"] = int(
+            future_return > 0
+        )
+
+        # ====================================================
+        # Store valid example
+        # ====================================================
+
+        dataset.append(
+            row
+        )
 
     return dataset
 
 
+# ============================================================
+# DATASET STORAGE
+# ============================================================
+
+
 def save_company_dataset(
     dataset: list[dict[str, Any]],
-    path: str = "data/processed/unified/aapl_training_dataset.json",
+    path: str = (
+        "data/processed/unified/"
+        "aapl_training_dataset.json"
+    ),
 ) -> None:
     """Save a generated company dataset to JSON."""
 

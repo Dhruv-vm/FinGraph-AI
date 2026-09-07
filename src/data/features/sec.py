@@ -7,10 +7,18 @@ from typing import Any
 from src.data.graph.schema import TemporalGraph
 
 
+# ============================================================
+# DATETIME HELPERS
+# ============================================================
+
 def _parse_datetime(
     value: str | datetime | None,
 ) -> datetime | None:
-    """Parse ISO date/datetime values safely."""
+    """
+    Parse ISO date/datetime values safely.
+
+    Naive datetimes are normalized to UTC.
+    """
 
     if value is None:
         return None
@@ -20,12 +28,11 @@ def _parse_datetime(
     else:
         try:
             dt = datetime.fromisoformat(
-                value.replace("Z", "+00:00")
+                str(value).replace("Z", "+00:00")
             )
         except (ValueError, TypeError):
             return None
 
-    # Normalize naive datetimes to UTC.
     if dt.tzinfo is None:
         dt = dt.replace(
             tzinfo=timezone.utc
@@ -34,36 +41,52 @@ def _parse_datetime(
     return dt
 
 
+# ============================================================
+# SEC FEATURE EXTRACTION
+# ============================================================
+
 def extract_sec_features(
     snapshot: TemporalGraph,
     company_id: str,
     as_of: str | datetime | None = None,
 ) -> dict[str, Any]:
     """
-    Extract point-in-time SEC V3 features.
+    Extract point-in-time SEC features.
 
-    Temporal semantics:
+    Temporal semantics
+    ------------------
+    event_time:
+        Filing event date.
 
-        event_time
-            = filing date
+    available_time:
+        SEC acceptance/publication datetime.
 
-        available_time
-            = SEC acceptance datetime
+    snapshot.as_of:
+        Point-in-time cutoff.
 
-        snapshot.as_of
-            = point-in-time cutoff
+    Only filings available by the snapshot cutoff are allowed
+    to contribute to the feature vector.
 
-    SEC information is only allowed to contribute if it was
-    available by the snapshot date.
+    Feature groups
+    --------------
+    1. Filing counts
+    2. Recent filing activity
+    3. Filing velocity
+    4. Filing acceleration
+    5. Filing composition
+    6. Filing recency
 
-    V3 includes:
-    - filing counts
-    - recent filing activity
-    - filing velocity
-    - filing acceleration
-    - filing composition
-    - filing recency
+    Notes
+    -----
+    Cumulative filing counts are retained for compatibility
+    with the existing dataset, but rolling-window features are
+    preferred for downstream predictive modeling because
+    cumulative counts naturally increase over time.
     """
+
+    # ========================================================
+    # COMPANY / TICKER
+    # ========================================================
 
     ticker = company_id.replace(
         "company:",
@@ -79,23 +102,20 @@ def extract_sec_features(
     #   1. Explicit as_of
     #   2. snapshot.as_of
     #
-    # Never derive as_of from SEC filings.
+    # Never infer the cutoff from SEC filings.
     # ========================================================
 
     if as_of is not None:
-
         snapshot_date = _parse_datetime(
             as_of
         )
-
     else:
-
         snapshot_date = _parse_datetime(
             snapshot.as_of
         )
 
     # ========================================================
-    # SEC FILINGS
+    # FIND SEC FILINGS
     # ========================================================
 
     filings = [
@@ -104,29 +124,21 @@ def extract_sec_features(
         if (
             node.node_type == "sec_filing"
             and str(
-                node.properties.get("ticker", "")
+                node.properties.get(
+                    "ticker",
+                    "",
+                )
             ).upper() == ticker
         )
     ]
 
     # ========================================================
-    # TEMPORAL FILING RECORDS
-    # ========================================================
-    #
-    # event_time:
-    #     filing_date
-    #
-    # available_time:
-    #     acceptance_datetime
-    #
-    # The snapshot should already contain only information
-    # available by snapshot.as_of.
-    #
-    # We nevertheless validate availability here as an
-    # additional point-in-time safety check.
+    # BUILD TEMPORAL FILING RECORDS
     # ========================================================
 
-    filing_records: list[dict[str, Any]] = []
+    filing_records: list[
+        dict[str, Any]
+    ] = []
 
     for node in filings:
 
@@ -138,6 +150,7 @@ def extract_sec_features(
             node.available_time
         )
 
+        # Cannot safely use a filing without an event date.
         if filing_date is None:
             continue
 
@@ -147,24 +160,37 @@ def extract_sec_features(
 
         if snapshot_date is not None:
 
+            # If availability is unknown, reject the record
+            # rather than risking temporal leakage.
             if available_date is None:
                 continue
 
+            # Information published after the prediction
+            # snapshot cannot contribute.
             if available_date > snapshot_date:
                 continue
+
+            # Event dates after the snapshot cannot contribute.
+            if filing_date > snapshot_date:
+                continue
+
+        form = str(
+            node.properties.get(
+                "form",
+                "",
+            )
+        ).upper()
 
         filing_records.append(
             {
                 "date": filing_date,
                 "available_date": available_date,
-                "form": node.properties.get(
-                    "form"
-                ),
+                "form": form,
             }
         )
 
     # ========================================================
-    # SORT FILINGS NEWEST -> OLDEST
+    # SORT NEWEST -> OLDEST
     # ========================================================
 
     filing_records.sort(
@@ -173,7 +199,7 @@ def extract_sec_features(
     )
 
     # ========================================================
-    # ORIGINAL SEC FEATURES
+    # ORIGINAL / CUMULATIVE SEC FEATURES
     # ========================================================
 
     forms = Counter(
@@ -211,7 +237,7 @@ def extract_sec_features(
     )
 
     # ========================================================
-    # RECENT ACTIVITY
+    # ROLLING SEC ACTIVITY
     # ========================================================
 
     sec_filings_5d = 0
@@ -232,29 +258,39 @@ def extract_sec_features(
                 snapshot_date - filing_date
             ).days
 
-            # A filing date after the snapshot should never
-            # contribute to a historical temporal window.
+            # Future event protection.
             if days_ago < 0:
                 continue
 
             form = record["form"]
 
-            # -------------------------
-            # Filing windows
-            # -------------------------
+            # ------------------------------------------------
+            # 5-day activity
+            # ------------------------------------------------
 
             if days_ago <= 5:
                 sec_filings_5d += 1
 
+            # ------------------------------------------------
+            # 20-day activity
+            # ------------------------------------------------
+
             if days_ago <= 20:
                 sec_filings_20d += 1
+
+            # ------------------------------------------------
+            # 60-day activity
+            # ------------------------------------------------
 
             if days_ago <= 60:
                 sec_filings_60d += 1
 
-            # -------------------------
-            # Filing composition
-            # -------------------------
+            # ------------------------------------------------
+            # Recent filing composition
+            #
+            # Composition is measured over the same 60-day
+            # window as the corresponding activity count.
+            # ------------------------------------------------
 
             if days_ago <= 60:
 
@@ -270,6 +306,9 @@ def extract_sec_features(
     # ========================================================
     # FILING VELOCITY
     # ========================================================
+    #
+    # Average filings per day over the 20-day window.
+    # ========================================================
 
     sec_filing_velocity = (
         sec_filings_20d / 20.0
@@ -277,9 +316,16 @@ def extract_sec_features(
 
     # ========================================================
     # FILING ACCELERATION
+    # ========================================================
     #
-    # Compare the recent 5-day filing rate against the
-    # broader 20-day filing rate.
+    # Compare the 5-day filing rate against the 20-day
+    # filing rate.
+    #
+    # Positive:
+    #     recent filing activity is increasing.
+    #
+    # Negative:
+    #     recent filing activity is decreasing.
     # ========================================================
 
     recent_rate = (
@@ -318,6 +364,13 @@ def extract_sec_features(
     # ========================================================
     # FILING RECENCY
     # ========================================================
+    #
+    # IMPORTANT:
+    #
+    # We calculate recency from EVENT DATE, not acceptance
+    # time. This represents how recently the filing event
+    # occurred relative to the prediction snapshot.
+    # ========================================================
 
     days_since_last_filing = None
     days_since_last_10k = None
@@ -339,56 +392,44 @@ def extract_sec_features(
 
             form = record["form"]
 
-            # -------------------------
-            # Latest filing
-            # -------------------------
+            # ------------------------------------------------
+            # Most recent filing
+            # ------------------------------------------------
 
             if days_since_last_filing is None:
+                days_since_last_filing = days_ago
 
-                days_since_last_filing = (
-                    days_ago
-                )
-
-            # -------------------------
-            # Latest 10-K
-            # -------------------------
+            # ------------------------------------------------
+            # Most recent 10-K
+            # ------------------------------------------------
 
             if (
                 form == "10-K"
                 and days_since_last_10k is None
             ):
+                days_since_last_10k = days_ago
 
-                days_since_last_10k = (
-                    days_ago
-                )
-
-            # -------------------------
-            # Latest 10-Q
-            # -------------------------
+            # ------------------------------------------------
+            # Most recent 10-Q
+            # ------------------------------------------------
 
             if (
                 form == "10-Q"
                 and days_since_last_10q is None
             ):
+                days_since_last_10q = days_ago
 
-                days_since_last_10q = (
-                    days_ago
-                )
-
-            # -------------------------
-            # Latest 8-K
-            # -------------------------
+            # ------------------------------------------------
+            # Most recent 8-K
+            # ------------------------------------------------
 
             if (
                 form == "8-K"
                 and days_since_last_8k is None
             ):
+                days_since_last_8k = days_ago
 
-                days_since_last_8k = (
-                    days_ago
-                )
-
-            # Stop once all recency values exist.
+            # Stop once all values have been found.
             if (
                 days_since_last_filing is not None
                 and days_since_last_10k is not None
@@ -398,44 +439,71 @@ def extract_sec_features(
                 break
 
     # ========================================================
-    # RETURN
+    # RETURN FEATURE VECTOR
     # ========================================================
 
     return {
+
+        # ====================================================
+        # METADATA
+        # ====================================================
+
         "company_id": company_id,
 
         # ====================================================
-        # SEC V1
+        # SEC V1 / CUMULATIVE
         # ====================================================
 
-        "sec_filing_count": sec_filing_count,
+        "sec_filing_count": (
+            sec_filing_count
+        ),
 
-        "sec_10k_count": sec_10k_count,
+        "sec_10k_count": (
+            sec_10k_count
+        ),
 
-        "sec_10q_count": sec_10q_count,
+        "sec_10q_count": (
+            sec_10q_count
+        ),
 
-        "sec_8k_count": sec_8k_count,
+        "sec_8k_count": (
+            sec_8k_count
+        ),
 
-        "sec_other_count": sec_other_count,
-
-        # ====================================================
-        # SEC V3 - Recent Activity
-        # ====================================================
-
-        "sec_filings_5d": sec_filings_5d,
-
-        "sec_filings_20d": sec_filings_20d,
-
-        "sec_filings_60d": sec_filings_60d,
-
-        "sec_10k_recent": sec_10k_recent,
-
-        "sec_10q_recent": sec_10q_recent,
-
-        "sec_8k_recent": sec_8k_recent,
+        "sec_other_count": (
+            sec_other_count
+        ),
 
         # ====================================================
-        # SEC V3 - Dynamics
+        # SEC V3 - RECENT ACTIVITY
+        # ====================================================
+
+        "sec_filings_5d": (
+            sec_filings_5d
+        ),
+
+        "sec_filings_20d": (
+            sec_filings_20d
+        ),
+
+        "sec_filings_60d": (
+            sec_filings_60d
+        ),
+
+        "sec_10k_recent": (
+            sec_10k_recent
+        ),
+
+        "sec_10q_recent": (
+            sec_10q_recent
+        ),
+
+        "sec_8k_recent": (
+            sec_8k_recent
+        ),
+
+        # ====================================================
+        # SEC V3 - DYNAMICS
         # ====================================================
 
         "sec_filing_velocity": (
@@ -447,15 +515,19 @@ def extract_sec_features(
         ),
 
         # ====================================================
-        # SEC V3 - Composition
+        # SEC V3 - COMPOSITION
         # ====================================================
 
-        "sec_8k_ratio": sec_8k_ratio,
+        "sec_8k_ratio": (
+            sec_8k_ratio
+        ),
 
-        "sec_10q_ratio": sec_10q_ratio,
+        "sec_10q_ratio": (
+            sec_10q_ratio
+        ),
 
         # ====================================================
-        # SEC V3 - Recency
+        # SEC V3 - RECENCY
         # ====================================================
 
         "days_since_last_filing": (

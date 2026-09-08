@@ -242,29 +242,25 @@ def _prepare_relations(
 
         if source_id is None:
             if source_name is None:
-                raise ValueError(
-                    "Each relation must contain source_entity "
-                    "or source_entity_id."
-                )
+                continue
 
-            source_id = _resolve_relation_entity(
-                source_name,
-                entity_lookup,
-                role="source",
-            )
+            normalized_source = _normalize_lookup_name(source_name)
+
+            if normalized_source not in entity_lookup:
+                continue
+
+            source_id = entity_lookup[normalized_source]
 
         if target_id is None:
             if target_name is None:
-                raise ValueError(
-                    "Each relation must contain target_entity "
-                    "or target_entity_id."
-                )
+                continue
 
-            target_id = _resolve_relation_entity(
-                target_name,
-                entity_lookup,
-                role="target",
-            )
+            normalized_target = _normalize_lookup_name(target_name)
+
+            if normalized_target not in entity_lookup:
+                continue
+
+            target_id = entity_lookup[normalized_target]
 
         item["source_entity_id"] = source_id
         item["target_entity_id"] = target_id

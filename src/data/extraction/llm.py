@@ -10,7 +10,7 @@ from openai import OpenAI
 from ollama import Client as OllamaClient
 
 from .entities import entities_from_dicts
-from .relations import relations_from_dicts
+from .relations import is_valid_relationship, relations_from_dicts
 from .schema import ExtractionResult
 
 
@@ -270,6 +270,12 @@ def _prepare_relations(
             and default_available_time is not None
         ):
             item["available_time"] = default_available_time
+
+        # LLMs may occasionally generate relationship types outside the
+        # controlled KG schema. Skip unsupported relations while preserving
+        # valid extracted entities and relations.
+        if not is_valid_relationship(item.get("relationship")):
+            continue
 
         prepared.append(item)
 

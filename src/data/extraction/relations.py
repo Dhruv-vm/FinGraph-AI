@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import hashlib
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Iterable
 
 from .schema import ExtractedRelation
@@ -21,14 +21,26 @@ def _parse_datetime(value: str | None) -> datetime | None:
         text = text[:-1] + "+00:00"
 
     try:
-        return datetime.fromisoformat(text)
+        parsed = datetime.fromisoformat(text)
+        if parsed.tzinfo is None:
+            return parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc)
     except ValueError:
         pass
 
-    # Accept common date-only formats returned by LLM extraction.
-    for fmt in ("%B %d, %Y", "%b %d, %Y", "%Y-%m-%d"):
+    # Accept common date-only and month/year formats returned by LLM extraction.
+    for fmt in (
+        "%B %d, %Y",
+        "%b %d, %Y",
+        "%Y-%m-%d",
+        "%B %Y",
+        "%b %Y",
+        "%Y-%m",
+    ):
         try:
-            return datetime.strptime(text, fmt)
+            return datetime.strptime(text, fmt).replace(
+                tzinfo=timezone.utc
+            )
         except ValueError:
             continue
 

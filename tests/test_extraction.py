@@ -187,3 +187,47 @@ def test_llm_rejects_dangling_relation():
             MockLLMClient(response),
             request,
         )
+
+
+def test_llm_skips_unsupported_relationship_types():
+    response = """
+    {
+      "entities": [
+        {
+          "entity_type": "Company",
+          "name": "NVIDIA",
+          "canonical_name": "NVIDIA"
+        },
+        {
+          "entity_type": "Company",
+          "name": "Microsoft",
+          "canonical_name": "Microsoft"
+        }
+      ],
+      "relations": [
+        {
+          "source_entity": "NVIDIA",
+          "target_entity": "Microsoft",
+          "relationship": "PART_OF"
+        },
+        {
+          "source_entity": "NVIDIA",
+          "target_entity": "Microsoft",
+          "relationship": "PARTNERS_WITH"
+        }
+      ]
+    }
+    """
+
+    request = ExtractionRequest(
+        document_id="doc:test:004",
+        text="Example financial document.",
+    )
+
+    result = extract_document(
+        MockLLMClient(response),
+        request,
+    )
+
+    assert len(result.relations) == 1
+    assert result.relations[0].relationship == "PARTNERS_WITH"

@@ -1,24 +1,24 @@
 from __future__ import annotations
-from src.data.graph.relationships import relationship_for_event
+
 import hashlib
 import json
-from typing import Any
+from typing import Any, Iterable
 
 from src.data.entities.resolution import (
     build_entity_indexes,
     load_company_universe,
     resolve_event_company,
 )
-from src.data.graph.relationships import build_relationship
-from src.data.graph.schema import (
-    GraphEdge,
-    GraphNode,
-    TemporalGraph,
+from src.data.graph.relationships import (
+    build_relationship,
+    build_semantic_relationship,
+    is_valid_node_type,
 )
+from src.data.graph.schema import GraphEdge, GraphNode, TemporalGraph
 
 
-def _stable_hash(value: dict[str, Any]) -> str:
-    """Create a deterministic short hash for an event."""
+def _stable_hash(value: Any) -> str:
+    """Create a deterministic short hash."""
 
     payload = json.dumps(
         value,
@@ -31,39 +31,227 @@ def _stable_hash(value: dict[str, Any]) -> str:
         payload.encode("utf-8")
     ).hexdigest()[:16]
 
-def build_relationship(
-    company_id: str,
-    event: dict[str, Any],
-) -> dict[str, Any] | None:
-    """Build a company-to-event relationship."""
 
-    event_type = event.get("event_type")
+# ---------------------------------------------------------------------------
+# Semantic KG identifiers
+# ---------------------------------------------------------------------------
 
-    relationship_map = {
-        "market": "HAS_MARKET_EVENT",
-        "news": "HAS_NEWS",
-        "sec_filing": "FILED",
-        "macro": "AFFECTED_BY",
-    }
 
-    relationship = relationship_map.get(event_type)
+def build_semantic_node_id(
+    node_type: str,
+    canonical_name: str,
+) -> str:
+    """
+    Build a deterministic identifier for a semantic KG node.
 
-    if relationship is None:
-        return None
+    Example:
+        Company + Apple -> company:apple
+        Supplier + TSMC -> supplier:tsmc
+    """
 
-    event_id = build_event_id(event)
+    if not is_valid_node_type(node_type):
+        raise ValueError(
+            f"Unsupported FinGraph node type: {node_type}"
+        )
 
-    return {
-        "edge_id": (
-            f"{company_id}->{relationship}->{event_id}"
-        ),
-        "source": company_id,
-        "target": event_id,
+    normalized = " ".join(
+        str(canonical_name).strip().lower().split()
+    )
+
+    if not normalized:
+        raise ValueError(
+            "Semantic node requires a non-empty canonical name."
+        )
+
+    return f"{node_type.lower()}:{normalized}"
+
+
+def build_semantic_node(
+    node_type: str,
+    canonical_name: str,
+    *,
+    properties: dict[str, Any] | None = None,
+    event_time: str | None = None,
+    available_time: str | None = None,
+) -> GraphNode:
+    """Build a semantic KG node with temporal metadata."""
+
+    node_id = build_semantic_node_id(
+        node_type,
+        canonical_name,
+    )
+
+    node_properties = dict(properties or {})
+    node_properties.setdefault(
+        "canonical_name",
+        canonical_name,
+    )
+
+    return GraphNode(
+        node_id=node_id,
+        node_type=node_type,
+        properties=node_properties,
+        event_time=event_time,
+        available_time=available_time,
+    )
+
+
+def build_semantic_edge(
+    source_id: str,
+    target_id: str,
+    relationship: str,
+    *,
+    event_time: str | None = None,
+    available_time: str | None = None,
+    properties: dict[str, Any] | None = None,
+) -> GraphEdge:
+    """Build a deterministic semantic KG edge."""
+
+    edge_properties = dict(properties or {})
+
+    edge_identity = {
+        "source": source_id,
+        "target": target_id,
         "relationship": relationship,
-        "event_time": event.get("event_time"),
-        "available_time": event.get("available_time"),
-        "properties": {},
+        "event_time": event_time,
+        "available_time": available_time,
+        "properties": edge_properties,
     }
+
+    edge_id = (
+        f"{source_id}"
+        f"->{relationship}"
+        f"->{target_id}"
+        f":{_stable_hash(edge_identity)}"
+    )
+
+    relationship_data = build_semantic_relationship(
+        source_id=source_id,
+        target_id=target_id,
+        relationship=relationship,
+        event_time=event_time,
+        available_time=available_time,
+        properties=edge_properties,
+    )
+
+    return GraphEdge(
+        edge_id=edge_id,
+        source=relationship_data["source"],
+        target=relationship_data["target"],
+        relationship=relationship_data["relationship"],
+        event_time=relationship_data["event_time"],
+        available_time=relationship_data["available_time"],
+        properties=relationship_data["properties"],
+    )
+
+
+# ---------------------------------------------------------------------------
+# Semantic graph builder
+# ---------------------------------------------------------------------------
+
+
+def build_semantic_graph(
+    entities: Iterable[dict[str, Any]],
+    relations: Iterable[dict[str, Any]],
+) -> TemporalGraph:
+    """
+    Build a temporal semantic knowledge graph from extracted entities
+    and relations.
+
+    Expected entity format:
+
+        {
+            "node_type": "Supplier",
+            "canonical_name": "TSMC",
+            "properties": {...},
+            "event_time": "...",
+            "available_time": "..."
+        }
+
+    Expected relation format:
+
+        {
+            "source": "supplier:tsmc",
+            "target": "company:nvidia",
+            "relationship": "SUPPLIES",
+            "event_time": "...",
+            "available_time": "...",
+            "properties": {
+                "source_document_id": "...",
+                "evidence_chunk_id": "...",
+                "confidence": 0.95
+            }
+        }
+
+    Relations reference already-created canonical node IDs.
+    """
+
+    graph = TemporalGraph()
+
+    node_ids: set[str] = set()
+    edge_ids: set[str] = set()
+
+    # ---------------------------------------------------------------
+    # Nodes
+    # ---------------------------------------------------------------
+
+    for entity in entities:
+        node_type = entity["node_type"]
+        canonical_name = entity["canonical_name"]
+
+        node = build_semantic_node(
+            node_type=node_type,
+            canonical_name=canonical_name,
+            properties=entity.get("properties"),
+            event_time=entity.get("event_time"),
+            available_time=entity.get("available_time"),
+        )
+
+        if node.node_id in node_ids:
+            continue
+
+        graph.nodes.append(node)
+        node_ids.add(node.node_id)
+
+    # ---------------------------------------------------------------
+    # Relationships
+    # ---------------------------------------------------------------
+
+    for relation in relations:
+        source_id = relation["source"]
+        target_id = relation["target"]
+
+        # Never create dangling edges.
+        if source_id not in node_ids:
+            continue
+
+        if target_id not in node_ids:
+            continue
+
+        edge = build_semantic_edge(
+            source_id=source_id,
+            target_id=target_id,
+            relationship=relation["relationship"],
+            event_time=relation.get("event_time"),
+            available_time=relation.get("available_time"),
+            properties=relation.get("properties"),
+        )
+
+        if edge.edge_id in edge_ids:
+            continue
+
+        graph.edges.append(edge)
+        edge_ids.add(edge.edge_id)
+
+    return graph
+
+
+# ---------------------------------------------------------------------------
+# Existing temporal event graph
+#
+# Kept intact for compatibility while the semantic KG pipeline is introduced.
+# ---------------------------------------------------------------------------
+
 
 def build_event_id(event: dict[str, Any]) -> str:
     """Build a deterministic identifier for a unified event."""
@@ -73,21 +261,18 @@ def build_event_id(event: dict[str, Any]) -> str:
 
     data = event.get("data", {})
 
-    # SEC filings have a naturally stable identifier.
     if event_type == "sec_filing":
         accession = data.get("accession_number")
 
         if accession:
             return f"sec:{ticker}:{accession}"
 
-    # Market data is naturally identified by ticker + date.
     if event_type == "market":
         date = event.get("event_time") or data.get("date")
 
         if date:
             return f"market:{ticker}:{date}"
 
-    # Macro data is identified by series + date.
     if event_type == "macro":
         series_id = data.get("series_id", "unknown")
         date = event.get("event_time") or data.get("date")
@@ -95,7 +280,6 @@ def build_event_id(event: dict[str, Any]) -> str:
         if date:
             return f"macro:{series_id}:{date}"
 
-    # News needs a stable hash because URLs/titles can vary.
     if event_type == "news":
         identity = {
             "ticker": ticker,
@@ -106,7 +290,6 @@ def build_event_id(event: dict[str, Any]) -> str:
 
         return f"news:{ticker}:{_stable_hash(identity)}"
 
-    # Safe fallback for future event types.
     return f"{event_type}:{ticker}:{_stable_hash(event)}"
 
 
@@ -117,16 +300,14 @@ def build_event_node(event: dict[str, Any]) -> GraphNode:
     event_type = event["event_type"]
     data = event.get("data", {})
 
-    event_time = event.get("event_time")
-    available_time = event.get("available_time")
-
     return GraphNode(
         node_id=event_id,
         node_type=event_type,
         properties=data,
-        event_time=event_time,
-        available_time=available_time,
+        event_time=event.get("event_time"),
+        available_time=event.get("available_time"),
     )
+
 
 def build_company_node(
     company: dict[str, str],
@@ -150,12 +331,10 @@ def build_graph(
     companies: list[dict[str, str]] | None = None,
 ) -> TemporalGraph:
     """
-    Build a temporal knowledge graph from unified events.
+    Build the existing temporal event graph.
 
-    Every resolved event receives:
-        company → event
-
-    relationship with event and availability timestamps preserved.
+    This compatibility path remains available while FinGraph AI migrates
+    to the semantic KG builder above.
     """
 
     if companies is None:
@@ -165,7 +344,6 @@ def build_graph(
 
     graph = TemporalGraph()
 
-    # Add canonical company nodes first.
     company_nodes: dict[str, GraphNode] = {}
 
     for company in companies:
@@ -185,7 +363,6 @@ def build_graph(
 
         event_id = build_event_id(resolved_event)
 
-        # Prevent duplicate event nodes.
         if event_id not in seen_event_ids:
             graph.nodes.append(
                 build_event_node(resolved_event)
@@ -228,6 +405,7 @@ def build_graph(
                 relationship=relationship["relationship"],
                 event_time=relationship["event_time"],
                 available_time=relationship["available_time"],
+                properties=relationship.get("properties", {}),
             )
         )
 

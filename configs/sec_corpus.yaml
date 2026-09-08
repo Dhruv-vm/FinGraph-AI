@@ -1,0 +1,36 @@
+# FinGraph AI — Controlled SEC Research Corpus
+
+companies:
+  - AAPL
+  - MSFT
+  - NVDA
+  - GOOGL
+  - AMZN
+  - META
+  - TSLA
+  - JPM
+  - JNJ
+  - XOM
+
+forms:
+  - 10-K
+  - 10-Q
+  - 8-K
+
+limits:
+  10-K: 1
+  10-Q: 4
+  8-K: 5
+
+content:
+  download_actual_filing: true
+  save_raw_html: true
+
+temporal:
+  require_available_time: true
+  use_acceptance_datetime: true
+
+output:
+  raw_dir: data/raw/sec/filings
+  document_dir: data/processed/documents
+  chunk_dir: data/processed/chunks

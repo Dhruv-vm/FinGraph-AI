@@ -1,32 +1,100 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass
 from typing import Any, Protocol
 
-from .schema import ExtractionResult
+from dotenv import load_dotenv
+from openai import OpenAI
+from ollama import Client as OllamaClient
+
 from .entities import entities_from_dicts
 from .relations import relations_from_dicts
+from .schema import ExtractionResult
 
 
 SYSTEM_PROMPT = """
-You are a financial knowledge graph extraction system.
+You are a financial information extraction system.
 
-Extract only information explicitly supported by the supplied document text.
+Extract entities and semantic relationships from the supplied financial
+document.
+
+Return ONLY valid JSON.
+Do not provide explanations, reasoning, markdown, code fences, or commentary.
+
+The JSON must have this structure:
+
+{
+  "entities": [
+    {
+      "entity_type": "Company",
+      "name": "Example Corp",
+      "canonical_name": "Example Corp",
+      "confidence": 0.95,
+      "properties": {}
+    }
+  ],
+  "relations": [
+    {
+      "source_entity": "Example Corp",
+      "target_entity": "Example Product",
+      "relationship": "MANUFACTURES",
+      "confidence": 0.90,
+      "event_time": null,
+      "available_time": null,
+      "properties": {}
+    }
+  ]
+}
 
 Allowed entity types:
-Company, Person, Product, Supplier, Competitor, Event, Risk,
-Country, FinancialMetric, Document, NewsArticle.
+- Company
+- Person
+- Product
+- Supplier
+- Competitor
+- Event
+- Risk
+- Country
+- FinancialMetric
+- Document
+- NewsArticle
 
 Allowed relationships:
-SUPPLIES, MANUFACTURES, DEPENDS_ON, COMPETES_WITH, PARTNERS_WITH,
-INVESTED_IN, ACQUIRED, LOCATED_IN, AFFECTED_BY, CAUSED, ANNOUNCED,
-HAS_RISK, MENTIONED_IN.
+- SUPPLIES
+- MANUFACTURES
+- DEPENDS_ON
+- COMPETES_WITH
+- PARTNERS_WITH
+- INVESTED_IN
+- ACQUIRED
+- LOCATED_IN
+- AFFECTED_BY
+- CAUSED
+- ANNOUNCED
+- HAS_RISK
+- MENTIONED_IN
 
-Do not infer unsupported facts.
-Do not invent entities or relationships.
-Return valid JSON only.
-""".strip()
+Important:
+- Use entity names in source_entity and target_entity.
+- Do NOT invent internal entity IDs.
+- Only extract relationships supported by the supplied text.
+- Do not infer unsupported facts.
+- Use ONLY the exact relationship names listed above.
+- NEVER invent, rename, paraphrase, or translate a relationship type.
+- NEVER use relationship names such as "tradedOn", "hasClassStock",
+  "representsInterestIn", "owns", "hasStock", or "listedOn".
+- If a relationship cannot be represented by one of the allowed
+  relationship types, omit that relationship.
+- Confidence must be between 0 and 1.
+- Use null for unknown temporal values.
+"""
+
+
+class LLMClient(Protocol):
+    def extract(self, text: str) -> str:
+        ...
 
 
 @dataclass
@@ -38,25 +106,188 @@ class ExtractionRequest:
     metadata: dict[str, Any] | None = None
 
 
-class LLMClient(Protocol):
-    """Provider-neutral interface for structured extraction."""
+class OpenRouterLLMClient:
+    def __init__(
+        self,
+        model: str | None = None,
+        temperature: float | None = None,
+        max_tokens: int | None = None,
+    ) -> None:
+        load_dotenv(".env")
 
-    def extract(self, request: ExtractionRequest) -> str:
-        ...
+        api_key = os.getenv("LLM_API_KEY")
+
+        if not api_key:
+            raise ValueError(
+                "LLM_API_KEY is required for OpenRouter extraction."
+            )
+
+        self.model = model or os.getenv(
+            "LLM_MODEL",
+            "openrouter/free",
+        )
+
+        self.temperature = (
+            temperature
+            if temperature is not None
+            else float(os.getenv("LLM_TEMPERATURE", "0"))
+        )
+
+        self.max_tokens = (
+            max_tokens
+            if max_tokens is not None
+            else int(os.getenv("LLM_MAX_TOKENS", "3000"))
+        )
+
+        self.client = OpenAI(
+            api_key=api_key,
+            base_url="https://openrouter.ai/api/v1",
+        )
+
+    def extract(self, text: str) -> str:
+        response = self.client.chat.completions.create(
+            model=self.model,
+            temperature=self.temperature,
+            max_tokens=self.max_tokens,
+            response_format={"type": "json_object"},
+            messages=[
+                {
+                    "role": "system",
+                    "content": SYSTEM_PROMPT,
+                },
+                {
+                    "role": "user",
+                    "content": (
+                        "Extract the financial entities and relationships "
+                        "from this document text:\n\n"
+                        f"{text}"
+                    ),
+                },
+            ],
+        )
+
+        if not response.choices:
+            raise ValueError("OpenRouter returned no choices.")
+
+        message = response.choices[0].message
+        content = message.content
+
+        if content and content.strip():
+            return content.strip()
+
+        raise ValueError(
+            "OpenRouter returned an empty response "
+            f"(finish_reason={response.choices[0].finish_reason})."
+        )
+
+
+class MockLLMClient:
+    def __init__(self, response: str | None = None) -> None:
+        self.response = response or json.dumps(
+            {
+                "entities": [],
+                "relations": [],
+            }
+        )
+
+    def extract(self, text: str) -> str:
+        return self.response
+
+
+def _normalize_lookup_name(value: str) -> str:
+    return " ".join(str(value).strip().split()).casefold()
+
+
+def _resolve_relation_entity(
+    value: str,
+    entity_lookup: dict[str, str],
+    *,
+    role: str,
+) -> str:
+    normalized = _normalize_lookup_name(value)
+
+    if normalized not in entity_lookup:
+        raise ValueError(
+            f"unknown {role} entity: {value!r}"
+        )
+
+    return entity_lookup[normalized]
+
+
+def _prepare_relations(
+    raw_relations: list[dict[str, Any]],
+    entity_lookup: dict[str, str],
+    *,
+    default_available_time: str | None = None,
+) -> list[dict[str, Any]]:
+    prepared: list[dict[str, Any]] = []
+
+    for raw in raw_relations:
+        item = dict(raw)
+
+        # New LLM-facing schema.
+        source_name = item.pop("source_entity", None)
+        target_name = item.pop("target_entity", None)
+
+        # Backward-compatible aliases.
+        if source_name is None:
+            source_name = item.pop("source_entity_name", None)
+
+        if target_name is None:
+            target_name = item.pop("target_entity_name", None)
+
+        # Existing deterministic-ID schema remains supported.
+        source_id = item.pop("source_entity_id", None)
+        target_id = item.pop("target_entity_id", None)
+
+        if source_id is None:
+            if source_name is None:
+                raise ValueError(
+                    "Each relation must contain source_entity "
+                    "or source_entity_id."
+                )
+
+            source_id = _resolve_relation_entity(
+                source_name,
+                entity_lookup,
+                role="source",
+            )
+
+        if target_id is None:
+            if target_name is None:
+                raise ValueError(
+                    "Each relation must contain target_entity "
+                    "or target_entity_id."
+                )
+
+            target_id = _resolve_relation_entity(
+                target_name,
+                entity_lookup,
+                role="target",
+            )
+
+        item["source_entity_id"] = source_id
+        item["target_entity_id"] = target_id
+
+        if (
+            not item.get("available_time")
+            and default_available_time is not None
+        ):
+            item["available_time"] = default_available_time
+
+        prepared.append(item)
+
+    return prepared
 
 
 def parse_extraction_response(
     response: str,
     request: ExtractionRequest,
 ) -> ExtractionResult:
-    """Parse and validate an LLM JSON response."""
-    if not response or not response.strip():
-        raise ValueError("LLM response is empty.")
-
     try:
         payload = json.loads(response)
     except json.JSONDecodeError as exc:
-        raise ValueError("LLM response is not valid JSON.") from exc
+        raise ValueError("LLM response is not valid JSON") from exc
 
     if not isinstance(payload, dict):
         raise ValueError("LLM response must be a JSON object.")
@@ -65,74 +296,134 @@ def parse_extraction_response(
     raw_relations = payload.get("relations", [])
 
     if not isinstance(raw_entities, list):
-        raise ValueError("'entities' must be a JSON list.")
+        raise ValueError("'entities' must be a list.")
 
     if not isinstance(raw_relations, list):
-        raise ValueError("'relations' must be a JSON list.")
+        raise ValueError("'relations' must be a list.")
 
     entities = entities_from_dicts(raw_entities)
-    relations = relations_from_dicts(raw_relations)
 
-    # Ensure every relation points to an entity extracted from
-    # this document. This prevents dangling graph relationships.
-    entity_ids = {entity.entity_id for entity in entities}
+    entity_lookup: dict[str, str] = {}
+
+    for entity in entities:
+        entity_lookup[
+            _normalize_lookup_name(entity.name)
+        ] = entity.entity_id
+
+        entity_lookup[
+            _normalize_lookup_name(entity.canonical_name)
+        ] = entity.entity_id
+
+    prepared_relations = _prepare_relations(
+        raw_relations,
+        entity_lookup,
+        default_available_time=request.available_time,
+    )
+
+    relations = relations_from_dicts(prepared_relations)
+
+    entity_ids = {
+        entity.entity_id
+        for entity in entities
+    }
 
     for relation in relations:
         if relation.source_entity_id not in entity_ids:
             raise ValueError(
-                f"Relation references unknown source entity: "
+                "unknown source entity: "
                 f"{relation.source_entity_id}"
             )
 
         if relation.target_entity_id not in entity_ids:
             raise ValueError(
-                f"Relation references unknown target entity: "
+                "unknown target entity: "
                 f"{relation.target_entity_id}"
             )
-
-    # Apply document-level temporal metadata when the model did not
-    # explicitly provide relation availability.
-    normalized_relations = []
-
-    for relation in relations:
-        if relation.available_time is None:
-            relation.available_time = request.available_time
-
-        normalized_relations.append(relation)
-
-    metadata = dict(request.metadata or {})
-    metadata["publication_date"] = request.publication_date
-    metadata["available_time"] = request.available_time
 
     return ExtractionResult(
         document_id=request.document_id,
         entities=entities,
-        relations=normalized_relations,
-        metadata=metadata,
+        relations=relations,
+        metadata={
+            "parser": "fingraph-extraction-parser",
+            "relation_resolution": (
+                "entity_name_to_deterministic_id"
+            ),
+        },
     )
 
 
-class MockLLMClient:
-    """Deterministic client used for tests and pipeline development.
+class OllamaLLMClient:
+    def __init__(
+        self,
+        model: str | None = None,
+        temperature: float | None = None,
+        max_tokens: int | None = None,
+    ) -> None:
+        load_dotenv(".env")
 
-    This deliberately performs no external API calls.
-    """
+        self.model = model or os.getenv(
+            "LLM_MODEL",
+            "qwen3.5:4b",
+        )
 
-    def __init__(self, response: str | None = None) -> None:
-        self.response = response or '{"entities": [], "relations": []}'
+        self.temperature = (
+            temperature
+            if temperature is not None
+            else float(os.getenv("LLM_TEMPERATURE", "0"))
+        )
 
-    def extract(self, request: ExtractionRequest) -> str:
-        return self.response
+        self.max_tokens = (
+            max_tokens
+            if max_tokens is not None
+            else int(os.getenv("LLM_MAX_TOKENS", "6000"))
+        )
+
+        self.client = OllamaClient(
+            host=os.getenv("OLLAMA_HOST", "http://localhost:11434")
+        )
+
+    def extract(self, text: str) -> str:
+        response = self.client.chat(
+            model=self.model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": SYSTEM_PROMPT,
+                },
+                {
+                    "role": "user",
+                    "content": (
+                        "Extract the financial entities and relationships "
+                        "from this document text:\n\n"
+                        f"{text}"
+                    ),
+                },
+            ],
+            options={
+                "temperature": self.temperature,
+                "num_predict": self.max_tokens,
+            },
+            format="json",
+            think=False,
+        )
+
+        message = response.get("message", {})
+        content = message.get("content")
+
+        if content and content.strip():
+            return content.strip()
+
+        raise ValueError("Ollama returned an empty response.")
 
 
 def extract_document(
     client: LLMClient,
     request: ExtractionRequest,
 ) -> ExtractionResult:
-    """Run extraction through any compatible LLM client."""
-    response = client.extract(request)
+    response = client.extract(request.text)
 
     return parse_extraction_response(
-        response=response,
-        request=request,
+        response,
+        request,
     )

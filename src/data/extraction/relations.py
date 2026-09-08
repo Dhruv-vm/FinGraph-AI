@@ -22,8 +22,17 @@ def _parse_datetime(value: str | None) -> datetime | None:
 
     try:
         return datetime.fromisoformat(text)
-    except ValueError as exc:
-        raise ValueError(f"Invalid datetime: {value}") from exc
+    except ValueError:
+        pass
+
+    # Accept common date-only formats returned by LLM extraction.
+    for fmt in ("%B %d, %Y", "%b %d, %Y", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(text, fmt)
+        except ValueError:
+            continue
+
+    raise ValueError(f"Invalid datetime: {value}")
 
 
 def validate_temporal_metadata(

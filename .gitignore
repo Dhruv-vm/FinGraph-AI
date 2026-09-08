@@ -69,3 +69,6 @@ data/processed/
 # Vector / graph local storage
 .qdrant/
 chroma/
+
+# Vector database artifacts
+data/vector_store/

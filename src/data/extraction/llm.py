@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from ollama import Client as OllamaClient
 
-from .entities import entities_from_dicts
+from .entities import entities_from_dicts, validate_entity_type
 from .relations import is_valid_relationship, relations_from_dicts
 from .schema import ExtractionResult
 
@@ -29,16 +29,16 @@ The JSON must have this structure:
   "entities": [
     {
       "entity_type": "Company",
-      "name": "Example Corp",
-      "canonical_name": "Example Corp",
+      "name": "<COMPANY>",
+      "canonical_name": "<COMPANY>",
       "confidence": 0.95,
       "properties": {}
     }
   ],
   "relations": [
     {
-      "source_entity": "Example Corp",
-      "target_entity": "Example Product",
+      "source_entity": "<COMPANY>",
+      "target_entity": "<PRODUCT>",
       "relationship": "MANUFACTURES",
       "confidence": 0.90,
       "event_time": null,
@@ -89,6 +89,37 @@ Important:
   relationship types, omit that relationship.
 - Confidence must be between 0 and 1.
 - Use null for unknown temporal values.
+
+Extraction scope:
+- Extract only semantically important entities needed for financial
+  question answering and graph reasoning.
+- Prefer a small set of high-value entities over exhaustive extraction.
+- Do NOT create an Event for every sentence, financial value, accounting
+  line item, or numerical observation.
+- Represent financial quantities as FinancialMetric entities when they
+  are meaningful to the document's financial context.
+- Avoid duplicate entities that express the same fact.
+- Do not extract individual table rows as separate entities unless they
+  are independently useful for reasoning.
+- Extract only relationships that connect meaningful entities and are
+  explicitly supported by the text.
+- Prefer high-confidence relationships and omit weak or redundant ones.
+- For each chunk, return at most 20 entities and 10 relationships.
+- Do NOT copy or reuse example entities, names, values, or relationships
+  from this system prompt. "Example Corp" and "Example Product" are
+  placeholders only and must never appear unless they are actually
+  present in the supplied document text.
+- Do not create MANUFACTURES, SUPPLIES, DEPENDS_ON, or other business
+  relationships merely because a financial table contains an accounting
+  line item.
+- FinancialMetric entities normally do not need relationships unless the
+  supplied text explicitly describes one of the allowed relationships.
+- Do not create relationships from a company to every financial metric,
+  debt category, expense, balance-sheet line, or table row.
+- If a chunk contains mostly financial tables with no meaningful semantic
+  relationships, return an empty relations array.
+- Keep the JSON compact and complete. Never stop in the middle of an
+  object, array, string, or JSON structure.
 """
 
 
@@ -303,7 +334,16 @@ def parse_extraction_response(
     if not isinstance(raw_relations, list):
         raise ValueError("'relations' must be a list.")
 
-    entities = entities_from_dicts(raw_entities)
+    # LLMs may occasionally generate entity types outside the
+    # controlled KG schema. Skip unsupported entities while preserving
+    # valid extracted entities.
+    supported_entities = [
+        entity
+        for entity in raw_entities
+        if validate_entity_type(entity.get("entity_type"))
+    ]
+
+    entities = entities_from_dicts(supported_entities)
 
     entity_lookup: dict[str, str] = {}
 

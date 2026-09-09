@@ -231,3 +231,36 @@ def test_llm_skips_unsupported_relationship_types():
 
     assert len(result.relations) == 1
     assert result.relations[0].relationship == "PARTNERS_WITH"
+
+
+def test_llm_skips_unsupported_entity_types():
+    response = """
+    {
+      "entities": [
+        {
+          "entity_type": "Location",
+          "name": "California",
+          "canonical_name": "California"
+        },
+        {
+          "entity_type": "Company",
+          "name": "NVIDIA",
+          "canonical_name": "NVIDIA"
+        }
+      ],
+      "relations": []
+    }
+    """
+
+    request = ExtractionRequest(
+        document_id="doc:test:005",
+        text="NVIDIA is headquartered in California.",
+    )
+
+    result = extract_document(
+        MockLLMClient(response),
+        request,
+    )
+
+    assert len(result.entities) == 1
+    assert result.entities[0].name == "NVIDIA"

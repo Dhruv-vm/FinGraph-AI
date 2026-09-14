@@ -36,6 +36,7 @@ def _parse_datetime(value: str | None) -> datetime | None:
         "%B %Y",
         "%b %Y",
         "%Y-%m",
+        "%Y",
     ):
         try:
             return datetime.strptime(text, fmt).replace(

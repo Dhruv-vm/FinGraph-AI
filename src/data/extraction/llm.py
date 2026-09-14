@@ -104,7 +104,8 @@ Extraction scope:
 - Extract only relationships that connect meaningful entities and are
   explicitly supported by the text.
 - Prefer high-confidence relationships and omit weak or redundant ones.
-- For each chunk, return at most 20 entities and 10 relationships.
+- For each chunk, return at most 15 entities and 5 relationships.
+- Prefer zero relationships over weak or repetitive relationships.
 - Do NOT copy or reuse example entities, names, values, or relationships
   from this system prompt. "Example Corp" and "Example Product" are
   placeholders only and must never appear unless they are actually

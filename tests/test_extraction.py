@@ -4,6 +4,7 @@ from src.data.extraction.entities import build_entity
 from src.data.extraction.llm import (
     ExtractionRequest,
     MockLLMClient,
+    OllamaLLMClient,
     extract_document,
 )
 from src.data.extraction.relations import build_relation
@@ -264,3 +265,47 @@ def test_llm_skips_unsupported_entity_types():
 
     assert len(result.entities) == 1
     assert result.entities[0].name == "NVIDIA"
+def test_ollama_falls_back_to_compact_extraction(monkeypatch):
+    responses = iter([
+        '{"entities": [',
+        """
+        {
+          "entities": [
+            {
+              "entity_type": "Company",
+              "name": "Alphabet Inc.",
+              "canonical_name": "Alphabet Inc.",
+              "confidence": 0.98,
+              "properties": {}
+            }
+          ],
+          "relations": []
+        }
+        """,
+    ])
+
+    class FakeResponse:
+        def __init__(self, content):
+            self.content = content
+
+        def get(self, key, default=None):
+            if key == "message":
+                return {"content": self.content}
+            return default
+
+    class FakeOllamaClient:
+        def chat(self, **kwargs):
+            return FakeResponse(next(responses))
+
+    client = OllamaLLMClient()
+    client.client = FakeOllamaClient()
+
+    result = client.extract(
+        "Alphabet Inc. reported strong financial results."
+    )
+
+    parsed = __import__("json").loads(result)
+
+    assert len(parsed["entities"]) == 1
+    assert parsed["entities"][0]["name"] == "Alphabet Inc."
+    assert parsed["relations"] == []

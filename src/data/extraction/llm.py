@@ -427,37 +427,87 @@ class OllamaLLMClient:
         )
 
     def extract(self, text: str) -> str:
-        response = self.client.chat(
-            model=self.model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": SYSTEM_PROMPT,
+        def call_model(
+            system_prompt: str,
+            user_prompt: str,
+        ) -> str:
+            response = self.client.chat(
+                model=self.model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": system_prompt,
+                    },
+                    {
+                        "role": "user",
+                        "content": user_prompt,
+                    },
+                ],
+                options={
+                    "temperature": self.temperature,
+                    "num_predict": self.max_tokens,
                 },
-                {
-                    "role": "user",
-                    "content": (
-                        "Extract the financial entities and relationships "
-                        "from this document text:\n\n"
-                        f"{text}"
-                    ),
-                },
-            ],
-            options={
-                "temperature": self.temperature,
-                "num_predict": self.max_tokens,
-            },
-            format="json",
-            think=False,
+                format="json",
+                think=False,
+            )
+
+            message = response.get("message", {})
+            content = message.get("content")
+
+            if content and content.strip():
+                return content.strip()
+
+            raise ValueError("Ollama returned an empty response.")
+
+        normal_prompt = (
+            "Extract the financial entities and relationships "
+            "from this document text:\n\n"
+            f"{text}"
         )
 
-        message = response.get("message", {})
-        content = message.get("content")
+        response = call_model(
+            SYSTEM_PROMPT,
+            normal_prompt,
+        )
 
-        if content and content.strip():
-            return content.strip()
+        try:
+            json.loads(response)
+            return response
+        except json.JSONDecodeError:
+            compact_system_prompt = (
+                "You extract financial knowledge from SEC text. "
+                "Return ONLY valid JSON. "
+                "Be concise and extract only high-value information."
+            )
 
-        raise ValueError("Ollama returned an empty response.")
+            compact_prompt = (
+                "Extract only the most important financial entities "
+                "and relationships from this text.\n\n"
+                "Return ONLY valid JSON with exactly two keys: "
+                "entities and relations.\n"
+                "Each entity must contain: entity_type, name, "
+                "canonical_name, confidence, properties.\n"
+                "Each relation must contain: relationship, "
+                "source_entity, target_entity, confidence, properties.\n"
+                "Maximum 8 entities. Maximum 2 relationships.\n"
+                "Prefer the company and important FinancialMetric entities.\n"
+                "Do not extract every table row.\n"
+                "Prefer zero relationships over weak relationships.\n"
+                "Do not invent information.\n"
+                "Do not include explanations or Markdown.\n"
+                "Make sure the JSON is complete and valid.\n\n"
+                f"Document text:\n{text}"
+            )
+
+            compact_response = call_model(
+                compact_system_prompt,
+                compact_prompt,
+            )
+
+            json.loads(compact_response)
+
+            return compact_response
+
 
 
 def extract_document(

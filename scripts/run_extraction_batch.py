@@ -269,6 +269,7 @@ def main() -> None:
         output_dir=args.output_dir,
     )
 
+    batch_start_time = time.perf_counter()
     attempted = 0
     processed = 0
     skipped = 0
@@ -335,13 +336,18 @@ def main() -> None:
 
                 processed += 1
 
+                elapsed = time.perf_counter() - batch_start_time
+                avg_time = elapsed / attempted if attempted else 0
+
                 print(
                     f"[OK] {processed} | "
                     f"{chunk_id} | "
                     f"entities="
                     f"{len(result.get('entities', []))} | "
                     f"relations="
-                    f"{len(result.get('relations', []))}"
+                    f"{len(result.get('relations', []))} | "
+                    f"time={elapsed:.1f}s | "
+                    f"avg={avg_time:.1f}s/chunk"
                 )
 
             except Exception as exc:
@@ -359,11 +365,16 @@ def main() -> None:
                     f"{type(exc).__name__}: {exc}"
                 )
 
+    total_elapsed = time.perf_counter() - batch_start_time
+    avg_time = total_elapsed / attempted if attempted else 0
+
     print()
     print("=== BATCH COMPLETE ===")
     print(f"Processed: {processed}")
     print(f"Skipped:   {skipped}")
     print(f"Failed:    {failed}")
+    print(f"Total time: {total_elapsed / 60:.2f} minutes")
+    print(f"Average:    {avg_time:.2f} seconds/chunk")
 
 
 if __name__ == "__main__":

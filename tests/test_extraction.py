@@ -7,7 +7,7 @@ from src.data.extraction.llm import (
     OllamaLLMClient,
     extract_document,
 )
-from src.data.extraction.relations import build_relation
+from src.data.extraction.relations import build_relation, relations_from_dicts
 
 
 def test_entity_is_deterministic():
@@ -53,6 +53,36 @@ def test_relation_rejects_unknown_relationship():
             target_entity_id="company:tsmc",
             relationship="UNKNOWN_RELATION",
         )
+
+
+def test_relation_rejects_self_reference():
+    with pytest.raises(ValueError, match="Self-referential relations are not allowed"):
+        build_relation(
+            source_entity_id="company:nvidia",
+            target_entity_id="company:nvidia",
+            relationship="DEPENDS_ON",
+        )
+
+
+def test_relations_from_dicts_skips_self_referential_relation():
+    records = [
+        {
+            "source_entity_id": "company:nvidia",
+            "target_entity_id": "company:nvidia",
+            "relationship": "DEPENDS_ON",
+        },
+        {
+            "source_entity_id": "company:nvidia",
+            "target_entity_id": "company:tsmc",
+            "relationship": "SUPPLIES",
+        },
+    ]
+
+    relations = relations_from_dicts(records)
+
+    assert len(relations) == 1
+    assert relations[0].source_entity_id == "company:nvidia"
+    assert relations[0].target_entity_id == "company:tsmc"
 
 
 def test_relation_rejects_invalid_temporal_order():

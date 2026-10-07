@@ -186,16 +186,21 @@ def relations_from_dicts(
     relations: list[ExtractedRelation] = []
 
     for record in records:
-        relations.append(
-            build_relation(
-                source_entity_id=record["source_entity_id"],
-                target_entity_id=record["target_entity_id"],
-                relationship=record["relationship"],
-                confidence=record.get("confidence", 1.0),
-                event_time=record.get("event_time"),
-                available_time=record.get("available_time"),
-                properties=record.get("properties"),
+        try:
+            relations.append(
+                build_relation(
+                    source_entity_id=record["source_entity_id"],
+                    target_entity_id=record["target_entity_id"],
+                    relationship=record["relationship"],
+                    confidence=record.get("confidence", 1.0),
+                    event_time=record.get("event_time"),
+                    available_time=record.get("available_time"),
+                    properties=record.get("properties"),
+                )
             )
-        )
+        except ValueError as exc:
+            if str(exc) == "Self-referential relations are not allowed.":
+                continue
+            raise
 
     return deduplicate_relations(relations)

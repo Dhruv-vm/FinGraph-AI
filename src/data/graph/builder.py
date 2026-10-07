@@ -2,17 +2,24 @@ from __future__ import annotations
 
 import hashlib
 import json
+from pathlib import Path
 from typing import Any, Iterable
 
 from src.data.entities.resolution import (
     build_entity_indexes,
     load_company_universe,
+    normalize_text,
+    resolve_company,
     resolve_event_company,
 )
+from src.data.extraction.entities import build_entity_id
+from src.data.extraction.relations import validate_temporal_metadata
 from src.data.graph.relationships import (
     build_relationship,
     build_semantic_relationship,
     is_valid_node_type,
+    is_valid_relationship,
+    normalize_entity_type,
 )
 from src.data.graph.schema import GraphEdge, GraphNode, TemporalGraph
 
@@ -40,56 +47,93 @@ def _stable_hash(value: Any) -> str:
 def build_semantic_node_id(
     node_type: str,
     canonical_name: str,
+    indexes: dict[str, Any] | None = None,
 ) -> str:
     """
-    Build a deterministic identifier for a semantic KG node.
+    Build a canonical deterministic identifier for a semantic KG node.
 
-    Example:
-        Company + Apple -> company:apple
-        Supplier + TSMC -> supplier:tsmc
+    If node_type is 'Company' and resolves to a universe company, returns
+    f'company:{ticker}' (e.g. company:NVDA, company:MSFT).
+    Otherwise, returns the canonical extraction entity ID f'{normalized_type}:{digest}'.
     """
 
-    if not is_valid_node_type(node_type):
-        raise ValueError(
-            f"Unsupported FinGraph node type: {node_type}"
-        )
+    canonical_type = normalize_entity_type(node_type)
+    name = str(canonical_name).strip()
 
-    normalized = " ".join(
-        str(canonical_name).strip().lower().split()
-    )
-
-    if not normalized:
+    if not name:
         raise ValueError(
             "Semantic node requires a non-empty canonical name."
         )
 
-    return f"{node_type.lower()}:{normalized}"
+    if canonical_type == "Company":
+        if indexes is None:
+            try:
+                indexes = build_entity_indexes(load_company_universe())
+            except Exception:
+                indexes = None
+
+        if indexes:
+            resolved = resolve_company(
+                company=name,
+                indexes=indexes,
+            )
+            if resolved:
+                return resolved["entity_id"]
+
+    return build_entity_id(canonical_type, name)
 
 
 def build_semantic_node(
     node_type: str,
     canonical_name: str,
     *,
+    entity_id: str | None = None,
     properties: dict[str, Any] | None = None,
     event_time: str | None = None,
     available_time: str | None = None,
+    indexes: dict[str, Any] | None = None,
 ) -> GraphNode:
     """Build a semantic KG node with temporal metadata."""
 
-    node_id = build_semantic_node_id(
-        node_type,
-        canonical_name,
-    )
+    canonical_type = normalize_entity_type(node_type)
+    name = str(canonical_name).strip()
+
+    if not name:
+        raise ValueError(
+            "Semantic node requires a non-empty canonical name."
+        )
+
+    if entity_id:
+        if canonical_type == "Company":
+            node_id = build_semantic_node_id(
+                canonical_type,
+                name,
+                indexes=indexes,
+            )
+            if not node_id.startswith("company:") or len(node_id) > 13:
+                node_id = entity_id
+        else:
+            node_id = entity_id
+    else:
+        node_id = build_semantic_node_id(
+            canonical_type,
+            name,
+            indexes=indexes,
+        )
 
     node_properties = dict(properties or {})
     node_properties.setdefault(
         "canonical_name",
-        canonical_name,
+        name,
+    )
+    node_properties.setdefault(
+        "name",
+        name,
     )
 
     return GraphNode(
         node_id=node_id,
-        node_type=node_type,
+        node_type=canonical_type,
         properties=node_properties,
         event_time=event_time,
         available_time=available_time,
@@ -107,28 +151,48 @@ def build_semantic_edge(
 ) -> GraphEdge:
     """Build a deterministic semantic KG edge."""
 
+    source = str(source_id).strip()
+    target = str(target_id).strip()
+    rel = str(relationship).strip().upper()
+
+    if not source:
+        raise ValueError("Source entity ID cannot be empty.")
+
+    if not target:
+        raise ValueError("Target entity ID cannot be empty.")
+
+    if source == target:
+        raise ValueError("Self-referential relations are not allowed.")
+
+    if not is_valid_relationship(rel):
+        raise ValueError(
+            f"Unsupported FinGraph relationship: {relationship}"
+        )
+
+    validate_temporal_metadata(event_time, available_time)
+
     edge_properties = dict(properties or {})
 
     edge_identity = {
-        "source": source_id,
-        "target": target_id,
-        "relationship": relationship,
+        "source": source,
+        "target": target,
+        "relationship": rel,
         "event_time": event_time,
         "available_time": available_time,
         "properties": edge_properties,
     }
 
     edge_id = (
-        f"{source_id}"
-        f"->{relationship}"
-        f"->{target_id}"
+        f"{source}"
+        f"->{rel}"
+        f"->{target}"
         f":{_stable_hash(edge_identity)}"
     )
 
     relationship_data = build_semantic_relationship(
-        source_id=source_id,
-        target_id=target_id,
-        relationship=relationship,
+        source_id=source,
+        target_id=target,
+        relationship=rel,
         event_time=event_time,
         available_time=available_time,
         properties=edge_properties,
@@ -153,95 +217,329 @@ def build_semantic_edge(
 def build_semantic_graph(
     entities: Iterable[dict[str, Any]],
     relations: Iterable[dict[str, Any]],
+    indexes: dict[str, Any] | None = None,
 ) -> TemporalGraph:
     """
     Build a temporal semantic knowledge graph from extracted entities
     and relations.
 
-    Expected entity format:
-
-        {
-            "node_type": "Supplier",
-            "canonical_name": "TSMC",
-            "properties": {...},
-            "event_time": "...",
-            "available_time": "..."
-        }
-
-    Expected relation format:
-
-        {
-            "source": "supplier:tsmc",
-            "target": "company:nvidia",
-            "relationship": "SUPPLIES",
-            "event_time": "...",
-            "available_time": "...",
-            "properties": {
-                "source_document_id": "...",
-                "evidence_chunk_id": "...",
-                "confidence": 0.95
-            }
-        }
-
-    Relations reference already-created canonical node IDs.
+    Ensures 100% ID compatibility with extraction outputs, handles
+    both extraction schema (entity_id, source_entity_id, target_entity_id)
+    and graph schema (node_id, source, target), and rejects dangling,
+    self-referential, and invalid relations.
     """
 
+    if indexes is None:
+        try:
+            indexes = build_entity_indexes(load_company_universe())
+        except Exception:
+            indexes = None
+
     graph = TemporalGraph()
-
-    node_ids: set[str] = set()
-    edge_ids: set[str] = set()
-
-    # ---------------------------------------------------------------
-    # Nodes
-    # ---------------------------------------------------------------
+    nodes_by_id: dict[str, GraphNode] = {}
+    edges_by_id: dict[str, GraphEdge] = {}
+    alias_map: dict[str, str] = {}
 
     for entity in entities:
-        node_type = entity["node_type"]
-        canonical_name = entity["canonical_name"]
+        node_type = entity.get("node_type") or entity.get("entity_type")
+        if not node_type or not is_valid_node_type(node_type):
+            continue
+
+        canonical_type = normalize_entity_type(node_type)
+        canonical_name = entity.get("canonical_name") or entity.get("name")
+        if not canonical_name:
+            continue
+
+        raw_id = entity.get("entity_id") or entity.get("node_id")
 
         node = build_semantic_node(
-            node_type=node_type,
-            canonical_name=canonical_name,
+            canonical_type,
+            canonical_name,
+            entity_id=raw_id,
             properties=entity.get("properties"),
             event_time=entity.get("event_time"),
             available_time=entity.get("available_time"),
+            indexes=indexes,
         )
 
-        if node.node_id in node_ids:
-            continue
+        node_id = node.node_id
 
-        graph.nodes.append(node)
-        node_ids.add(node.node_id)
+        # Register mapping aliases
+        if raw_id:
+            alias_map[raw_id] = node_id
+        alias_map[node_id] = node_id
+        alias_map[canonical_name] = node_id
+        alias_map[canonical_name.casefold()] = node_id
+        name = entity.get("name")
+        if name:
+            alias_map[name] = node_id
+            alias_map[name.casefold()] = node_id
+        alias_map[f"{canonical_type.lower()}:{normalize_text(canonical_name)}"] = node_id
 
-    # ---------------------------------------------------------------
-    # Relationships
-    # ---------------------------------------------------------------
+        if node_id in nodes_by_id:
+            existing = nodes_by_id[node_id]
+            merged_props = {**existing.properties, **node.properties}
+            existing.properties = merged_props
+            if node.available_time and (
+                not existing.available_time
+                or node.available_time < existing.available_time
+            ):
+                existing.available_time = node.available_time
+        else:
+            nodes_by_id[node_id] = node
 
     for relation in relations:
-        source_id = relation["source"]
-        target_id = relation["target"]
+        source_ref = (
+            relation.get("source_entity_id")
+            or relation.get("source")
+            or relation.get("source_entity")
+        )
+        target_ref = (
+            relation.get("target_entity_id")
+            or relation.get("target")
+            or relation.get("target_entity")
+        )
 
-        # Never create dangling edges.
-        if source_id not in node_ids:
+        if not source_ref or not target_ref:
             continue
 
-        if target_id not in node_ids:
+        source_id = alias_map.get(source_ref) or alias_map.get(str(source_ref).casefold())
+        target_id = alias_map.get(target_ref) or alias_map.get(str(target_ref).casefold())
+
+        # Never create dangling edges.
+        if not source_id or source_id not in nodes_by_id:
+            continue
+        if not target_id or target_id not in nodes_by_id:
+            continue
+
+        # Disallow self-referential relations
+        if source_id == target_id:
+            continue
+
+        rel_name = str(relation.get("relationship", "")).strip().upper()
+        if not is_valid_relationship(rel_name):
+            continue
+
+        event_time = relation.get("event_time")
+        available_time = relation.get("available_time")
+
+        try:
+            validate_temporal_metadata(event_time, available_time)
+        except ValueError:
             continue
 
         edge = build_semantic_edge(
             source_id=source_id,
             target_id=target_id,
-            relationship=relation["relationship"],
-            event_time=relation.get("event_time"),
-            available_time=relation.get("available_time"),
+            relationship=rel_name,
+            event_time=event_time,
+            available_time=available_time,
             properties=relation.get("properties"),
         )
 
-        if edge.edge_id in edge_ids:
+        if edge.edge_id in edges_by_id:
             continue
 
-        graph.edges.append(edge)
-        edge_ids.add(edge.edge_id)
+        edges_by_id[edge.edge_id] = edge
+
+    graph.nodes = list(nodes_by_id.values())
+    graph.edges = list(edges_by_id.values())
+
+    return graph
+
+
+def build_unified_semantic_graph(
+    extractions_dir: str | Path = "data/processed/extractions",
+    universe_path: str | Path | None = None,
+) -> TemporalGraph:
+    """
+    Build a unified multi-company Temporal Knowledge Graph from all
+    SEC extraction JSON files.
+
+    Preserves document ID, chunk provenance, event_time, available_time,
+    publication_date, and fiscal_period.
+    """
+
+    ext_dir = Path(extractions_dir)
+    if not ext_dir.exists():
+        raise FileNotFoundError(
+            f"Extractions directory not found: {ext_dir}"
+        )
+
+    files = sorted(ext_dir.glob("*.json"))
+    if not files:
+        raise RuntimeError(
+            f"No extraction files found in {ext_dir}"
+        )
+
+    companies = (
+        load_company_universe(universe_path)
+        if universe_path
+        else load_company_universe()
+    )
+    indexes = build_entity_indexes(companies)
+
+    graph = TemporalGraph()
+    nodes_by_id: dict[str, GraphNode] = {}
+    edges_by_id: dict[str, GraphEdge] = {}
+    alias_map: dict[str, str] = {}
+
+    for file_path in files:
+        with file_path.open("r", encoding="utf-8") as handle:
+            chunks = json.load(handle)
+
+        if not isinstance(chunks, list):
+            continue
+
+        for chunk in chunks:
+            chunk_id = chunk.get("chunk_id")
+            doc_id = chunk.get("document_id")
+            provenance = chunk.get("provenance", {})
+            pub_date = provenance.get("publication_date")
+            avail_time = provenance.get("available_time")
+            fiscal_period = chunk.get("metadata", {}).get("fiscal_period")
+
+            chunk_alias_map: dict[str, str] = {}
+
+            for entity in chunk.get("entities", []):
+                node_type = entity.get("entity_type") or entity.get("node_type")
+                if not node_type or not is_valid_node_type(node_type):
+                    continue
+
+                canonical_type = normalize_entity_type(node_type)
+                canonical_name = entity.get("canonical_name") or entity.get("name")
+                if not canonical_name:
+                    continue
+
+                raw_id = entity.get("entity_id") or entity.get("node_id")
+
+                node = build_semantic_node(
+                    canonical_type,
+                    canonical_name,
+                    entity_id=raw_id,
+                    properties=entity.get("properties"),
+                    event_time=entity.get("event_time"),
+                    available_time=entity.get("available_time") or avail_time,
+                    indexes=indexes,
+                )
+
+                node_id = node.node_id
+
+                # Attach document and chunk provenance
+                node_props = node.properties
+                doc_ids = node_props.setdefault("document_ids", [])
+                if doc_id and doc_id not in doc_ids:
+                    doc_ids.append(doc_id)
+                chunk_ids = node_props.setdefault("chunk_ids", [])
+                if chunk_id and chunk_id not in chunk_ids:
+                    chunk_ids.append(chunk_id)
+
+                # Map aliases locally and globally
+                if raw_id:
+                    chunk_alias_map[raw_id] = node_id
+                    alias_map[raw_id] = node_id
+                chunk_alias_map[node_id] = node_id
+                alias_map[node_id] = node_id
+                chunk_alias_map[canonical_name] = node_id
+                chunk_alias_map[canonical_name.casefold()] = node_id
+                alias_map[canonical_name] = node_id
+                alias_map[canonical_name.casefold()] = node_id
+
+                name = entity.get("name")
+                if name:
+                    chunk_alias_map[name] = node_id
+                    chunk_alias_map[name.casefold()] = node_id
+                    alias_map[name] = node_id
+                    alias_map[name.casefold()] = node_id
+
+                if node_id in nodes_by_id:
+                    existing = nodes_by_id[node_id]
+                    existing_docs = existing.properties.setdefault("document_ids", [])
+                    if doc_id and doc_id not in existing_docs:
+                        existing_docs.append(doc_id)
+                    existing_chunks = existing.properties.setdefault("chunk_ids", [])
+                    if chunk_id and chunk_id not in existing_chunks:
+                        existing_chunks.append(chunk_id)
+
+                    if node.available_time and (
+                        not existing.available_time
+                        or node.available_time < existing.available_time
+                    ):
+                        existing.available_time = node.available_time
+                else:
+                    nodes_by_id[node_id] = node
+
+            for relation in chunk.get("relations", []):
+                source_ref = (
+                    relation.get("source_entity_id")
+                    or relation.get("source")
+                    or relation.get("source_entity")
+                )
+                target_ref = (
+                    relation.get("target_entity_id")
+                    or relation.get("target")
+                    or relation.get("target_entity")
+                )
+
+                if not source_ref or not target_ref:
+                    continue
+
+                source_id = (
+                    chunk_alias_map.get(source_ref)
+                    or chunk_alias_map.get(str(source_ref).casefold())
+                    or alias_map.get(source_ref)
+                    or alias_map.get(str(source_ref).casefold())
+                )
+                target_id = (
+                    chunk_alias_map.get(target_ref)
+                    or chunk_alias_map.get(str(target_ref).casefold())
+                    or alias_map.get(target_ref)
+                    or alias_map.get(str(target_ref).casefold())
+                )
+
+                if not source_id or source_id not in nodes_by_id:
+                    continue
+                if not target_id or target_id not in nodes_by_id:
+                    continue
+                if source_id == target_id:
+                    continue
+
+                rel_name = str(relation.get("relationship", "")).strip().upper()
+                if not is_valid_relationship(rel_name):
+                    continue
+
+                rel_available = relation.get("available_time") or avail_time
+                event_time = relation.get("event_time")
+
+                try:
+                    validate_temporal_metadata(event_time, rel_available)
+                except ValueError:
+                    continue
+
+                edge_props = dict(relation.get("properties") or {})
+                edge_props["document_id"] = doc_id
+                edge_props["chunk_id"] = chunk_id
+                edge_props["source"] = provenance.get("source", "sec")
+                edge_props["source_url"] = provenance.get("source_url")
+                edge_props["source_reference"] = provenance.get("source_reference")
+                edge_props["publication_date"] = pub_date
+                edge_props["fiscal_period"] = fiscal_period
+                edge_props["confidence"] = relation.get("confidence", 1.0)
+
+                edge = build_semantic_edge(
+                    source_id=source_id,
+                    target_id=target_id,
+                    relationship=rel_name,
+                    event_time=event_time,
+                    available_time=rel_available,
+                    properties=edge_props,
+                )
+
+                if edge.edge_id not in edges_by_id:
+                    edges_by_id[edge.edge_id] = edge
+
+    graph.nodes = list(nodes_by_id.values())
+    graph.edges = list(edges_by_id.values())
 
     return graph
 

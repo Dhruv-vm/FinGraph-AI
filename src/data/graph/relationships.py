@@ -54,10 +54,36 @@ EVENT_RELATIONSHIPS = {
 }
 
 
-def is_valid_node_type(node_type: str) -> bool:
-    """Return True when node_type belongs to the FinGraph ontology."""
+_NODE_TYPE_LOOKUP = {t.casefold(): t for t in NODE_TYPES}
 
-    return node_type in NODE_TYPES
+
+def normalize_entity_type(node_type: str) -> str:
+    """
+    Normalize an entity type to its canonical TitleCase ontology representation.
+
+    Examples:
+        'company' -> 'Company'
+        'COMPANY' -> 'Company'
+        'Company' -> 'Company'
+        'financialmetric' -> 'FinancialMetric'
+        'newsarticle' -> 'NewsArticle'
+    """
+    if not node_type:
+        raise ValueError("Entity type cannot be empty.")
+
+    key = str(node_type).strip().casefold()
+    if key not in _NODE_TYPE_LOOKUP:
+        raise ValueError(f"Unsupported FinGraph entity type: {node_type}")
+
+    return _NODE_TYPE_LOOKUP[key]
+
+
+def is_valid_node_type(node_type: str) -> bool:
+    """Return True when node_type belongs to the FinGraph ontology (case-insensitive)."""
+    if not node_type:
+        return False
+
+    return str(node_type).strip().casefold() in _NODE_TYPE_LOOKUP
 
 
 def is_valid_relationship(relationship: str) -> bool:

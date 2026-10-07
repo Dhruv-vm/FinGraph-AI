@@ -69,6 +69,39 @@ class TemporalGraph:
             "as_of": self.as_of,
         }
 
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> TemporalGraph:
+        """Deserialize a TemporalGraph from a dictionary."""
+        nodes = [
+            GraphNode(
+                node_id=node["node_id"],
+                node_type=node["node_type"],
+                properties=node.get("properties", {}),
+                event_time=node.get("event_time"),
+                available_time=node.get("available_time"),
+            )
+            for node in data.get("nodes", [])
+        ]
+
+        edges = [
+            GraphEdge(
+                edge_id=edge["edge_id"],
+                source=edge["source"],
+                target=edge["target"],
+                relationship=edge["relationship"],
+                event_time=edge.get("event_time"),
+                available_time=edge.get("available_time"),
+                properties=edge.get("properties", {}),
+            )
+            for edge in data.get("edges", [])
+        ]
+
+        return cls(
+            nodes=nodes,
+            edges=edges,
+            as_of=data.get("as_of"),
+        )
+
     @property
     def node_count(self) -> int:
         """Return the number of graph nodes."""

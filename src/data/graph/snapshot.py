@@ -102,7 +102,7 @@ def build_temporal_snapshot(
     snapshot_nodes = [
         node
         for node in graph.nodes
-        if node.node_type == "company"
+        if node.node_type.casefold() == "company"
         or is_available(
             node.available_time,
             snapshot_time,

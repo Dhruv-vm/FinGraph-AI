@@ -77,6 +77,61 @@ def load_company_universe(
     return records
 
 
+LEGAL_SUFFIXES = {
+    "corporation",
+    "corp",
+    "incorporated",
+    "inc",
+    "company",
+    "co",
+    "limited",
+    "ltd",
+    "plc",
+    "llc",
+    "holdings",
+    "group",
+    "class a",
+    "class b",
+    "class c",
+    "n a",
+}
+
+KNOWN_COMPANY_ALIASES = {
+    "google": "GOOGL",
+    "alphabet": "GOOGL",
+    "facebook": "META",
+    "meta": "META",
+    "meta platforms": "META",
+    "jpmorgan": "JPM",
+    "jpmorganchase": "JPM",
+    "jp morgan": "JPM",
+    "jpmorgan chase": "JPM",
+    "exxonmobil": "XOM",
+    "exxon mobil": "XOM",
+    "johnson johnson": "JNJ",
+    "amazon com": "AMZN",
+}
+
+
+def strip_company_legal_suffix(name: str | None) -> str:
+    """Strip common legal corporate suffixes for fuzzy canonical matching."""
+    normalized = normalize_text(name)
+    if not normalized:
+        return ""
+
+    tokens = normalized.split()
+    while tokens:
+        if len(tokens) >= 2 and f"{tokens[-2]} {tokens[-1]}" in LEGAL_SUFFIXES:
+            tokens = tokens[:-2]
+            continue
+        if tokens[-1] in LEGAL_SUFFIXES:
+            tokens = tokens[:-1]
+            continue
+        break
+
+    return " ".join(tokens)
+
+
 def build_entity_indexes(
     companies: list[dict[str, str]],
 ) -> dict[str, dict[str, dict[str, str]]]:
@@ -87,9 +142,24 @@ def build_entity_indexes(
     by_name: dict[str, dict[str, str]] = {}
 
     for company in companies:
-        by_ticker[company["ticker"]] = company
+        ticker = company["ticker"]
+        by_ticker[ticker] = company
         by_cik[company["cik"]] = company
-        by_name[normalize_text(company["company"])] = company
+
+        exact_name = normalize_text(company["company"])
+        by_name[exact_name] = company
+
+        stripped_name = strip_company_legal_suffix(company["company"])
+        if stripped_name:
+            by_name[stripped_name] = company
+
+        by_name[ticker.lower()] = company
+
+    # Map known canonical corporate aliases to universe records
+    ticker_lookup = {c["ticker"]: c for c in companies}
+    for alias, ticker in KNOWN_COMPANY_ALIASES.items():
+        if ticker in ticker_lookup:
+            by_name[alias] = ticker_lookup[ticker]
 
     return {
         "ticker": by_ticker,
@@ -111,7 +181,7 @@ def resolve_company(
     Resolution priority:
         1. CIK
         2. Ticker
-        3. Company name
+        3. Company name (exact, stripped legal suffix, or alias)
     """
 
     if cik:
@@ -141,6 +211,7 @@ def resolve_company(
     if company:
         normalized = normalize_text(company)
 
+        # 1. Exact name or registered alias
         if normalized in indexes["name"]:
             entity = indexes["name"][normalized]
 
@@ -148,6 +219,28 @@ def resolve_company(
                 **entity,
                 "resolution_method": "company_name",
                 "resolution_confidence": 1.0,
+            }
+
+        # 2. Name with legal corporate suffix stripped
+        stripped = strip_company_legal_suffix(company)
+        if stripped and stripped in indexes["name"]:
+            entity = indexes["name"][stripped]
+
+            return {
+                **entity,
+                "resolution_method": "company_name_normalized",
+                "resolution_confidence": 0.95,
+            }
+
+        # 3. Check if company string is a ticker symbol
+        ticker_candidate = company.strip().upper()
+        if ticker_candidate in indexes["ticker"]:
+            entity = indexes["ticker"][ticker_candidate]
+
+            return {
+                **entity,
+                "resolution_method": "company_as_ticker",
+                "resolution_confidence": 0.95,
             }
 
     return None

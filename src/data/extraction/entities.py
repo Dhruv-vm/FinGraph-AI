@@ -40,9 +40,12 @@ def build_entity_id(entity_type: str, canonical_name: str) -> str:
     return f"{normalized_type}:{digest}"
 
 
+from src.data.graph.relationships import is_valid_node_type, normalize_entity_type
+
+
 def validate_entity_type(entity_type: str) -> bool:
     """Return whether an entity type belongs to the FinGraph schema."""
-    return str(entity_type).strip() in ENTITY_TYPES
+    return is_valid_node_type(entity_type)
 
 
 def build_entity(
@@ -53,14 +56,11 @@ def build_entity(
     properties: dict[str, Any] | None = None,
 ) -> ExtractedEntity:
     """Build a validated, deterministic extracted entity."""
-    entity_type = str(entity_type).strip()
-    name = str(name).strip()
-
-    if not name:
-        raise ValueError("Entity name cannot be empty.")
-
     if not validate_entity_type(entity_type):
         raise ValueError(f"Unsupported entity type: {entity_type}")
+
+    canonical_type = normalize_entity_type(entity_type)
+    name = str(name).strip()
 
     canonical = (
         str(canonical_name).strip()
@@ -76,11 +76,11 @@ def build_entity(
     if not 0.0 <= confidence <= 1.0:
         raise ValueError("Entity confidence must be between 0 and 1.")
 
-    entity_id = build_entity_id(entity_type, canonical)
+    entity_id = build_entity_id(canonical_type, canonical)
 
     return ExtractedEntity(
         entity_id=entity_id,
-        entity_type=entity_type,
+        entity_type=canonical_type,
         name=name,
         canonical_name=canonical,
         confidence=confidence,

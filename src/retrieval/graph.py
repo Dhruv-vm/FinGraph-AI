@@ -519,6 +519,8 @@ class GraphRetriever:
             queue.append((seed, [seed], []))
 
             while queue:
+                if len(candidates) >= 1000:
+                    break
                 curr_node, path_nodes, path_edges = queue.popleft()
                 curr_hop = len(path_edges)
 

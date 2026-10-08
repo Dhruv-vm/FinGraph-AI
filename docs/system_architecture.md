@@ -167,3 +167,30 @@ Orchestrates an adaptive, bounded retrieval loop without unrestricted LLM tool u
   - If entities are missing $\to$ `retrieve_missing_entity`
   - Otherwise $\to$ `broaden_retrieval`
 - **Output:** Encapsulates findings into `QAEvidencePackage` with primary evidence (top 5), supporting evidence, graph traversal paths, complete document provenance, execution trace, and temporal validity flags.
+
+## Generative Financial QA & Verification Layer (Phase 4)
+
+### 8. Evidence-Grounded Answer Generation (`AnswerGenerator`)
+The generative layer transforms the temporally validated `QAEvidencePackage` into a structured, provenance-backed `QAAnswer`:
+- **Local Ollama Backend:** Powered by `qwen3.5:4b` running locally at deterministic sampling ($T = 0$, `think=False`).
+- **Hard Pre-Generation Temporal Gate:** Asserts `available_time <= reference_time` across all package evidence prior to prompt construction. If any future item exists, generation is aborted immediately.
+- **Insufficient Evidence Refusal Policy:** If `package.sufficient == False` or evidence is empty, the generator immediately emits a structured refusal:
+  ```json
+  {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "evidence_ids": [],
+    "reasoning_summary": "Retrieved evidence does not satisfy query entity, relationship, or reasoning depth constraints."
+  }
+  ```
+  This is completed in $0.00$s without invoking LLM tokens, preventing fabrication on out-of-scope or unverified queries.
+- **Strict Evidence Injection:** Prompt strictly constrains the LLM to use only the provided evidence IDs and text snippets, forbidding external parametric facts.
+- **Structured JSON Output:** Requires strictly valid JSON output with schema keys: `answer`, `confidence`, `evidence_ids`, `reasoning_summary`.
+
+### 9. Post-Generation Answer Validation (`AnswerValidator`)
+Every LLM response is submitted to rigorous post-generation schema, citation, and temporal verification:
+- **JSON Schema Conformance:** Validates JSON syntax and required keys.
+- **Citation Grounding:** Asserts that every factual claim cites one or more evidence IDs, and all cited IDs belong to the retrieved package (`unknown_evidence_ids == 0`).
+- **Post-Generation Temporal Compliance:** Asserts that zero cited evidence items have `available_time > reference_time`.
+- **Confidence Range Verification:** Confirms confidence scores lie strictly in $[0.0, 1.0]$.
+- **Provenance Retention:** Retains complete document provenance (`document_id`, `chunk_id`, `available_time`, `source_type`) on all cited evidence objects for auditability and compliance.

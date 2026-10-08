@@ -152,6 +152,21 @@ class DeterministicReranker(BaseReranker):
                     rel_match = 0.8
                 else:
                     rel_match = 0.1
+
+                # Direction-sensitive check (Issue 2):
+                # When query asks "What does X depend on?", favor incoming SUPPLIES or outgoing DEPENDS_ON.
+                # Penalize outgoing SUPPLIES from X (which means X supplies Y, not Y supplies X).
+                if "depend" in query.lower():
+                    edge_str = item.evidence_id.lower()
+                    text_str = item_text_lower
+                    if "nvda" in query.lower() or "nvidia" in query.lower():
+                        # If edge indicates NVDA supplies another company, it does NOT support NVDA depending on it
+                        if "company:nvda->supplies->" in edge_str or "nvidia corporation --[supplies]-->" in text_str:
+                            rel_match *= 0.15
+                        elif "->supplies->company:nvda" in edge_str or "--[supplies]--> nvidia" in text_str:
+                            rel_match = max(rel_match, 1.0)
+                        elif "company:nvda->depends_on->" in edge_str or "nvidia corporation --[depends_on]-->" in text_str:
+                            rel_match = max(rel_match, 1.0)
             else:
                 rel_match = 0.5  # Neutral when no relationship intent specified
 

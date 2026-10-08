@@ -614,11 +614,26 @@ class GraphRetriever:
                     multiplier = 8.0
             else:
                 multiplier = 0.2
-
             if wants_company:
                 target_node = self.nodes.get(item.target_node)
                 if target_node and target_node.node_type.casefold() == "company":
                     multiplier *= 1.5
+
+            # Direction-sensitive check (Issue 2):
+            # When query asks "What does X depend on?", favor incoming SUPPLIES or outgoing DEPENDS_ON.
+            # Penalize outgoing SUPPLIES from X (which means X supplies Y, not Y supplies X).
+            if "depend" in query.lower() and item.hop_count == 1:
+                edge_id = item.evidence_id.replace("edge:", "").lower()
+                text_lower = (item.text or "").lower()
+                for seed in seed_nodes:
+                    seed_lower = seed.lower()
+                    if seed_lower in edge_id:
+                        if f"{seed_lower}->supplies->" in edge_id:
+                            multiplier *= 0.1  # Strongly downrank reverse direction (X supplying others)
+                        elif f"->supplies->{seed_lower}" in edge_id:
+                            multiplier *= 2.0  # Boost supplier to X
+                        elif f"{seed_lower}->depends_on->" in edge_id:
+                            multiplier *= 2.0  # Boost X depending on entity
 
             return base_score * multiplier
 

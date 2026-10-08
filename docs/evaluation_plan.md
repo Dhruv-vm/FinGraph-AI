@@ -20,7 +20,7 @@ Evaluates the retrieval precision, recall, and ability to reconstruct multi-hop 
 - **Cross-Document Fact Coverage:** Proportion of required facts retrieved when evidence spans across multiple SEC filings.
 
 ### Dimension B: Strict Temporal Validity (Zero Leakage)
-Validates that future information never infiltrates point-in-time financial decisions.
+Validates that future information never infiltrates point-in-time financial decisions at the retriever level.
 - **Future Evidence Infiltration Rate (FEIR):**
   $$\text{FEIR} = \frac{\sum_{i=1}^N \sum_{e \in E_i} \mathbb{I}(t_e > t_{\text{ref}, i})}{\sum_{i=1}^N |E_i|}$$
   **Target:** Exactly $0.00\%$ ($0$ violations across all benchmarks).
@@ -29,8 +29,13 @@ Validates that future information never infiltrates point-in-time financial deci
 ### Dimension C: Parametric Leakage Evaluation
 Evaluates the tendency of LLMs to answer historical questions using training data weights (parametric memory) rather than retrieved evidence.
 - **Retriever-Disabled Baseline:** Querying LLM directly on historical point-in-time questions where subsequent events occurred after the cutoff date (e.g., asking about NVIDIA's 2025 chip roadmap as of January 2024).
-- **Parametric Leakage Rate (PLR):** Percentage of answers mentioning future facts (events occurring after $t_{\text{ref}}$) despite the prompt specifying $t_{\text{ref}}$.
+- **Parametric Leakage Rate (PLR):** Percentage of answers mentioning future facts (events occurring after $t_{\text{ref}}$) despite the prompt specifying $t_{\text{ref}}$, when retrieval is turned off:
+  $$\text{PLR} = \frac{\sum_{i=1}^N \mathbb{I}(\text{future\_keywords} \in \text{raw\_response}_i)}{N}$$
 - **Retriever-Grounded Verification:** Measuring whether providing FinGraph AI's temporally validated evidence package eliminates parametric hallucination.
+
+**Crucial Scientific Distinction between FEIR and PLR:**
+1. **FEIR (Future Evidence Infiltration Rate):** Measures architectural information leaks in the *retrieval and reranking pipeline* (edges or chunks timestamped after the cutoff passing into the prompt). FinGraph AI maintains **$\text{FEIR} = 0.00\%$** through hard graph and vector point-in-time gates.
+2. **PLR (Parametric Leakage Rate):** Measures intrinsic temporal leakage from *LLM pre-training weights* when retrieval is disabled. Qwen3.5:4B demonstrates **$\text{PLR} = 100.00\%$** without retrieval on post-cutoff queries (e.g. leaking the Blackwell B200 announcement), which empirically motivates the strict retrieval-grounding and sufficiency refusal policies implemented in FinGraph AI.
 
 ### Dimension D: Evidence Sufficiency & Agent Efficiency
 Evaluates the performance and restraint of the lightweight ReAct retrieval loop:

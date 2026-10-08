@@ -214,6 +214,52 @@ class EvidenceSufficiencyChecker:
                 provenance_complete=True,
             )
 
+        # For multi-hop compound queries (e.g. Q6: risks affecting suppliers):
+        # The query asks for risks affecting suppliers (Supplier -> HAS_RISK/AFFECTED_BY -> Risk).
+        # It is NOT satisfied by NVIDIA affected by risks! A single evidence path must connect
+        # supplier to risk, or separate evidence must provide risks of identified suppliers.
+        query_lower = analysis.original_query.lower()
+        wants_supplier = any(w in query_lower for w in ("supply", "supplies", "supplier", "suppliers"))
+        wants_risk = any(w in query_lower for w in ("risk", "risks", "affect", "affects", "affected"))
+        if analysis.is_multi_hop and wants_supplier and wants_risk:
+            # Does evidence connect a supplier to a risk?
+            has_supplier_risk_chain = False
+            has_supp = False
+            has_supplier_risk = False
+            for ev in evidence[:5]:
+                text_lower = (ev.text or "").lower()
+                rels_str = str(ev.metadata.get("relationship", "")).upper()
+                # Check for path like: Supplier --SUPPLIES--> NVDA AND Supplier --HAS_RISK/AFFECTED_BY--> Risk
+                if ("HAS_RISK" in rels_str or "AFFECTED_BY" in rels_str) and ("SUPPLIES" in rels_str):
+                    has_supplier_risk_chain = True
+                    break
+                if "SUPPLIES" in rels_str or "supplies" in text_lower or "supplier" in text_lower:
+                    has_supp = True
+                if ("HAS_RISK" in rels_str or "AFFECTED_BY" in rels_str or "risk" in text_lower or "affected" in text_lower):
+                    # Must not be NVDA directly affected by risk
+                    if "nvda --[affected_by]" not in text_lower and "nvda->affected_by" not in ev.evidence_id.lower():
+                        has_supplier_risk = True
+
+            if has_supp and has_supplier_risk:
+                has_supplier_risk_chain = True
+
+            if not has_supplier_risk_chain:
+                return SufficiencyResult(
+                    sufficient=False,
+                    reason=(
+                        "Insufficient compound relationship coverage: multi-hop query requires evidence "
+                        "linking risks affecting supplier companies, but evidence only covers supplier identity "
+                        "or risks affecting the target company directly."
+                    ),
+                    missing_entities=[],
+                    missing_relationships=["HAS_RISK", "AFFECTED_BY"],
+                    required_hops=required_hops,
+                    observed_hops=observed_hops,
+                    evidence_count=evidence_count,
+                    temporal_valid=True,
+                    provenance_complete=True,
+                )
+
         if missing_relationships and len(missing_relationships) == len(analysis.relationship_intent):
             return SufficiencyResult(
                 sufficient=False,

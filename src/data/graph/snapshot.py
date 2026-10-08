@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+import re
 from typing import Any
 
 from src.data.graph.schema import GraphEdge, GraphNode, TemporalGraph
@@ -14,15 +15,20 @@ def parse_datetime(value: str | None) -> datetime | None:
 
     value = value.strip()
 
-    if len(value) == 10:
+    if len(value) == 4 and value.isdigit():
+        value = f"{value}-01-01T00:00:00+00:00"
+    elif len(value) == 7 and re.match(r"^\d{4}-\d{2}$", value):
+        value = f"{value}-01T00:00:00+00:00"
+    elif len(value) == 10 and re.match(r"^\d{4}-\d{2}-\d{2}$", value):
         value = f"{value}T00:00:00+00:00"
 
-    dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
-
-    if dt.tzinfo is None:
-        dt = dt.replace(tzinfo=timezone.utc)
-
-    return dt
+    try:
+        dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt
+    except (ValueError, TypeError):
+        return None
 
 
 def is_available(

@@ -126,6 +126,17 @@ class HybridRetriever:
                 for _, g_item in g_matches:
                     handled_graph_evidence_ids.add(g_item.evidence_id)
 
+                graph_edge_paths: list[list[dict[str, Any]]] = []
+                for _, g in g_matches:
+                    if "graph_edges" in g.properties and g.properties["graph_edges"]:
+                        graph_edge_paths.append(list(g.properties["graph_edges"]))
+                    elif g.source_node and g.target_node and g.relationship and " -> " not in g.relationship:
+                        graph_edge_paths.append([{
+                            "source": g.source_node,
+                            "relationship": g.relationship,
+                            "target": g.target_node,
+                        }])
+
                 rrf_score = (
                     (vector_weight / (self.rrf_k + v_rank))
                     + (graph_weight / (self.rrf_k + best_g_rank))
@@ -158,6 +169,8 @@ class HybridRetriever:
                             "vector_score": v_chunk.score,
                             "graph_relations": [g.relationship for _, g in g_matches],
                             "graph_paths": [g.path for _, g in g_matches],
+                            "graph_edge_paths": graph_edge_paths,
+                            "graph_edges": [e for path in graph_edge_paths for e in path],
                         },
                     )
                 )
@@ -191,6 +204,16 @@ class HybridRetriever:
             if g_item.evidence_id in handled_graph_evidence_ids:
                 continue
 
+            edge_paths: list[list[dict[str, Any]]] = []
+            if "graph_edges" in g_item.properties and g_item.properties["graph_edges"]:
+                edge_paths.append(list(g_item.properties["graph_edges"]))
+            elif g_item.source_node and g_item.target_node and g_item.relationship and " -> " not in g_item.relationship:
+                edge_paths.append([{
+                    "source": g_item.source_node,
+                    "relationship": g_item.relationship,
+                    "target": g_item.target_node,
+                }])
+
             rrf_score = graph_weight / (self.rrf_k + g_rank)
             fused_items.append(
                 RetrievalEvidence(
@@ -214,6 +237,8 @@ class HybridRetriever:
                         "relationship": g_item.relationship,
                         "hop_count": g_item.hop_count,
                         "properties": g_item.properties,
+                        "graph_edge_paths": edge_paths,
+                        "graph_edges": edge_paths[0] if edge_paths else [],
                     },
                 )
             )

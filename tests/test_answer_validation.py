@@ -343,7 +343,13 @@ def test_multihop_relationship_chain_required():
         document_id="doc_1",
         chunk_id="chunk_1",
         available_time="2025-08-27T00:00:00+00:00",
-        metadata={"relationship": "SUPPLIES", "hop_count": 2},
+        metadata={
+            "relationship": "SUPPLIES",
+            "hop_count": 2,
+            "graph_edges": [
+                {"source": "company:MU", "relationship": "SUPPLIES", "target": "company:NVDA"}
+            ],
+        },
     )
     ev_risk = RetrievalEvidence(
         evidence_id="ev_risk",
@@ -354,7 +360,13 @@ def test_multihop_relationship_chain_required():
         document_id="doc_1",
         chunk_id="chunk_2",
         available_time="2025-08-27T00:00:00+00:00",
-        metadata={"relationship": "HAS_RISK", "hop_count": 2},
+        metadata={
+            "relationship": "HAS_RISK",
+            "hop_count": 2,
+            "graph_edges": [
+                {"source": "company:MU", "relationship": "HAS_RISK", "target": "risk:SUPPLY_CHAIN"}
+            ],
+        },
     )
 
     # When both relations exist, sufficiency succeeds

@@ -427,3 +427,18 @@ def test_mixed_historical_and_future_branches(sample_temporal_graph, mock_univer
     assert not any("risk:geopolitical_taiwan" in ev.path for ev in results)
     for ev in results:
         assert ev.available_time <= "2024-03-01T00:00:00+00:00"
+
+
+def test_incoming_traversal_preserves_original_edge_direction(sample_temporal_graph, mock_universe):
+    """Scenario 9: Traversing an edge backward does not reverse its original directed triple in metadata."""
+    retriever = GraphRetriever(graph=sample_temporal_graph, company_universe=mock_universe)
+    results = retriever.retrieve(query="NVIDIA", max_hops=1, top_k=5)
+    ev = next((e for e in results if "e1_tsm_supplies_nvda" in e.evidence_id), None)
+    assert ev is not None
+    assert ev.path == ["company:NVDA", "company:TSM"]
+    assert "graph_edges" in ev.properties
+    assert len(ev.properties["graph_edges"]) == 1
+    edge_triple = ev.properties["graph_edges"][0]
+    assert edge_triple["source"] == "company:TSM"
+    assert edge_triple["relationship"] == "SUPPLIES"
+    assert edge_triple["target"] == "company:NVDA"

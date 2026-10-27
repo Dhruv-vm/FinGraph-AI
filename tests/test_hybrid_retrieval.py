@@ -284,3 +284,49 @@ def test_rrf_receives_only_temporally_valid_candidates():
     assert results[0].chunk_id == "v_valid"
     assert results[0].source_type == "hybrid"
     assert results[0].available_time <= "2024-06-01T00:00:00+00:00"
+
+
+def test_hybrid_preserves_graph_edge_paths_metadata():
+    """Scenario 8: Graph edge paths survive conversion into hybrid RetrievalEvidence."""
+    g_item = GraphEvidence(
+        evidence_id="edge:e_supp",
+        source_node="company:FOXCONN",
+        target_node="company:AAPL",
+        relationship="SUPPLIES",
+        path=["company:FOXCONN", "company:AAPL"],
+        hop_count=1,
+        text="Foxconn supplies Apple",
+        available_time="2024-01-01T00:00:00+00:00",
+        chunk_id="chunk_hybrid_01",
+        properties={
+            "graph_edges": [
+                {"source": "company:FOXCONN", "relationship": "SUPPLIES", "target": "company:AAPL"}
+            ]
+        },
+    )
+    v_chunk = RetrievedChunk(
+        chunk_id="chunk_hybrid_01",
+        score=0.85,
+        text="Foxconn supplies Apple",
+        payload={"document_id": "doc_01", "available_time": "2024-01-01T00:00:00+00:00"},
+    )
+    mock_v = MagicMock()
+    mock_v.search.return_value = [v_chunk]
+    mock_g = MagicMock()
+    mock_g.retrieve.return_value = [g_item]
+
+    hybrid = HybridRetriever(vector_store=mock_v, graph_retriever=mock_g)
+    results = hybrid.retrieve("Apple suppliers", top_k=5)
+
+    assert len(results) == 1
+    item = results[0]
+    assert item.source_type == "hybrid"
+    assert "graph_edge_paths" in item.metadata
+    assert len(item.metadata["graph_edge_paths"]) == 1
+    assert item.metadata["graph_edge_paths"][0] == [
+        {"source": "company:FOXCONN", "relationship": "SUPPLIES", "target": "company:AAPL"}
+    ]
+    assert "graph_edges" in item.metadata
+    assert item.metadata["graph_edges"] == [
+        {"source": "company:FOXCONN", "relationship": "SUPPLIES", "target": "company:AAPL"}
+    ]

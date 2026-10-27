@@ -677,6 +677,13 @@ class GraphRetriever:
             fiscal_period = edge.properties.get("fiscal_period")
             confidence = float(edge.properties.get("confidence", 1.0))
             props = dict(edge.properties)
+            props["graph_edges"] = [
+                {
+                    "source": edge.source,
+                    "relationship": edge.relationship,
+                    "target": edge.target,
+                }
+            ]
         else:
             evidence_id = f"path:{':'.join(e.edge_id for e in edges)}"
             relationship = " -> ".join(e.relationship for e in edges)
@@ -702,6 +709,14 @@ class GraphRetriever:
                 "edge_ids": [e.edge_id for e in edges],
                 "documents": [e.properties.get("document_id") for e in edges if e.properties.get("document_id")],
                 "chunks": [e.properties.get("chunk_id") for e in edges if e.properties.get("chunk_id")],
+                "graph_edges": [
+                    {
+                        "source": e.source,
+                        "relationship": e.relationship,
+                        "target": e.target,
+                    }
+                    for e in edges
+                ],
             }
 
         text = self._verbalize_path(nodes, edges)

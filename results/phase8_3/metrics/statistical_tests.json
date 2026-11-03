@@ -1,0 +1,82 @@
+{
+  "condition": "A3_forced_estimate",
+  "test": "Fisher exact, two-sided",
+  "tests": [
+    {
+      "name": "within 1% (primary recall rule; EPS exact cent)",
+      "pre_release": [
+        0,
+        84
+      ],
+      "post_release_control": [
+        1,
+        58
+      ],
+      "p_value": 0.4085
+    },
+    {
+      "name": "within 2%",
+      "pre_release": [
+        3,
+        84
+      ],
+      "post_release_control": [
+        2,
+        58
+      ],
+      "p_value": 1.0
+    },
+    {
+      "name": "relative error <= 5%",
+      "pre_release": [
+        6,
+        84
+      ],
+      "post_release_control": [
+        5,
+        58
+      ],
+      "p_value": 0.7589
+    },
+    {
+      "name": "revenue, relative error <= 10%",
+      "pre_release": [
+        12,
+        29
+      ],
+      "post_release_control": [
+        4,
+        20
+      ],
+      "p_value": 0.1362
+    },
+    {
+      "name": "net income, relative error <= 10%",
+      "pre_release": [
+        4,
+        29
+      ],
+      "post_release_control": [
+        1,
+        20
+      ],
+      "p_value": 0.6359
+    },
+    {
+      "name": "diluted EPS, relative error <= 10%",
+      "pre_release": [
+        3,
+        26
+      ],
+      "post_release_control": [
+        3,
+        18
+      ],
+      "p_value": 0.676
+    }
+  ],
+  "median_relative_error": {
+    "pre_release": 0.3028,
+    "post_release": 0.3449
+  }
+}

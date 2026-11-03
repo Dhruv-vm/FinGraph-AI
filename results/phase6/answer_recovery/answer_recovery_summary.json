@@ -1,0 +1,243 @@
+{
+  "timestamp": "2026-10-30T07:53:04.131060+00:00",
+  "total_questions": 64,
+  "answerable_questions": 50,
+  "unanswerable_questions": 14,
+  "systems": {
+    "B1_Dense_Vector_Baseline": {
+      "decision_accuracy": 0.7031,
+      "refusal_recall": 0.6429,
+      "hallucinations_total": 5,
+      "cross_company_misattributions": 1,
+      "feir_context": 0.0,
+      "feir_cited": 0.0,
+      "false_refusals": 14,
+      "correct_answers_attempted": 36,
+      "correct_refusals": 9,
+      "answerable_token_f1": 0.2059,
+      "answerable_exact_match": 0.0,
+      "mean_latency_seconds": 18.8
+    },
+    "FinGraph_AI_K5": {
+      "decision_accuracy": 0.8281,
+      "refusal_recall": 1.0,
+      "hallucinations_total": 0,
+      "cross_company_misattributions": 0,
+      "feir_context": 0.0,
+      "feir_cited": 0.0,
+      "false_refusals": 11,
+      "correct_answers_attempted": 39,
+      "correct_refusals": 14,
+      "answerable_token_f1": 0.2911,
+      "answerable_exact_match": 0.02,
+      "mean_latency_seconds": 17.739
+    },
+    "FinGraph_AI_K8": {
+      "decision_accuracy": 0.8594,
+      "refusal_recall": 1.0,
+      "hallucinations_total": 0,
+      "cross_company_misattributions": 0,
+      "feir_context": 0.0,
+      "feir_cited": 0.0,
+      "false_refusals": 9,
+      "correct_answers_attempted": 41,
+      "correct_refusals": 14,
+      "answerable_token_f1": 0.2922,
+      "answerable_exact_match": 0.02,
+      "mean_latency_seconds": 18.609
+    }
+  },
+  "retrieval": {
+    "B1_dense": {
+      "total_questions": 64,
+      "evaluated_questions": 50,
+      "mean_hit_at_k": {
+        "1": 0.06,
+        "3": 0.1,
+        "5": 0.14,
+        "10": 0.14
+      },
+      "mean_precision_at_k": {
+        "1": 0.06,
+        "3": 0.0333,
+        "5": 0.032,
+        "10": 0.016
+      },
+      "mean_recall_at_k": {
+        "1": 0.012,
+        "3": 0.0227,
+        "5": 0.0347,
+        "10": 0.0347
+      },
+      "mean_mrr": 0.0847,
+      "mean_ndcg_at_k": {
+        "1": 0.06,
+        "3": 0.0388,
+        "5": 0.0375,
+        "10": 0.0375
+      },
+      "mean_doc_hit_at_k": {
+        "1": 0.48,
+        "3": 0.72,
+        "5": 0.74,
+        "10": 0.74
+      },
+      "mean_doc_recall_at_k": {
+        "1": 0.1101,
+        "3": 0.2697,
+        "5": 0.3501,
+        "10": 0.3501
+      },
+      "multi_hop_path_accuracy": 0.0,
+      "cross_doc_coverage": 0.3929
+    },
+    "FinGraph_hybrid_graph": {
+      "total_questions": 64,
+      "evaluated_questions": 50,
+      "mean_hit_at_k": {
+        "1": 0.1,
+        "3": 0.24,
+        "5": 0.26,
+        "10": 0.3
+      },
+      "mean_precision_at_k": {
+        "1": 0.1,
+        "3": 0.0867,
+        "5": 0.068,
+        "10": 0.044
+      },
+      "mean_recall_at_k": {
+        "1": 0.0227,
+        "3": 0.0583,
+        "5": 0.0753,
+        "10": 0.098
+      },
+      "mean_mrr": 0.1718,
+      "mean_ndcg_at_k": {
+        "1": 0.1,
+        "3": 0.0906,
+        "5": 0.0812,
+        "10": 0.0928
+      },
+      "mean_doc_hit_at_k": {
+        "1": 0.56,
+        "3": 0.66,
+        "5": 0.78,
+        "10": 0.78
+      },
+      "mean_doc_recall_at_k": {
+        "1": 0.1194,
+        "3": 0.2663,
+        "5": 0.4574,
+        "10": 0.489
+      },
+      "multi_hop_path_accuracy": 0.1818,
+      "cross_doc_coverage": 0.572
+    }
+  },
+  "leakage_audit": {
+    "retriever_feir": 0.0,
+    "parametric_plr": 0.8,
+    "feir_stage_metrics": {
+      "feir_pre_filter": null,
+      "feir_post_filter": 0.0,
+      "feir_context": 0.0,
+      "feir_cited": 0.0,
+      "gate_rejections": 0,
+      "total_pre_filter_items": 0,
+      "total_post_filter_items": 130,
+      "total_context_items": 104,
+      "total_cited_items": 40
+    },
+    "plr_candidate_positives": 0,
+    "plr_manually_verified": 4,
+    "plr_confirmed_non_leakage": 1,
+    "plr_uncertain": 0,
+    "plr_total_probes": 5,
+    "details": {
+      "plr_results": [
+        {
+          "question_id": "PLR-01",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": true,
+          "evidence_of_future_information": "Manually verified future fact presence: Blackwell B200",
+          "verification_method": "manual",
+          "future_event_date": "2024-03-18",
+          "parametric_leakage_detected": true,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "hardware_roadmap",
+            "company": "NVDA"
+          }
+        },
+        {
+          "question_id": "PLR-02",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": true,
+          "evidence_of_future_information": "Manually verified future fact presence: Rubin architecture",
+          "verification_method": "manual",
+          "future_event_date": "2024-06-02",
+          "parametric_leakage_detected": true,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "hardware_roadmap",
+            "company": "NVDA"
+          }
+        },
+        {
+          "question_id": "PLR-03",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": false,
+          "evidence_of_future_information": "Manually verified future fact presence: Run:ai acquisition completed",
+          "verification_method": "manual",
+          "future_event_date": "2024-04-24",
+          "parametric_leakage_detected": false,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "ma_acquisitions",
+            "company": "NVDA",
+            "note": "False positive in heuristic detector"
+          }
+        },
+        {
+          "question_id": "PLR-04",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": true,
+          "evidence_of_future_information": "Manually verified future fact presence: Gemini 1.5 Pro",
+          "verification_method": "manual",
+          "future_event_date": "2024-02-15",
+          "parametric_leakage_detected": true,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "model_release",
+            "company": "GOOGL"
+          }
+        },
+        {
+          "question_id": "PLR-05",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": true,
+          "evidence_of_future_information": "Manually verified future fact presence: Cybercab Robotaxi",
+          "verification_method": "manual",
+          "future_event_date": "2024-10-10",
+          "parametric_leakage_detected": true,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "vehicle_launch",
+            "company": "TSLA"
+          }
+        }
+      ]
+    }
+  }
+}

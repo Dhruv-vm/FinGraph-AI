@@ -1,5 +1,7 @@
 # FinGraph AI Evaluation Plan
 
+> **Note:** For the completed, canonical Phase 5 empirical benchmark results, ablation tables (CFG0–CFG5), and compound-chain audit, refer to [EVALUATION.md](EVALUATION.md).
+
 ## Research Evaluation Framework
 
 This document outlines the rigorous evaluation methodology for the research paper:

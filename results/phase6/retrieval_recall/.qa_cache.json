@@ -1,0 +1,1706 @@
+{
+  "CDC-01:POOL_20_DEFAULT": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 0.07136883299972396,
+    "sufficient": false
+  },
+  "CDC-01:POOL_25_EXPANDED": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 0.06915099999605445,
+    "sufficient": false
+  },
+  "CDC-01:POOL_50_DEEP": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 0.07431933299812954,
+    "sufficient": false
+  },
+  "CDC-02:POOL_20_DEFAULT": {
+    "answer": "The provided evidence does not contain information describing how Microsoft or Amazon characterize their competition in cloud services within SEC filings; it only lists general competitive relationships between these companies and others.",
+    "confidence": 0.5,
+    "citations": [
+      {
+        "evidence_id": "graph:edge:company:MSFT->COMPETES_WITH->company:AMZN:e1670cbcc34c9aa5",
+        "document_id": "doc:sec:98d8cee8a8ae0f7d",
+        "chunk_id": "doc:sec:98d8cee8a8ae0f7d:chunk:25",
+        "available_time": "2026-02-25T21:42:19+00:00",
+        "source_type": "graph",
+        "confidence": 0.85,
+        "text_snippet": "Microsoft --[COMPETES_WITH]--> Amazon.com, Inc. (as of 2026-02-25)"
+      },
+      {
+        "evidence_id": "graph:edge:company:GOOGL->COMPETES_WITH->company:AMZN:296b3f8689395f68",
+        "document_id": "doc:sec:98d8cee8a8ae0f7d",
+        "chunk_id": "doc:sec:98d8cee8a8ae0f7d:chunk:26",
+        "available_time": "2026-02-25T21:42:19+00:00",
+        "source_type": "graph",
+        "confidence": 0.85,
+        "text_snippet": "Alphabet Inc. --[COMPETES_WITH]--> Amazon.com, Inc. (as of 2026-02-25)"
+      }
+    ],
+    "evidence_ids": [
+      "graph:edge:company:MSFT->COMPETES_WITH->company:AMZN:e1670cbcc34c9aa5",
+      "graph:edge:company:GOOGL->COMPETES_WITH->company:AMZN:296b3f8689395f68"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "graph:edge:company:MSFT->COMPETES_WITH->company:AMZN:e1670cbcc34c9aa5",
+        "graph:edge:company:GOOGL->COMPETES_WITH->company:AMZN:296b3f8689395f68"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 31.02163683300023,
+    "sufficient": true
+  },
+  "CDC-02:POOL_25_EXPANDED": {
+    "answer": "The provided evidence does not contain information describing how Microsoft or Amazon characterize their competition in cloud services within SEC filings; it only lists general competitive relationships between these companies and others.",
+    "confidence": 0.5,
+    "citations": [
+      {
+        "evidence_id": "graph:edge:company:MSFT->COMPETES_WITH->company:AMZN:e1670cbcc34c9aa5",
+        "document_id": "doc:sec:98d8cee8a8ae0f7d",
+        "chunk_id": "doc:sec:98d8cee8a8ae0f7d:chunk:25",
+        "available_time": "2026-02-25T21:42:19+00:00",
+        "source_type": "graph",
+        "confidence": 0.85,
+        "text_snippet": "Microsoft --[COMPETES_WITH]--> Amazon.com, Inc. (as of 2026-02-25)"
+      },
+      {
+        "evidence_id": "graph:edge:company:GOOGL->COMPETES_WITH->company:AMZN:296b3f8689395f68",
+        "document_id": "doc:sec:98d8cee8a8ae0f7d",
+        "chunk_id": "doc:sec:98d8cee8a8ae0f7d:chunk:26",
+        "available_time": "2026-02-25T21:42:19+00:00",
+        "source_type": "graph",
+        "confidence": 0.85,
+        "text_snippet": "Alphabet Inc. --[COMPETES_WITH]--> Amazon.com, Inc. (as of 2026-02-25)"
+      }
+    ],
+    "evidence_ids": [
+      "graph:edge:company:MSFT->COMPETES_WITH->company:AMZN:e1670cbcc34c9aa5",
+      "graph:edge:company:GOOGL->COMPETES_WITH->company:AMZN:296b3f8689395f68"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "graph:edge:company:MSFT->COMPETES_WITH->company:AMZN:e1670cbcc34c9aa5",
+        "graph:edge:company:GOOGL->COMPETES_WITH->company:AMZN:296b3f8689395f68"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 14.118101334002858,
+    "sufficient": true
+  },
+  "CDC-02:POOL_50_DEEP": {
+    "answer": "The provided evidence does not contain information describing how Microsoft or Amazon characterize their competition in cloud services within SEC filings; it only lists general competitive relationships between these companies and others.",
+    "confidence": 0.5,
+    "citations": [
+      {
+        "evidence_id": "graph:edge:company:MSFT->COMPETES_WITH->company:AMZN:e1670cbcc34c9aa5",
+        "document_id": "doc:sec:98d8cee8a8ae0f7d",
+        "chunk_id": "doc:sec:98d8cee8a8ae0f7d:chunk:25",
+        "available_time": "2026-02-25T21:42:19+00:00",
+        "source_type": "graph",
+        "confidence": 0.85,
+        "text_snippet": "Microsoft --[COMPETES_WITH]--> Amazon.com, Inc. (as of 2026-02-25)"
+      },
+      {
+        "evidence_id": "graph:edge:company:GOOGL->COMPETES_WITH->company:AMZN:296b3f8689395f68",
+        "document_id": "doc:sec:98d8cee8a8ae0f7d",
+        "chunk_id": "doc:sec:98d8cee8a8ae0f7d:chunk:26",
+        "available_time": "2026-02-25T21:42:19+00:00",
+        "source_type": "graph",
+        "confidence": 0.85,
+        "text_snippet": "Alphabet Inc. --[COMPETES_WITH]--> Amazon.com, Inc. (as of 2026-02-25)"
+      }
+    ],
+    "evidence_ids": [
+      "graph:edge:company:MSFT->COMPETES_WITH->company:AMZN:e1670cbcc34c9aa5",
+      "graph:edge:company:GOOGL->COMPETES_WITH->company:AMZN:296b3f8689395f68"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "graph:edge:company:MSFT->COMPETES_WITH->company:AMZN:e1670cbcc34c9aa5",
+        "graph:edge:company:GOOGL->COMPETES_WITH->company:AMZN:296b3f8689395f68"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 13.289361083996482,
+    "sufficient": true
+  },
+  "CDC-11:POOL_20_DEFAULT": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 18.13533170899609,
+    "sufficient": true
+  },
+  "CDC-11:POOL_25_EXPANDED": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 18.322496958004194,
+    "sufficient": true
+  },
+  "CDC-11:POOL_50_DEEP": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 18.29940912500024,
+    "sufficient": true
+  },
+  "FSH-01:POOL_20_DEFAULT": {
+    "answer": "According to the filings, Apple manufactures iPhone, iOS, iPad, and Mac.",
+    "confidence": 0.99,
+    "citations": [
+      {
+        "evidence_id": "graph:edge:company:AAPL->MANUFACTURES->product:418d4c63af2544ad:6d541bbcac7edcd3",
+        "document_id": "doc:sec:e0ba72210ca7deb2",
+        "chunk_id": "doc:sec:e0ba72210ca7deb2:chunk:70",
+        "available_time": "2025-10-31T10:01:26+00:00",
+        "source_type": "graph",
+        "confidence": 0.99,
+        "text_snippet": "Apple Inc. --[MANUFACTURES]--> iPhone (as of 2025-10-31)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->MANUFACTURES->product:d874dc1707b398c8:ecefc2e6c785bf3b",
+        "document_id": "doc:sec:7a93e4a643b9ddb1",
+        "chunk_id": "doc:sec:7a93e4a643b9ddb1:chunk:59",
+        "available_time": "2025-07-31T00:02:12+00:00",
+        "source_type": "graph",
+        "confidence": 0.99,
+        "text_snippet": "Apple Inc. --[MANUFACTURES]--> iOS (as of 2025-07-31)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->MANUFACTURES->product:f46dde9e58541ec3:5610b32674649a57",
+        "document_id": "doc:sec:e0ba72210ca7deb2",
+        "chunk_id": "doc:sec:e0ba72210ca7deb2:chunk:70",
+        "available_time": "2025-10-31T10:01:26+00:00",
+        "source_type": "graph",
+        "confidence": 0.99,
+        "text_snippet": "Apple Inc. --[MANUFACTURES]--> iPad (as of 2025-10-31)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->MANUFACTURES->product:f54cd7e7026dfd0a:1ffc2b3569d6d84a",
+        "document_id": "doc:sec:e0ba72210ca7deb2",
+        "chunk_id": "doc:sec:e0ba72210ca7deb2:chunk:70",
+        "available_time": "2025-10-31T10:01:26+00:00",
+        "source_type": "graph",
+        "confidence": 0.99,
+        "text_snippet": "Apple Inc. --[MANUFACTURES]--> Mac (as of 2025-10-31)"
+      }
+    ],
+    "evidence_ids": [
+      "graph:edge:company:AAPL->MANUFACTURES->product:418d4c63af2544ad:6d541bbcac7edcd3",
+      "graph:edge:company:AAPL->MANUFACTURES->product:d874dc1707b398c8:ecefc2e6c785bf3b",
+      "graph:edge:company:AAPL->MANUFACTURES->product:f46dde9e58541ec3:5610b32674649a57",
+      "graph:edge:company:AAPL->MANUFACTURES->product:f54cd7e7026dfd0a:1ffc2b3569d6d84a"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "graph:edge:company:AAPL->MANUFACTURES->product:418d4c63af2544ad:6d541bbcac7edcd3",
+        "graph:edge:company:AAPL->MANUFACTURES->product:d874dc1707b398c8:ecefc2e6c785bf3b",
+        "graph:edge:company:AAPL->MANUFACTURES->product:f46dde9e58541ec3:5610b32674649a57",
+        "graph:edge:company:AAPL->MANUFACTURES->product:f54cd7e7026dfd0a:1ffc2b3569d6d84a"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 32.36284850000084,
+    "sufficient": true
+  },
+  "FSH-01:POOL_25_EXPANDED": {
+    "answer": "According to the filings, Apple manufactures iPhone, iOS, iPad, and Mac.",
+    "confidence": 0.99,
+    "citations": [
+      {
+        "evidence_id": "graph:edge:company:AAPL->MANUFACTURES->product:418d4c63af2544ad:6d541bbcac7edcd3",
+        "document_id": "doc:sec:e0ba72210ca7deb2",
+        "chunk_id": "doc:sec:e0ba72210ca7deb2:chunk:70",
+        "available_time": "2025-10-31T10:01:26+00:00",
+        "source_type": "graph",
+        "confidence": 0.99,
+        "text_snippet": "Apple Inc. --[MANUFACTURES]--> iPhone (as of 2025-10-31)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->MANUFACTURES->product:d874dc1707b398c8:ecefc2e6c785bf3b",
+        "document_id": "doc:sec:7a93e4a643b9ddb1",
+        "chunk_id": "doc:sec:7a93e4a643b9ddb1:chunk:59",
+        "available_time": "2025-07-31T00:02:12+00:00",
+        "source_type": "graph",
+        "confidence": 0.99,
+        "text_snippet": "Apple Inc. --[MANUFACTURES]--> iOS (as of 2025-07-31)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->MANUFACTURES->product:f46dde9e58541ec3:5610b32674649a57",
+        "document_id": "doc:sec:e0ba72210ca7deb2",
+        "chunk_id": "doc:sec:e0ba72210ca7deb2:chunk:70",
+        "available_time": "2025-10-31T10:01:26+00:00",
+        "source_type": "graph",
+        "confidence": 0.99,
+        "text_snippet": "Apple Inc. --[MANUFACTURES]--> iPad (as of 2025-10-31)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->MANUFACTURES->product:f54cd7e7026dfd0a:1ffc2b3569d6d84a",
+        "document_id": "doc:sec:e0ba72210ca7deb2",
+        "chunk_id": "doc:sec:e0ba72210ca7deb2:chunk:70",
+        "available_time": "2025-10-31T10:01:26+00:00",
+        "source_type": "graph",
+        "confidence": 0.99,
+        "text_snippet": "Apple Inc. --[MANUFACTURES]--> Mac (as of 2025-10-31)"
+      }
+    ],
+    "evidence_ids": [
+      "graph:edge:company:AAPL->MANUFACTURES->product:418d4c63af2544ad:6d541bbcac7edcd3",
+      "graph:edge:company:AAPL->MANUFACTURES->product:d874dc1707b398c8:ecefc2e6c785bf3b",
+      "graph:edge:company:AAPL->MANUFACTURES->product:f46dde9e58541ec3:5610b32674649a57",
+      "graph:edge:company:AAPL->MANUFACTURES->product:f54cd7e7026dfd0a:1ffc2b3569d6d84a"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "graph:edge:company:AAPL->MANUFACTURES->product:418d4c63af2544ad:6d541bbcac7edcd3",
+        "graph:edge:company:AAPL->MANUFACTURES->product:d874dc1707b398c8:ecefc2e6c785bf3b",
+        "graph:edge:company:AAPL->MANUFACTURES->product:f46dde9e58541ec3:5610b32674649a57",
+        "graph:edge:company:AAPL->MANUFACTURES->product:f54cd7e7026dfd0a:1ffc2b3569d6d84a"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 31.963387124997098,
+    "sufficient": true
+  },
+  "FSH-01:POOL_50_DEEP": {
+    "answer": "According to the filings, Apple manufactures iPhone, iPad, Mac, and iOS.",
+    "confidence": 0.99,
+    "citations": [
+      {
+        "evidence_id": "graph:edge:company:AAPL->MANUFACTURES->product:418d4c63af2544ad:6d541bbcac7edcd3",
+        "document_id": "doc:sec:e0ba72210ca7deb2",
+        "chunk_id": "doc:sec:e0ba72210ca7deb2:chunk:70",
+        "available_time": "2025-10-31T10:01:26+00:00",
+        "source_type": "graph",
+        "confidence": 0.99,
+        "text_snippet": "Apple Inc. --[MANUFACTURES]--> iPhone (as of 2025-10-31)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->MANUFACTURES->product:f46dde9e58541ec3:5610b32674649a57",
+        "document_id": "doc:sec:e0ba72210ca7deb2",
+        "chunk_id": "doc:sec:e0ba72210ca7deb2:chunk:70",
+        "available_time": "2025-10-31T10:01:26+00:00",
+        "source_type": "graph",
+        "confidence": 0.99,
+        "text_snippet": "Apple Inc. --[MANUFACTURES]--> iPad (as of 2025-10-31)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->MANUFACTURES->product:f54cd7e7026dfd0a:1ffc2b3569d6d84a",
+        "document_id": "doc:sec:e0ba72210ca7deb2",
+        "chunk_id": "doc:sec:e0ba72210ca7deb2:chunk:70",
+        "available_time": "2025-10-31T10:01:26+00:00",
+        "source_type": "graph",
+        "confidence": 0.99,
+        "text_snippet": "Apple Inc. --[MANUFACTURES]--> Mac (as of 2025-10-31)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->MANUFACTURES->product:d874dc1707b398c8:ecefc2e6c785bf3b",
+        "document_id": "doc:sec:7a93e4a643b9ddb1",
+        "chunk_id": "doc:sec:7a93e4a643b9ddb1:chunk:59",
+        "available_time": "2025-07-31T00:02:12+00:00",
+        "source_type": "graph",
+        "confidence": 0.99,
+        "text_snippet": "Apple Inc. --[MANUFACTURES]--> iOS (as of 2025-07-31)"
+      }
+    ],
+    "evidence_ids": [
+      "graph:edge:company:AAPL->MANUFACTURES->product:418d4c63af2544ad:6d541bbcac7edcd3",
+      "graph:edge:company:AAPL->MANUFACTURES->product:f46dde9e58541ec3:5610b32674649a57",
+      "graph:edge:company:AAPL->MANUFACTURES->product:f54cd7e7026dfd0a:1ffc2b3569d6d84a",
+      "graph:edge:company:AAPL->MANUFACTURES->product:d874dc1707b398c8:ecefc2e6c785bf3b"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "graph:edge:company:AAPL->MANUFACTURES->product:418d4c63af2544ad:6d541bbcac7edcd3",
+        "graph:edge:company:AAPL->MANUFACTURES->product:f46dde9e58541ec3:5610b32674649a57",
+        "graph:edge:company:AAPL->MANUFACTURES->product:f54cd7e7026dfd0a:1ffc2b3569d6d84a",
+        "graph:edge:company:AAPL->MANUFACTURES->product:d874dc1707b398c8:ecefc2e6c785bf3b"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 33.33266979199834,
+    "sufficient": true
+  },
+  "FSH-02:POOL_20_DEFAULT": {
+    "answer": "Microsoft provides Microsoft 365 Consumer products and cloud services, including subscriptions and Office licensed on-premises, alongside server products and cloud services.",
+    "confidence": 0.95,
+    "citations": [
+      {
+        "evidence_id": "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:10",
+        "document_id": "doc:sec:6a50d47d6a8dc43d",
+        "chunk_id": "doc:sec:6a50d47d6a8dc43d:chunk:10",
+        "available_time": "2026-07-29T20:08:01+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.98,
+        "text_snippet": "ndows Commercial on-premises and Office licensed on-premises. \u2022 Microsoft 365 Consumer products and cloud services, including Microsoft 365 Consumer s"
+      },
+      {
+        "evidence_id": "hybrid:doc:sec:076412151b515b96:chunk:62",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:62",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.95,
+        "text_snippet": "44 million or 3% driven by investments in cloud and AI engineering and commercial sales. Intelligent Cloud Revenue increased $12.7 billion or 20%. \u2022 S"
+      }
+    ],
+    "evidence_ids": [
+      "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:10",
+      "hybrid:doc:sec:076412151b515b96:chunk:62"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:10",
+        "hybrid:doc:sec:076412151b515b96:chunk:62"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 26.075323874996684,
+    "sufficient": true
+  },
+  "FSH-02:POOL_25_EXPANDED": {
+    "answer": "Microsoft provides cloud services and server products including Microsoft 365 Consumer subscriptions, Office licensed on-premises, Intelligent Cloud revenue streams, and Server products.",
+    "confidence": 0.95,
+    "citations": [
+      {
+        "evidence_id": "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:10",
+        "document_id": "doc:sec:6a50d47d6a8dc43d",
+        "chunk_id": "doc:sec:6a50d47d6a8dc43d:chunk:10",
+        "available_time": "2026-07-29T20:08:01+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.98,
+        "text_snippet": "ndows Commercial on-premises and Office licensed on-premises. \u2022 Microsoft 365 Consumer products and cloud services, including Microsoft 365 Consumer s"
+      },
+      {
+        "evidence_id": "hybrid:doc:sec:076412151b515b96:chunk:62",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:62",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.95,
+        "text_snippet": "44 million or 3% driven by investments in cloud and AI engineering and commercial sales. Intelligent Cloud Revenue increased $12.7 billion or 20%. \u2022 S"
+      }
+    ],
+    "evidence_ids": [
+      "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:10",
+      "hybrid:doc:sec:076412151b515b96:chunk:62"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:10",
+        "hybrid:doc:sec:076412151b515b96:chunk:62"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 25.158939583001484,
+    "sufficient": true
+  },
+  "FSH-02:POOL_50_DEEP": {
+    "answer": "Microsoft provides cloud services and server products including Microsoft 365 Consumer subscriptions, Office licensed on-premises, Intelligent Cloud revenue streams, and Server products sold through volume licensing programs.",
+    "confidence": 0.95,
+    "citations": [
+      {
+        "evidence_id": "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:15",
+        "document_id": "doc:sec:6a50d47d6a8dc43d",
+        "chunk_id": "doc:sec:6a50d47d6a8dc43d:chunk:15",
+        "available_time": "2026-07-29T20:08:01+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.95,
+        "text_snippet": "developers, testers, and project managers. Server products revenue is mainly affected by purchases through volume licensing programs, licenses sold to"
+      },
+      {
+        "evidence_id": "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:185",
+        "document_id": "doc:sec:6a50d47d6a8dc43d",
+        "chunk_id": "doc:sec:6a50d47d6a8dc43d:chunk:185",
+        "available_time": "2026-07-29T20:08:01+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.95,
+        "text_snippet": "United States (a) $ 170,794 $ 144,546 $ 124,704 Other countries 161,045 137,178 120,418 Total $ 331,839 $ 281,724 $ 245,122 (a) Includes billings to O"
+      },
+      {
+        "evidence_id": "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:10",
+        "document_id": "doc:sec:6a50d47d6a8dc43d",
+        "chunk_id": "doc:sec:6a50d47d6a8dc43d:chunk:10",
+        "available_time": "2026-07-29T20:08:01+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.98,
+        "text_snippet": "ndows Commercial on-premises and Office licensed on-premises. \u2022 Microsoft 365 Consumer products and cloud services, including Microsoft 365 Consumer s"
+      },
+      {
+        "evidence_id": "hybrid:doc:sec:e312824081333ffd:chunk:60",
+        "document_id": "doc:sec:e312824081333ffd",
+        "chunk_id": "doc:sec:e312824081333ffd:chunk:60",
+        "available_time": "2026-01-28T21:07:34+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.96,
+        "text_snippet": "sed driven by efficiency gains in Microsoft 365 Commercial cloud even with the impact of investments in AI infrastructure and growing AI product usage"
+      },
+      {
+        "evidence_id": "hybrid:doc:sec:076412151b515b96:chunk:62",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:62",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.95,
+        "text_snippet": "44 million or 3% driven by investments in cloud and AI engineering and commercial sales. Intelligent Cloud Revenue increased $12.7 billion or 20%. \u2022 S"
+      }
+    ],
+    "evidence_ids": [
+      "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:15",
+      "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:185",
+      "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:10",
+      "hybrid:doc:sec:e312824081333ffd:chunk:60",
+      "hybrid:doc:sec:076412151b515b96:chunk:62"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:15",
+        "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:185",
+        "hybrid:doc:sec:6a50d47d6a8dc43d:chunk:10",
+        "hybrid:doc:sec:e312824081333ffd:chunk:60",
+        "hybrid:doc:sec:076412151b515b96:chunk:62"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 30.826939708000282,
+    "sufficient": true
+  },
+  "FSH-12:POOL_20_DEFAULT": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 2.0885188750035013,
+    "sufficient": false
+  },
+  "FSH-12:POOL_25_EXPANDED": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 0.41295933299988974,
+    "sufficient": false
+  },
+  "FSH-12:POOL_50_DEEP": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 0.46583516700047767,
+    "sufficient": false
+  },
+  "RMH-01:POOL_20_DEFAULT": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 0.17912108299788088,
+    "sufficient": false
+  },
+  "RMH-01:POOL_25_EXPANDED": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 1.5574580829998013,
+    "sufficient": false
+  },
+  "RMH-01:POOL_50_DEEP": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 0.08108233300299617,
+    "sufficient": false
+  },
+  "RMH-02:POOL_20_DEFAULT": {
+    "answer": "NVIDIA depends on USG, TSMC, Meta Platforms, Inc., Instagram, shipping companies, Micron, and PricewaterhouseCoopers LLP. The evidence does not identify a specific regulatory body that restricts NVIDIA's exports to these companies.",
+    "confidence": 0.85,
+    "citations": [
+      {
+        "evidence_id": "graph:edge:company:7b03e97b8bc2db6c->SUPPLIES->company:NVDA:a34c62fca3af05b5",
+        "document_id": "doc:sec:7715829946225165",
+        "chunk_id": "doc:sec:7715829946225165:chunk:3",
+        "available_time": "2026-06-30T20:27:26+00:00",
+        "source_type": "graph",
+        "confidence": 0.95,
+        "text_snippet": "PricewaterhouseCoopers LLP --[SUPPLIES]--> NVIDIA Corporation (as of 2026-06-30)"
+      },
+      {
+        "evidence_id": "graph:edge:company:NVDA->DEPENDS_ON->company:929c41dfd7756c6b:2a533983d8e1d801",
+        "document_id": "doc:sec:878a73f0f4488fc2",
+        "chunk_id": "doc:sec:878a73f0f4488fc2:chunk:77",
+        "available_time": "2026-05-20T20:35:52+00:00",
+        "source_type": "graph",
+        "confidence": 0.94,
+        "text_snippet": "NVIDIA Corporation --[DEPENDS_ON]--> USG (as of 2026-05-20)"
+      },
+      {
+        "evidence_id": "graph:edge:company:NVDA->DEPENDS_ON->company:929c41dfd7756c6b:8c8552a7bcfe1cfd",
+        "document_id": "doc:sec:1ad2e96011122307",
+        "chunk_id": "doc:sec:1ad2e96011122307:chunk:83",
+        "available_time": "2026-08-26T20:36:00+00:00",
+        "source_type": "graph",
+        "confidence": 0.94,
+        "text_snippet": "NVIDIA Corporation --[DEPENDS_ON]--> USG (as of 2026-08-26)"
+      },
+      {
+        "evidence_id": "graph:edge:company:18f73e37e5317278->SUPPLIES->company:NVDA:2ecec3a3d5387b40",
+        "document_id": "doc:sec:6aadaca6341c317e",
+        "chunk_id": "doc:sec:6aadaca6341c317e:chunk:80",
+        "available_time": "2025-08-27T20:52:07+00:00",
+        "source_type": "graph",
+        "confidence": 0.9,
+        "text_snippet": "Micron --[SUPPLIES]--> NVIDIA Corporation (as of 2025-08-27)"
+      },
+      {
+        "evidence_id": "graph:edge:company:NVDA->DEPENDS_ON->company:494b2cd849b21750:cdca3e4be9b38f03",
+        "document_id": "doc:sec:88b6e7c0b3278b5e",
+        "chunk_id": "doc:sec:88b6e7c0b3278b5e:chunk:91",
+        "available_time": "2025-10-30T22:18:21+00:00",
+        "source_type": "graph",
+        "confidence": 0.9,
+        "text_snippet": "NVIDIA Corporation --[DEPENDS_ON]--> shipping companies (as of 2025-10-30)"
+      },
+      {
+        "evidence_id": "graph:edge:company:NVDA->DEPENDS_ON->company:55678c5a0f01cc67:08590a3b041518d2",
+        "document_id": "doc:sec:7a93e4a643b9ddb1",
+        "chunk_id": "doc:sec:7a93e4a643b9ddb1:chunk:57",
+        "available_time": "2025-07-31T00:02:12+00:00",
+        "source_type": "graph",
+        "confidence": 0.9,
+        "text_snippet": "NVIDIA Corporation --[DEPENDS_ON]--> Instagram (as of 2025-07-31)"
+      },
+      {
+        "evidence_id": "graph:edge:company:NVDA->DEPENDS_ON->company:994327452d331cd6:1f7f509de154a06d",
+        "document_id": "doc:sec:98d8cee8a8ae0f7d",
+        "chunk_id": "doc:sec:98d8cee8a8ae0f7d:chunk:52",
+        "available_time": "2026-02-25T21:42:19+00:00",
+        "source_type": "graph",
+        "confidence": 0.9,
+        "text_snippet": "NVIDIA Corporation --[DEPENDS_ON]--> TSMC (as of 2026-02-25)"
+      },
+      {
+        "evidence_id": "graph:edge:company:NVDA->DEPENDS_ON->company:META:715433e0a7dc734c",
+        "document_id": "doc:sec:7a93e4a643b9ddb1",
+        "chunk_id": "doc:sec:7a93e4a643b9ddb1:chunk:57",
+        "available_time": "2025-07-31T00:02:12+00:00",
+        "source_type": "graph",
+        "confidence": 0.9,
+        "text_snippet": "NVIDIA Corporation --[DEPENDS_ON]--> Meta Platforms, Inc. (as of 2025-07-31)"
+      }
+    ],
+    "evidence_ids": [
+      "graph:edge:company:7b03e97b8bc2db6c->SUPPLIES->company:NVDA:a34c62fca3af05b5",
+      "graph:edge:company:NVDA->DEPENDS_ON->company:929c41dfd7756c6b:2a533983d8e1d801",
+      "graph:edge:company:NVDA->DEPENDS_ON->company:929c41dfd7756c6b:8c8552a7bcfe1cfd",
+      "graph:edge:company:18f73e37e5317278->SUPPLIES->company:NVDA:2ecec3a3d5387b40",
+      "graph:edge:company:NVDA->DEPENDS_ON->company:494b2cd849b21750:cdca3e4be9b38f03",
+      "graph:edge:company:NVDA->DEPENDS_ON->company:55678c5a0f01cc67:08590a3b041518d2",
+      "graph:edge:company:NVDA->DEPENDS_ON->company:994327452d331cd6:1f7f509de154a06d",
+      "graph:edge:company:NVDA->DEPENDS_ON->company:META:715433e0a7dc734c"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "graph:edge:company:7b03e97b8bc2db6c->SUPPLIES->company:NVDA:a34c62fca3af05b5",
+        "graph:edge:company:NVDA->DEPENDS_ON->company:929c41dfd7756c6b:2a533983d8e1d801",
+        "graph:edge:company:NVDA->DEPENDS_ON->company:929c41dfd7756c6b:8c8552a7bcfe1cfd",
+        "graph:edge:company:18f73e37e5317278->SUPPLIES->company:NVDA:2ecec3a3d5387b40",
+        "graph:edge:company:NVDA->DEPENDS_ON->company:494b2cd849b21750:cdca3e4be9b38f03",
+        "graph:edge:company:NVDA->DEPENDS_ON->company:55678c5a0f01cc67:08590a3b041518d2",
+        "graph:edge:company:NVDA->DEPENDS_ON->company:994327452d331cd6:1f7f509de154a06d",
+        "graph:edge:company:NVDA->DEPENDS_ON->company:META:715433e0a7dc734c"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 46.65377908300434,
+    "sufficient": true
+  },
+  "RMH-02:POOL_25_EXPANDED": {
+    "answer": "NVIDIA depends on USG, shipping companies, TSMC, Meta Platforms, Inc., Instagram, and Micron for supplies. The evidence does not identify a specific regulatory body that restricts these exports.",
+    "confidence": 0.85,
+    "citations": [
+      {
+        "evidence_id": "graph:edge:company:NVDA->DEPENDS_ON->company:929c41dfd7756c6b:2a533983d8e1d801",
+        "document_id": "doc:sec:878a73f0f4488fc2",
+        "chunk_id": "doc:sec:878a73f0f4488fc2:chunk:77",
+        "available_time": "2026-05-20T20:35:52+00:00",
+        "source_type": "graph",
+        "confidence": 0.94,
+        "text_snippet": "NVIDIA Corporation --[DEPENDS_ON]--> USG (as of 2026-05-20)"
+      },
+      {
+        "evidence_id": "graph:edge:company:NVDA->DEPENDS_ON->company:494b2cd849b21750:cdca3e4be9b38f03",
+        "document_id": "doc:sec:88b6e7c0b3278b5e",
+        "chunk_id": "doc:sec:88b6e7c0b3278b5e:chunk:91",
+        "available_time": "2025-10-30T22:18:21+00:00",
+        "source_type": "graph",
+        "confidence": 0.9,
+        "text_snippet": "NVIDIA Corporation --[DEPENDS_ON]--> shipping companies (as of 2025-10-30)"
+      },
+      {
+        "evidence_id": "graph:edge:company:NVDA->DEPENDS_ON->company:994327452d331cd6:1f7f509de154a06d",
+        "document_id": "doc:sec:98d8cee8a8ae0f7d",
+        "chunk_id": "doc:sec:98d8cee8a8ae0f7d:chunk:52",
+        "available_time": "2026-02-25T21:42:19+00:00",
+        "source_type": "graph",
+        "confidence": 0.9,
+        "text_snippet": "NVIDIA Corporation --[DEPENDS_ON]--> TSMC (as of 2026-02-25)"
+      },
+      {
+        "evidence_id": "graph:edge:company:7b03e97b8bc2db6c->SUPPLIES->company:NVDA:a34c62fca3af05b5",
+        "document_id": "doc:sec:7715829946225165",
+        "chunk_id": "doc:sec:7715829946225165:chunk:3",
+        "available_time": "2026-06-30T20:27:26+00:00",
+        "source_type": "graph",
+        "confidence": 0.95,
+        "text_snippet": "PricewaterhouseCoopers LLP --[SUPPLIES]--> NVIDIA Corporation (as of 2026-06-30)"
+      }
+    ],
+    "evidence_ids": [
+      "graph:edge:company:NVDA->DEPENDS_ON->company:929c41dfd7756c6b:2a533983d8e1d801",
+      "graph:edge:company:NVDA->DEPENDS_ON->company:494b2cd849b21750:cdca3e4be9b38f03",
+      "graph:edge:company:NVDA->DEPENDS_ON->company:994327452d331cd6:1f7f509de154a06d",
+      "graph:edge:company:META:715433e0a7dc734c->SUPPLIES->company:NVDA:2ecec3a3d5387b40",
+      "graph:edge:company:55678c5a0f01cc67:08590a3b041518d2->SUPPLIES->company:NVDA:a34c62fca3af05b5",
+      "graph:edge:company:7b03e97b8bc2db6c->SUPPLIES->company:NVDA:a34c62fca3af05b5"
+    ],
+    "validation_status": {
+      "is_valid": false,
+      "errors": [
+        "Unknown evidence IDs cited: ['graph:edge:company:META:715433e0a7dc734c->SUPPLIES->company:NVDA:2ecec3a3d5387b40', 'graph:edge:company:55678c5a0f01cc67:08590a3b041518d2->SUPPLIES->company:NVDA:a34c62fca3af05b5']"
+      ],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "graph:edge:company:NVDA->DEPENDS_ON->company:929c41dfd7756c6b:2a533983d8e1d801",
+        "graph:edge:company:NVDA->DEPENDS_ON->company:494b2cd849b21750:cdca3e4be9b38f03",
+        "graph:edge:company:NVDA->DEPENDS_ON->company:994327452d331cd6:1f7f509de154a06d",
+        "graph:edge:company:META:715433e0a7dc734c->SUPPLIES->company:NVDA:2ecec3a3d5387b40",
+        "graph:edge:company:55678c5a0f01cc67:08590a3b041518d2->SUPPLIES->company:NVDA:a34c62fca3af05b5",
+        "graph:edge:company:7b03e97b8bc2db6c->SUPPLIES->company:NVDA:a34c62fca3af05b5"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 44.620480083001894,
+    "sufficient": true
+  },
+  "RMH-02:POOL_50_DEEP": {
+    "answer": "NVIDIA depends on USG (United States Government) and shipping companies, with the USG being the regulatory body that restricts its exports.",
+    "confidence": 0.94,
+    "citations": [
+      {
+        "evidence_id": "hybrid:doc:sec:6aadaca6341c317e:chunk:80",
+        "document_id": "doc:sec:6aadaca6341c317e",
+        "chunk_id": "doc:sec:6aadaca6341c317e:chunk:80",
+        "available_time": "2025-08-27T20:52:07+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.9,
+        "text_snippet": "interpreted broadly, could impact our ability to develop and supply solutions for our automotive customers. The USG is also considering restrictions t"
+      },
+      {
+        "evidence_id": "graph:edge:company:NVDA->DEPENDS_ON->company:929c41dfd7756c6b:2a533983d8e1d801",
+        "document_id": "doc:sec:878a73f0f4488fc2",
+        "chunk_id": "doc:sec:878a73f0f4488fc2:chunk:77",
+        "available_time": "2026-05-20T20:35:52+00:00",
+        "source_type": "graph",
+        "confidence": 0.94,
+        "text_snippet": "NVIDIA Corporation --[DEPENDS_ON]--> USG (as of 2026-05-20)"
+      },
+      {
+        "evidence_id": "graph:edge:company:NVDA->DEPENDS_ON->company:494b2cd849b21750:cdca3e4be9b38f03",
+        "document_id": "doc:sec:88b6e7c0b3278b5e",
+        "chunk_id": "doc:sec:88b6e7c0b3278b5e:chunk:91",
+        "available_time": "2025-10-30T22:18:21+00:00",
+        "source_type": "graph",
+        "confidence": 0.9,
+        "text_snippet": "NVIDIA Corporation --[DEPENDS_ON]--> shipping companies (as of 2025-10-30)"
+      }
+    ],
+    "evidence_ids": [
+      "hybrid:doc:sec:6aadaca6341c317e:chunk:80",
+      "graph:edge:company:NVDA->DEPENDS_ON->company:929c41dfd7756c6b:2a533983d8e1d801",
+      "graph:edge:company:NVDA->DEPENDS_ON->company:494b2cd849b21750:cdca3e4be9b38f03"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "hybrid:doc:sec:6aadaca6341c317e:chunk:80",
+        "graph:edge:company:NVDA->DEPENDS_ON->company:929c41dfd7756c6b:2a533983d8e1d801",
+        "graph:edge:company:NVDA->DEPENDS_ON->company:494b2cd849b21750:cdca3e4be9b38f03"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 28.804909667000175,
+    "sufficient": true
+  },
+  "RMH-05:POOL_20_DEFAULT": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 1.117837249999866,
+    "sufficient": false
+  },
+  "RMH-05:POOL_25_EXPANDED": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 0.11844979200395755,
+    "sufficient": false
+  },
+  "RMH-05:POOL_50_DEEP": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 0.13685541699669557,
+    "sufficient": false
+  },
+  "RSH-01:POOL_20_DEFAULT": {
+    "answer": "Apple Inc. is identified as competing with Epic Games and Alphabet Inc. in its filings.",
+    "confidence": 0.92,
+    "citations": [
+      {
+        "evidence_id": "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:AAPL:e05337a7785ed938",
+        "document_id": "doc:sec:38008a9845a2c105",
+        "chunk_id": "doc:sec:38008a9845a2c105:chunk:36",
+        "available_time": "2026-07-31T10:01:02+00:00",
+        "source_type": "graph",
+        "confidence": 0.92,
+        "text_snippet": "Epic Games --[COMPETES_WITH]--> Apple Inc. (as of 2026-07-31)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689",
+        "document_id": "doc:sec:6b5300f8289ff6c0",
+        "chunk_id": "doc:sec:6b5300f8289ff6c0:chunk:69",
+        "available_time": "2026-07-29T22:58:51+00:00",
+        "source_type": "graph",
+        "confidence": 0.92,
+        "text_snippet": "Apple Inc. --[COMPETES_WITH]--> Alphabet Inc. (as of 2026-07-29)"
+      }
+    ],
+    "evidence_ids": [
+      "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:AAPL:e05337a7785ed938",
+      "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:AAPL:e05337a7785ed938",
+        "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 24.603541417003726,
+    "sufficient": true
+  },
+  "RSH-01:POOL_25_EXPANDED": {
+    "answer": "Apple Inc. is identified as competing with Epic Games and Alphabet Inc. in its filings.",
+    "confidence": 0.92,
+    "citations": [
+      {
+        "evidence_id": "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:AAPL:e05337a7785ed938",
+        "document_id": "doc:sec:38008a9845a2c105",
+        "chunk_id": "doc:sec:38008a9845a2c105:chunk:36",
+        "available_time": "2026-07-31T10:01:02+00:00",
+        "source_type": "graph",
+        "confidence": 0.92,
+        "text_snippet": "Epic Games --[COMPETES_WITH]--> Apple Inc. (as of 2026-07-31)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689",
+        "document_id": "doc:sec:6b5300f8289ff6c0",
+        "chunk_id": "doc:sec:6b5300f8289ff6c0:chunk:69",
+        "available_time": "2026-07-29T22:58:51+00:00",
+        "source_type": "graph",
+        "confidence": 0.92,
+        "text_snippet": "Apple Inc. --[COMPETES_WITH]--> Alphabet Inc. (as of 2026-07-29)"
+      }
+    ],
+    "evidence_ids": [
+      "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:AAPL:e05337a7785ed938",
+      "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:AAPL:e05337a7785ed938",
+        "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 25.69484633299726,
+    "sufficient": true
+  },
+  "RSH-01:POOL_50_DEEP": {
+    "answer": "Apple Inc. is identified as competing with Epic Games, Inc., Alphabet Inc., and non-practicing entities in the provided filings.",
+    "confidence": 0.92,
+    "citations": [
+      {
+        "evidence_id": "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:AAPL:e05337a7785ed938",
+        "document_id": "doc:sec:38008a9845a2c105",
+        "chunk_id": "doc:sec:38008a9845a2c105:chunk:36",
+        "available_time": "2026-07-31T10:01:02+00:00",
+        "source_type": "graph",
+        "confidence": 0.92,
+        "text_snippet": "Epic Games --[COMPETES_WITH]--> Apple Inc. (as of 2026-07-31)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689",
+        "document_id": "doc:sec:6b5300f8289ff6c0",
+        "chunk_id": "doc:sec:6b5300f8289ff6c0:chunk:69",
+        "available_time": "2026-07-29T22:58:51+00:00",
+        "source_type": "graph",
+        "confidence": 0.92,
+        "text_snippet": "Apple Inc. --[COMPETES_WITH]--> Alphabet Inc. (as of 2026-07-29)"
+      },
+      {
+        "evidence_id": "graph:edge:company:3387eeaa5027fa9a->COMPETES_WITH->company:AAPL:713d3205d3317d51",
+        "document_id": "doc:sec:904c980e058e122b",
+        "chunk_id": "doc:sec:904c980e058e122b:chunk:34",
+        "available_time": "2025-08-01T10:00:42+00:00",
+        "source_type": "graph",
+        "confidence": 0.85,
+        "text_snippet": "Epic Games, Inc. --[COMPETES_WITH]--> Apple Inc. (as of 2025-08-01)"
+      }
+    ],
+    "evidence_ids": [
+      "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:AAPL:e05337a7785ed938",
+      "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689",
+      "graph:edge:company:3387eeaa5027fa9a->COMPETES_WITH->company:AAPL:713d3205d3317d51"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:AAPL:e05337a7785ed938",
+        "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689",
+        "graph:edge:company:3387eeaa5027fa9a->COMPETES_WITH->company:AAPL:713d3205d3317d51"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 30.97735841699614,
+    "sufficient": true
+  },
+  "RSH-02:POOL_20_DEFAULT": {
+    "answer": "Based on the provided evidence, companies that compete with Alphabet Inc. include Epic Games and Apple Inc., while Amazon, Baidu, Huawei, and Microsoft are listed as competitors in a broader context but not specifically identified as competing in enterprise cloud or digital advertising.",
+    "confidence": 0.75,
+    "citations": [
+      {
+        "evidence_id": "hybrid:doc:sec:98d8cee8a8ae0f7d:chunk:26",
+        "document_id": "doc:sec:98d8cee8a8ae0f7d",
+        "chunk_id": "doc:sec:98d8cee8a8ae0f7d:chunk:26",
+        "available_time": "2026-02-25T21:42:19+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.85,
+        "text_snippet": "aba Group, Alphabet Inc., Amazon, Inc., or Amazon, Baidu, Inc., Huawei, and Microsoft Corporation, or Microsoft; \u2022 suppliers of Arm-based CPUs and com"
+      },
+      {
+        "evidence_id": "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:GOOGL:53ed585447f89701",
+        "document_id": "doc:sec:9360ae13391cbe52",
+        "chunk_id": "doc:sec:9360ae13391cbe52:chunk:48",
+        "available_time": "2025-10-30T01:55:01+00:00",
+        "source_type": "graph",
+        "confidence": 0.92,
+        "text_snippet": "Epic Games --[COMPETES_WITH]--> Alphabet Inc. (as of 2025-10-30)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689",
+        "document_id": "doc:sec:6b5300f8289ff6c0",
+        "chunk_id": "doc:sec:6b5300f8289ff6c0:chunk:69",
+        "available_time": "2026-07-29T22:58:51+00:00",
+        "source_type": "graph",
+        "confidence": 0.92,
+        "text_snippet": "Apple Inc. --[COMPETES_WITH]--> Alphabet Inc. (as of 2026-07-29)"
+      }
+    ],
+    "evidence_ids": [
+      "hybrid:doc:sec:98d8cee8a8ae0f7d:chunk:26",
+      "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:GOOGL:53ed585447f89701",
+      "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "hybrid:doc:sec:98d8cee8a8ae0f7d:chunk:26",
+        "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:GOOGL:53ed585447f89701",
+        "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 32.962585875000514,
+    "sufficient": true
+  },
+  "RSH-02:POOL_25_EXPANDED": {
+    "answer": "Based on the provided evidence, companies that compete with Alphabet Inc. include Epic Games and Apple Inc., while Amazon, Baidu, Huawei, and Microsoft are listed as competitors in a broader context but not specifically identified as competing in enterprise cloud or digital advertising.",
+    "confidence": 0.75,
+    "citations": [
+      {
+        "evidence_id": "hybrid:doc:sec:98d8cee8a8ae0f7d:chunk:26",
+        "document_id": "doc:sec:98d8cee8a8ae0f7d",
+        "chunk_id": "doc:sec:98d8cee8a8ae0f7d:chunk:26",
+        "available_time": "2026-02-25T21:42:19+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.85,
+        "text_snippet": "aba Group, Alphabet Inc., Amazon, Inc., or Amazon, Baidu, Inc., Huawei, and Microsoft Corporation, or Microsoft; \u2022 suppliers of Arm-based CPUs and com"
+      },
+      {
+        "evidence_id": "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:GOOGL:53ed585447f89701",
+        "document_id": "doc:sec:9360ae13391cbe52",
+        "chunk_id": "doc:sec:9360ae13391cbe52:chunk:48",
+        "available_time": "2025-10-30T01:55:01+00:00",
+        "source_type": "graph",
+        "confidence": 0.92,
+        "text_snippet": "Epic Games --[COMPETES_WITH]--> Alphabet Inc. (as of 2025-10-30)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689",
+        "document_id": "doc:sec:6b5300f8289ff6c0",
+        "chunk_id": "doc:sec:6b5300f8289ff6c0:chunk:69",
+        "available_time": "2026-07-29T22:58:51+00:00",
+        "source_type": "graph",
+        "confidence": 0.92,
+        "text_snippet": "Apple Inc. --[COMPETES_WITH]--> Alphabet Inc. (as of 2026-07-29)"
+      }
+    ],
+    "evidence_ids": [
+      "hybrid:doc:sec:98d8cee8a8ae0f7d:chunk:26",
+      "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:GOOGL:53ed585447f89701",
+      "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "hybrid:doc:sec:98d8cee8a8ae0f7d:chunk:26",
+        "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:GOOGL:53ed585447f89701",
+        "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 19.789190416006022,
+    "sufficient": true
+  },
+  "RSH-02:POOL_50_DEEP": {
+    "answer": "Based on the provided evidence, companies that compete with Alphabet Inc. include Epic Games and Apple Inc., while Amazon, Baidu, Huawei, and Microsoft are listed as competitors in a broader context but not specifically identified for enterprise cloud or digital advertising.",
+    "confidence": 0.75,
+    "citations": [
+      {
+        "evidence_id": "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:GOOGL:53ed585447f89701",
+        "document_id": "doc:sec:9360ae13391cbe52",
+        "chunk_id": "doc:sec:9360ae13391cbe52:chunk:48",
+        "available_time": "2025-10-30T01:55:01+00:00",
+        "source_type": "graph",
+        "confidence": 0.92,
+        "text_snippet": "Epic Games --[COMPETES_WITH]--> Alphabet Inc. (as of 2025-10-30)"
+      },
+      {
+        "evidence_id": "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689",
+        "document_id": "doc:sec:6b5300f8289ff6c0",
+        "chunk_id": "doc:sec:6b5300f8289ff6c0:chunk:69",
+        "available_time": "2026-07-29T22:58:51+00:00",
+        "source_type": "graph",
+        "confidence": 0.92,
+        "text_snippet": "Apple Inc. --[COMPETES_WITH]--> Alphabet Inc. (as of 2026-07-29)"
+      },
+      {
+        "evidence_id": "hybrid:doc:sec:98d8cee8a8ae0f7d:chunk:26",
+        "document_id": "doc:sec:98d8cee8a8ae0f7d",
+        "chunk_id": "doc:sec:98d8cee8a8ae0f7d:chunk:26",
+        "available_time": "2026-02-25T21:42:19+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.85,
+        "text_snippet": "aba Group, Alphabet Inc., Amazon, Inc., or Amazon, Baidu, Inc., Huawei, and Microsoft Corporation, or Microsoft; \u2022 suppliers of Arm-based CPUs and com"
+      }
+    ],
+    "evidence_ids": [
+      "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:GOOGL:53ed585447f89701",
+      "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689",
+      "hybrid:doc:sec:98d8cee8a8ae0f7d:chunk:26"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "graph:edge:company:674f17d9c2419676->COMPETES_WITH->company:GOOGL:53ed585447f89701",
+        "graph:edge:company:AAPL->COMPETES_WITH->company:GOOGL:d50499de79438689",
+        "hybrid:doc:sec:98d8cee8a8ae0f7d:chunk:26"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 33.80263137500151,
+    "sufficient": true
+  },
+  "RSH-12:POOL_20_DEFAULT": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 3.044828916004917,
+    "sufficient": false
+  },
+  "RSH-12:POOL_25_EXPANDED": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 0.06994033299997682,
+    "sufficient": false
+  },
+  "RSH-12:POOL_50_DEEP": {
+    "answer": "Insufficient evidence in the retrieved corpus.",
+    "confidence": 0.0,
+    "citations": [],
+    "evidence_ids": [],
+    "validation_status": {
+      "is_valid": true,
+      "errors": []
+    },
+    "latency_s": 0.09099575000436744,
+    "sufficient": false
+  },
+  "TPT-01:POOL_20_DEFAULT": {
+    "answer": "Microsoft disclosed that Microsoft 365 Consumer products and cloud services revenue increased $173 million or 10%, while Intelligent Cloud Revenue increased $12.7 billion or 20% for the three months ended March 31, 2025.",
+    "confidence": 0.95,
+    "citations": [
+      {
+        "evidence_id": "hybrid:doc:sec:076412151b515b96:chunk:59",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:59",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.95,
+        "text_snippet": "of Microsoft 365 suite sales and an increase in Office transactional purchasing. \u2022 Microsoft 365 Consumer products and cloud services revenue increase"
+      },
+      {
+        "evidence_id": "hybrid:doc:sec:076412151b515b96:chunk:62",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:62",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.95,
+        "text_snippet": "44 million or 3% driven by investments in cloud and AI engineering and commercial sales. Intelligent Cloud Revenue increased $12.7 billion or 20%. \u2022 S"
+      }
+    ],
+    "evidence_ids": [
+      "hybrid:doc:sec:076412151b515b96:chunk:59",
+      "hybrid:doc:sec:076412151b515b96:chunk:62"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "hybrid:doc:sec:076412151b515b96:chunk:59",
+        "hybrid:doc:sec:076412151b515b96:chunk:62"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 28.019586166003137,
+    "sufficient": true
+  },
+  "TPT-01:POOL_25_EXPANDED": {
+    "answer": "Microsoft disclosed that Intelligent Cloud Revenue increased $12.7 billion or 20%, and Server products and cloud services revenue increased $12.6 billion, as of the three months ended March 31, 2025.",
+    "confidence": 0.95,
+    "citations": [
+      {
+        "evidence_id": "hybrid:doc:sec:076412151b515b96:chunk:62",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:62",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.95,
+        "text_snippet": "44 million or 3% driven by investments in cloud and AI engineering and commercial sales. Intelligent Cloud Revenue increased $12.7 billion or 20%. \u2022 S"
+      },
+      {
+        "evidence_id": "hybrid:doc:sec:076412151b515b96:chunk:58",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:58",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.95,
+        "text_snippet": "g our AI infrastructure. Operating expenses increased $2.8 billion or 6% driven by investments in cloud and AI engineering and the impact of the Activ"
+      }
+    ],
+    "evidence_ids": [
+      "hybrid:doc:sec:076412151b515b96:chunk:62",
+      "hybrid:doc:sec:076412151b515b96:chunk:58"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "hybrid:doc:sec:076412151b515b96:chunk:62",
+        "hybrid:doc:sec:076412151b515b96:chunk:58"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 27.13744187499833,
+    "sufficient": true
+  },
+  "TPT-01:POOL_50_DEEP": {
+    "answer": "Microsoft disclosed Intelligent Cloud revenue of $76,387 million and Server products and cloud services revenue of $12,604 million for the three months ended March 31, 2025.",
+    "confidence": 0.95,
+    "citations": [
+      {
+        "evidence_id": "hybrid:doc:sec:076412151b515b96:chunk:62",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:62",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.95,
+        "text_snippet": "44 million or 3% driven by investments in cloud and AI engineering and commercial sales. Intelligent Cloud Revenue increased $12.7 billion or 20%. \u2022 S"
+      },
+      {
+        "evidence_id": "hybrid:doc:sec:076412151b515b96:chunk:44",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:44",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.9,
+        "text_snippet": ",113 $ 87,698 $ 78,193 Intelligent Cloud 26,751 22,141 76,387 63,679 More Personal Computing 13,371 12,604 41,198 38,523 Total $ 70,066 $ 61,858 $ 205"
+      }
+    ],
+    "evidence_ids": [
+      "hybrid:doc:sec:076412151b515b96:chunk:62",
+      "hybrid:doc:sec:076412151b515b96:chunk:44"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "hybrid:doc:sec:076412151b515b96:chunk:62",
+        "hybrid:doc:sec:076412151b515b96:chunk:44"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 19.786958999997296,
+    "sufficient": true
+  },
+  "TPT-03:POOL_20_DEFAULT": {
+    "answer": "As of August 1, 2025, Alphabet Inc. was affected by international trade volatility, the macroeconomic environment, and regulatory bodies including the United States, European Union, and European Commission. The company also faced risks related to its $70.0 billion share repurchase authorization and cost of revenues.",
+    "confidence": 0.92,
+    "citations": [
+      {
+        "evidence_id": "hybrid:doc:sec:6572663282945293:chunk:69",
+        "document_id": "doc:sec:6572663282945293",
+        "chunk_id": "doc:sec:6572663282945293:chunk:69",
+        "available_time": "2025-07-23T23:44:01+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.75,
+        "text_snippet": "As of June 30, 2025, we had 187,103 employees. We are monitoring ongoing developments surrounding international trade and the macroeconomic environmen"
+      },
+      {
+        "evidence_id": "graph:edge:company:GOOGL->AFFECTED_BY->country:33863e666daaed2c:ad701154b70506c9",
+        "document_id": "doc:sec:6572663282945293",
+        "chunk_id": "doc:sec:6572663282945293:chunk:46",
+        "available_time": "2025-07-23T23:44:01+00:00",
+        "source_type": "graph",
+        "confidence": 0.96,
+        "text_snippet": "Alphabet Inc. --[AFFECTED_BY]--> United States (as of 2025-07-23)"
+      },
+      {
+        "evidence_id": "graph:edge:company:GOOGL->AFFECTED_BY->country:77e222bf388e7cb6:60263caf9c8acf35",
+        "document_id": "doc:sec:6572663282945293",
+        "chunk_id": "doc:sec:6572663282945293:chunk:89",
+        "available_time": "2025-07-23T23:44:01+00:00",
+        "source_type": "graph",
+        "confidence": 0.96,
+        "text_snippet": "Alphabet Inc. --[AFFECTED_BY]--> European Union (as of 2025-07-23)"
+      },
+      {
+        "evidence_id": "graph:edge:company:GOOGL->HAS_RISK->financialmetric:f5af5b10863fa6b9:386020dabc77ac1d",
+        "document_id": "doc:sec:6572663282945293",
+        "chunk_id": "doc:sec:6572663282945293:chunk:88",
+        "available_time": "2025-07-23T23:44:01+00:00",
+        "source_type": "graph",
+        "confidence": 0.9,
+        "text_snippet": "Alphabet Inc. --[HAS_RISK]--> $70.0 billion share repurchase authorization (as of 2025-07-23)"
+      },
+      {
+        "evidence_id": "graph:edge:company:GOOGL->AFFECTED_BY->country:1e1333734e8ab56e:c0baee7f7d2dda00",
+        "document_id": "doc:sec:6572663282945293",
+        "chunk_id": "doc:sec:6572663282945293:chunk:88",
+        "available_time": "2025-07-23T23:44:01+00:00",
+        "source_type": "graph",
+        "confidence": 0.85,
+        "text_snippet": "Alphabet Inc. --[AFFECTED_BY]--> European Commission (as of 2025-07-23)"
+      }
+    ],
+    "evidence_ids": [
+      "hybrid:doc:sec:6572663282945293:chunk:69",
+      "graph:edge:company:GOOGL->AFFECTED_BY->country:33863e666daaed2c:ad701154b70506c9",
+      "graph:edge:company:GOOGL->AFFECTED_BY->country:77e222bf388e7cb6:60263caf9c8acf35",
+      "graph:edge:company:GOOGL->HAS_RISK->financialmetric:f5af5b10863fa6b9:386020dabc77ac1d",
+      "graph:edge:company:GOOGL->AFFECTED_BY->country:1e1333734e8ab56e:c0baee7f7d2dda00"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "hybrid:doc:sec:6572663282945293:chunk:69",
+        "graph:edge:company:GOOGL->AFFECTED_BY->country:33863e666daaed2c:ad701154b70506c9",
+        "graph:edge:company:GOOGL->AFFECTED_BY->country:77e222bf388e7cb6:60263caf9c8acf35",
+        "graph:edge:company:GOOGL->HAS_RISK->financialmetric:f5af5b10863fa6b9:386020dabc77ac1d",
+        "graph:edge:company:GOOGL->AFFECTED_BY->country:1e1333734e8ab56e:c0baee7f7d2dda00"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 42.323549124994315,
+    "sufficient": true
+  },
+  "TPT-03:POOL_25_EXPANDED": {
+    "answer": "As of August 1, 2025, Alphabet Inc. faced risks from regulatory investigations in the U.S., Europe, and globally regarding competition matters; ongoing international trade and macroeconomic volatility; and specific financial risks including a $70 billion share repurchase authorization.",
+    "confidence": 0.85,
+    "citations": [
+      {
+        "evidence_id": "hybrid:doc:sec:6572663282945293:chunk:43",
+        "document_id": "doc:sec:6572663282945293",
+        "chunk_id": "doc:sec:6572663282945293:chunk:43",
+        "available_time": "2025-07-23T23:44:01+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.95,
+        "text_snippet": "tigation on various competition matters by regulatory authorities and private parties in the U.S., Europe, and other jurisdictions globally, including"
+      },
+      {
+        "evidence_id": "hybrid:doc:sec:6572663282945293:chunk:69",
+        "document_id": "doc:sec:6572663282945293",
+        "chunk_id": "doc:sec:6572663282945293:chunk:69",
+        "available_time": "2025-07-23T23:44:01+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.75,
+        "text_snippet": "As of June 30, 2025, we had 187,103 employees. We are monitoring ongoing developments surrounding international trade and the macroeconomic environmen"
+      },
+      {
+        "evidence_id": "graph:edge:company:GOOGL->HAS_RISK->financialmetric:f5af5b10863fa6b9:386020dabc77ac1d",
+        "document_id": "doc:sec:6572663282945293",
+        "chunk_id": "doc:sec:6572663282945293:chunk:88",
+        "available_time": "2025-07-23T23:44:01+00:00",
+        "source_type": "graph",
+        "confidence": 0.9,
+        "text_snippet": "Alphabet Inc. --[HAS_RISK]--> $70.0 billion share repurchase authorization (as of 2025-07-23)"
+      }
+    ],
+    "evidence_ids": [
+      "hybrid:doc:sec:6572663282945293:chunk:43",
+      "hybrid:doc:sec:6572663282945293:chunk:69",
+      "graph:edge:company:GOOGL->HAS_RISK->financialmetric:f5af5b10863fa6b9:386020dabc77ac1d"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "hybrid:doc:sec:6572663282945293:chunk:43",
+        "hybrid:doc:sec:6572663282945293:chunk:69",
+        "graph:edge:company:GOOGL->HAS_RISK->financialmetric:f5af5b10863fa6b9:386020dabc77ac1d"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 31.283523832993524,
+    "sufficient": true
+  },
+  "TPT-03:POOL_50_DEEP": {
+    "answer": "As of August 1, 2025, Alphabet Inc. faced risks from ongoing litigation on competition matters in the U.S., Europe, and globally; volatility in international trade and the macroeconomic environment; and regulatory proposals such as the One Big Beautiful Bill Act.",
+    "confidence": 0.85,
+    "citations": [
+      {
+        "evidence_id": "hybrid:doc:sec:6572663282945293:chunk:43",
+        "document_id": "doc:sec:6572663282945293",
+        "chunk_id": "doc:sec:6572663282945293:chunk:43",
+        "available_time": "2025-07-23T23:44:01+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.95,
+        "text_snippet": "tigation on various competition matters by regulatory authorities and private parties in the U.S., Europe, and other jurisdictions globally, including"
+      },
+      {
+        "evidence_id": "hybrid:doc:sec:6572663282945293:chunk:69",
+        "document_id": "doc:sec:6572663282945293",
+        "chunk_id": "doc:sec:6572663282945293:chunk:69",
+        "available_time": "2025-07-23T23:44:01+00:00",
+        "source_type": "hybrid",
+        "confidence": 0.75,
+        "text_snippet": "As of June 30, 2025, we had 187,103 employees. We are monitoring ongoing developments surrounding international trade and the macroeconomic environmen"
+      },
+      {
+        "evidence_id": "graph:edge:event:57f9d9ddead1ce4d->AFFECTED_BY->company:GOOGL:4dd9cac7571775aa",
+        "document_id": "doc:sec:6572663282945293",
+        "chunk_id": "doc:sec:6572663282945293:chunk:55",
+        "available_time": "2025-07-23T23:44:01+00:00",
+        "source_type": "graph",
+        "confidence": 0.85,
+        "text_snippet": "One Big Beautiful Bill Act (OBBBA) --[AFFECTED_BY]--> Alphabet Inc. (as of 2025-07-23)"
+      }
+    ],
+    "evidence_ids": [
+      "hybrid:doc:sec:6572663282945293:chunk:43",
+      "hybrid:doc:sec:6572663282945293:chunk:69",
+      "graph:edge:event:57f9d9ddead1ce4d->AFFECTED_BY->company:GOOGL:4dd9cac7571775aa"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "hybrid:doc:sec:6572663282945293:chunk:43",
+        "hybrid:doc:sec:6572663282945293:chunk:69",
+        "graph:edge:event:57f9d9ddead1ce4d->AFFECTED_BY->company:GOOGL:4dd9cac7571775aa"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 30.561040707994835,
+    "sufficient": true
+  },
+  "TPT-02:POOL_20_DEFAULT": {
+    "answer": "As of June 1, 2025, NVIDIA faced risks including supply chain disruptions, potential source code leaks affecting trade secret protection, and adverse impacts from declining demand for PCs and servers. Additionally, fluctuations in the U.S. dollar relative to foreign currencies decreased reported revenue and expenses from international operations.",
+    "confidence": 0.344,
+    "citations": [
+      {
+        "evidence_id": "vector:doc:sec:076412151b515b96:chunk:128",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:128",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "vector",
+        "confidence": 0.3199,
+        "text_snippet": "ly and indirectly impacted by such events. These conditions also may add uncertainty to the timing and budget for technology investment decisions by o"
+      },
+      {
+        "evidence_id": "vector:doc:sec:076412151b515b96:chunk:124",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:124",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "vector",
+        "confidence": 0.33053,
+        "text_snippet": "our source code leaks, we might lose future trade secret protection for that code. It may then become easier for third parties to compete with our pro"
+      },
+      {
+        "evidence_id": "vector:doc:sec:076412151b515b96:chunk:126",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:126",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "vector",
+        "confidence": 0.34049,
+        "text_snippet": "g and adversely affect our results of operations. If demand for PCs, servers, and other computing devices declines, or consumer or business spending f"
+      },
+      {
+        "evidence_id": "vector:doc:sec:076412151b515b96:chunk:52",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:52",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "vector",
+        "confidence": 0.34402,
+        "text_snippet": "tuations in the U.S. dollar relative to certain foreign currencies decreased reported revenue and expenses from our international operations for the t"
+      }
+    ],
+    "evidence_ids": [
+      "vector:doc:sec:076412151b515b96:chunk:128",
+      "vector:doc:sec:076412151b515b96:chunk:124",
+      "vector:doc:sec:076412151b515b96:chunk:126",
+      "vector:doc:sec:076412151b515b96:chunk:52"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "vector:doc:sec:076412151b515b96:chunk:128",
+        "vector:doc:sec:076412151b515b96:chunk:124",
+        "vector:doc:sec:076412151b515b96:chunk:126",
+        "vector:doc:sec:076412151b515b96:chunk:52"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 33.89903266699548,
+    "sufficient": true
+  },
+  "TPT-02:POOL_25_EXPANDED": {
+    "answer": "As of June 1, 2025, NVIDIA faced risks including supply chain disruptions, potential source code leaks affecting trade secret protection, and adverse impacts from declining demand for PCs and servers. Additionally, fluctuations in the U.S. dollar relative to foreign currencies affected reported revenue and expenses.",
+    "confidence": 0.35,
+    "citations": [
+      {
+        "evidence_id": "vector:doc:sec:076412151b515b96:chunk:128",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:128",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "vector",
+        "confidence": 0.32723,
+        "text_snippet": "ly and indirectly impacted by such events. These conditions also may add uncertainty to the timing and budget for technology investment decisions by o"
+      },
+      {
+        "evidence_id": "vector:doc:sec:076412151b515b96:chunk:124",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:124",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "vector",
+        "confidence": 0.33872,
+        "text_snippet": "our source code leaks, we might lose future trade secret protection for that code. It may then become easier for third parties to compete with our pro"
+      },
+      {
+        "evidence_id": "vector:doc:sec:076412151b515b96:chunk:126",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:126",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "vector",
+        "confidence": 0.34818,
+        "text_snippet": "g and adversely affect our results of operations. If demand for PCs, servers, and other computing devices declines, or consumer or business spending f"
+      },
+      {
+        "evidence_id": "vector:doc:sec:076412151b515b96:chunk:52",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:52",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "vector",
+        "confidence": 0.35154,
+        "text_snippet": "tuations in the U.S. dollar relative to certain foreign currencies decreased reported revenue and expenses from our international operations for the t"
+      }
+    ],
+    "evidence_ids": [
+      "vector:doc:sec:076412151b515b96:chunk:128",
+      "vector:doc:sec:076412151b515b96:chunk:124",
+      "vector:doc:sec:076412151b515b96:chunk:126",
+      "vector:doc:sec:076412151b515b96:chunk:52"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "vector:doc:sec:076412151b515b96:chunk:128",
+        "vector:doc:sec:076412151b515b96:chunk:124",
+        "vector:doc:sec:076412151b515b96:chunk:126",
+        "vector:doc:sec:076412151b515b96:chunk:52"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 34.217024540994316,
+    "sufficient": true
+  },
+  "TPT-02:POOL_50_DEEP": {
+    "answer": "As of June 1, 2025, NVIDIA faced risks including declines in demand for PCs and servers, currency fluctuations affecting international operations, potential source code leaks compromising trade secrets, supply chain disruptions, and uncertainty in technology investment timing. These factors could adversely affect results of operations and customer budgeting.",
+    "confidence": 0.3712,
+    "citations": [
+      {
+        "evidence_id": "vector:doc:sec:076412151b515b96:chunk:126",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:126",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "vector",
+        "confidence": 0.37124,
+        "text_snippet": "g and adversely affect our results of operations. If demand for PCs, servers, and other computing devices declines, or consumer or business spending f"
+      },
+      {
+        "evidence_id": "vector:doc:sec:076412151b515b96:chunk:52",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:52",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "vector",
+        "confidence": 0.37407,
+        "text_snippet": "tuations in the U.S. dollar relative to certain foreign currencies decreased reported revenue and expenses from our international operations for the t"
+      },
+      {
+        "evidence_id": "vector:doc:sec:076412151b515b96:chunk:124",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:124",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "vector",
+        "confidence": 0.36325,
+        "text_snippet": "our source code leaks, we might lose future trade secret protection for that code. It may then become easier for third parties to compete with our pro"
+      },
+      {
+        "evidence_id": "vector:doc:sec:076412151b515b96:chunk:128",
+        "document_id": "doc:sec:076412151b515b96",
+        "chunk_id": "doc:sec:076412151b515b96:chunk:128",
+        "available_time": "2025-04-30T20:08:52+00:00",
+        "source_type": "vector",
+        "confidence": 0.34922,
+        "text_snippet": "ly and indirectly impacted by such events. These conditions also may add uncertainty to the timing and budget for technology investment decisions by o"
+      }
+    ],
+    "evidence_ids": [
+      "vector:doc:sec:076412151b515b96:chunk:126",
+      "vector:doc:sec:076412151b515b96:chunk:52",
+      "vector:doc:sec:076412151b515b96:chunk:124",
+      "vector:doc:sec:076412151b515b96:chunk:128"
+    ],
+    "validation_status": {
+      "is_valid": true,
+      "errors": [],
+      "warnings": [],
+      "cited_evidence_ids": [
+        "vector:doc:sec:076412151b515b96:chunk:126",
+        "vector:doc:sec:076412151b515b96:chunk:52",
+        "vector:doc:sec:076412151b515b96:chunk:124",
+        "vector:doc:sec:076412151b515b96:chunk:128"
+      ],
+      "temporal_valid": true,
+      "provenance_complete": true
+    },
+    "latency_s": 31.82423312500032,
+    "sufficient": true
+  }
+}

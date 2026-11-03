@@ -1,0 +1,585 @@
+{
+  "timestamp": "2026-10-29T16:40:40.711980+00:00",
+  "total_questions": 64,
+  "answerable_questions": 50,
+  "unanswerable_questions": 14,
+  "tpt02_configurations": [
+    {
+      "config_name": "B1_baseline_k5",
+      "system": "B1",
+      "max_evidence_k": 5,
+      "candidate_pool_size": null,
+      "latency_seconds": 28.551,
+      "sufficient": true,
+      "sufficiency_reason": "No sufficiency gate (dense baseline)",
+      "predicted_answer": "As of June 1, 2025, NVIDIA faced risks including supply chain disruptions from hardware assembled in Asia, fluctuations in the U.S. dollar impacting international revenue, potential declines in demand for PCs and servers, and climate-related increases in energy or resource costs. These conditions could also add uncertainty to customer technology investment timing and budgets.",
+      "is_refusal": false,
+      "outcome": "FN_hallucination",
+      "token_f1": 0.0345,
+      "exact_match": 0.0,
+      "evidence_items": [
+        {
+          "chunk_id": "doc:sec:076412151b515b96:chunk:128",
+          "company": "MSFT",
+          "available_time": "2025-04-30T20:08:52+00:00",
+          "score": 0.5315500298476958
+        },
+        {
+          "chunk_id": "doc:sec:076412151b515b96:chunk:52",
+          "company": "MSFT",
+          "available_time": "2025-04-30T20:08:52+00:00",
+          "score": 0.3877985689164959
+        },
+        {
+          "chunk_id": "doc:sec:076412151b515b96:chunk:126",
+          "company": "MSFT",
+          "available_time": "2025-04-30T20:08:52+00:00",
+          "score": 0.38664850764214065
+        },
+        {
+          "chunk_id": "doc:sec:076412151b515b96:chunk:129",
+          "company": "MSFT",
+          "available_time": "2025-04-30T20:08:52+00:00",
+          "score": 0.3749730063306087
+        },
+        {
+          "chunk_id": "doc:sec:076412151b515b96:chunk:110",
+          "company": "MSFT",
+          "available_time": "2025-04-30T20:08:52+00:00",
+          "score": 0.36875733541910993
+        }
+      ]
+    },
+    {
+      "config_name": "FinGraph_K5_pool20",
+      "system": "FinGraph",
+      "max_evidence_k": 5,
+      "candidate_pool_size": 20,
+      "latency_seconds": 2.643,
+      "sufficient": false,
+      "sufficiency_reason": "Missing evidence coverage for key query entities: ['company:NVDA']",
+      "predicted_answer": "Insufficient evidence in the retrieved corpus.",
+      "is_refusal": true,
+      "outcome": "TN_refusal",
+      "token_f1": 1.0,
+      "exact_match": 1.0,
+      "evidence_items": [
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:31",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:31",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:109",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:109",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:126",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:126",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:124",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:124",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:52",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:52",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        }
+      ]
+    },
+    {
+      "config_name": "FinGraph_K8_pool20",
+      "system": "FinGraph",
+      "max_evidence_k": 8,
+      "candidate_pool_size": 20,
+      "latency_seconds": 1.168,
+      "sufficient": false,
+      "sufficiency_reason": "Missing evidence coverage for key query entities: ['company:NVDA']",
+      "predicted_answer": "Insufficient evidence in the retrieved corpus.",
+      "is_refusal": true,
+      "outcome": "TN_refusal",
+      "token_f1": 1.0,
+      "exact_match": 1.0,
+      "evidence_items": [
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:31",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:31",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:109",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:109",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:126",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:126",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:124",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:124",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:52",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:52",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:35",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:35",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:128",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:128",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:129",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:129",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        }
+      ]
+    },
+    {
+      "config_name": "FinGraph_K5_pool25",
+      "system": "FinGraph",
+      "max_evidence_k": 5,
+      "candidate_pool_size": 25,
+      "latency_seconds": 0.832,
+      "sufficient": false,
+      "sufficiency_reason": "Missing evidence coverage for key query entities: ['company:NVDA']",
+      "predicted_answer": "Insufficient evidence in the retrieved corpus.",
+      "is_refusal": true,
+      "outcome": "TN_refusal",
+      "token_f1": 1.0,
+      "exact_match": 1.0,
+      "evidence_items": [
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:31",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:31",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:109",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:109",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:126",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:126",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:124",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:124",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:52",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:52",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        }
+      ]
+    },
+    {
+      "config_name": "FinGraph_K5_pool50",
+      "system": "FinGraph",
+      "max_evidence_k": 5,
+      "candidate_pool_size": 50,
+      "latency_seconds": 0.697,
+      "sufficient": false,
+      "sufficiency_reason": "Missing evidence coverage for key query entities: ['company:NVDA']",
+      "predicted_answer": "Insufficient evidence in the retrieved corpus.",
+      "is_refusal": true,
+      "outcome": "TN_refusal",
+      "token_f1": 1.0,
+      "exact_match": 1.0,
+      "evidence_items": [
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:83",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:83",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:31",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:31",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:109",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:109",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:126",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:126",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        },
+        {
+          "evidence_id": "vector:doc:sec:076412151b515b96:chunk:124",
+          "source_type": "vector",
+          "document_id": "doc:sec:076412151b515b96",
+          "chunk_id": "doc:sec:076412151b515b96:chunk:124",
+          "source_company": "MSFT",
+          "provenance_verified": true,
+          "attribution_status": "verified_issuer",
+          "available_time": "2025-04-30T20:08:52+00:00"
+        }
+      ]
+    }
+  ],
+  "systems": {
+    "B1_Dense_Vector_Baseline": {
+      "decision_accuracy": 0.7031,
+      "refusal_recall": 0.6429,
+      "hallucinations_total": 5,
+      "cross_company_misattributions": 1,
+      "feir_context": 0.0,
+      "feir_cited": 0.0,
+      "false_refusals": 14,
+      "correct_answers_attempted": 36,
+      "correct_refusals": 9,
+      "answerable_token_f1": 0.2059,
+      "answerable_exact_match": 0.0,
+      "mean_latency_seconds": 18.8
+    },
+    "FinGraph_AI_K5": {
+      "decision_accuracy": 0.6562,
+      "refusal_recall": 1.0,
+      "hallucinations_total": 0,
+      "cross_company_misattributions": 0,
+      "feir_context": 0.0,
+      "feir_cited": 0.0,
+      "false_refusals": 22,
+      "correct_answers_attempted": 28,
+      "correct_refusals": 14,
+      "answerable_token_f1": 0.192,
+      "answerable_exact_match": 0.0,
+      "mean_latency_seconds": 13.785
+    },
+    "FinGraph_AI_K8": {
+      "decision_accuracy": 0.6719,
+      "refusal_recall": 1.0,
+      "hallucinations_total": 0,
+      "cross_company_misattributions": 0,
+      "feir_context": 0.0,
+      "feir_cited": 0.0,
+      "false_refusals": 21,
+      "correct_answers_attempted": 29,
+      "correct_refusals": 14,
+      "answerable_token_f1": 0.1921,
+      "answerable_exact_match": 0.0,
+      "mean_latency_seconds": 13.442
+    }
+  },
+  "retrieval": {
+    "B1_dense": {
+      "total_questions": 64,
+      "evaluated_questions": 50,
+      "mean_hit_at_k": {
+        "1": 0.06,
+        "3": 0.1,
+        "5": 0.14,
+        "10": 0.14
+      },
+      "mean_precision_at_k": {
+        "1": 0.06,
+        "3": 0.0333,
+        "5": 0.032,
+        "10": 0.016
+      },
+      "mean_recall_at_k": {
+        "1": 0.012,
+        "3": 0.0227,
+        "5": 0.0347,
+        "10": 0.0347
+      },
+      "mean_mrr": 0.0847,
+      "mean_ndcg_at_k": {
+        "1": 0.06,
+        "3": 0.0388,
+        "5": 0.0375,
+        "10": 0.0375
+      },
+      "mean_doc_hit_at_k": {
+        "1": 0.48,
+        "3": 0.72,
+        "5": 0.74,
+        "10": 0.74
+      },
+      "mean_doc_recall_at_k": {
+        "1": 0.1101,
+        "3": 0.2697,
+        "5": 0.3501,
+        "10": 0.3501
+      },
+      "multi_hop_path_accuracy": 0.0,
+      "cross_doc_coverage": 0.3929
+    },
+    "FinGraph_hybrid_graph": {
+      "total_questions": 64,
+      "evaluated_questions": 50,
+      "mean_hit_at_k": {
+        "1": 0.04,
+        "3": 0.12,
+        "5": 0.12,
+        "10": 0.14
+      },
+      "mean_precision_at_k": {
+        "1": 0.04,
+        "3": 0.06,
+        "5": 0.036,
+        "10": 0.022
+      },
+      "mean_recall_at_k": {
+        "1": 0.008,
+        "3": 0.0387,
+        "5": 0.0387,
+        "10": 0.0467
+      },
+      "mean_mrr": 0.0756,
+      "mean_ndcg_at_k": {
+        "1": 0.04,
+        "3": 0.0553,
+        "5": 0.0413,
+        "10": 0.0455
+      },
+      "mean_doc_hit_at_k": {
+        "1": 0.6,
+        "3": 0.7,
+        "5": 0.76,
+        "10": 0.76
+      },
+      "mean_doc_recall_at_k": {
+        "1": 0.1334,
+        "3": 0.2957,
+        "5": 0.4225,
+        "10": 0.4382
+      },
+      "multi_hop_path_accuracy": 0.1,
+      "cross_doc_coverage": 0.51
+    }
+  },
+  "leakage_audit": {
+    "retriever_feir": 0.0,
+    "parametric_plr": 0.8,
+    "feir_stage_metrics": {
+      "feir_pre_filter": null,
+      "feir_post_filter": 0.0,
+      "feir_context": 0.0,
+      "feir_cited": 0.0,
+      "gate_rejections": 0,
+      "total_pre_filter_items": 0,
+      "total_post_filter_items": 130,
+      "total_context_items": 65,
+      "total_cited_items": 25
+    },
+    "plr_candidate_positives": 0,
+    "plr_manually_verified": 4,
+    "plr_confirmed_non_leakage": 1,
+    "plr_uncertain": 0,
+    "plr_total_probes": 5,
+    "details": {
+      "plr_results": [
+        {
+          "question_id": "PLR-01",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": true,
+          "evidence_of_future_information": "Manually verified future fact presence: Blackwell B200",
+          "verification_method": "manual",
+          "future_event_date": "2024-03-18",
+          "parametric_leakage_detected": true,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "hardware_roadmap",
+            "company": "NVDA"
+          }
+        },
+        {
+          "question_id": "PLR-02",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": true,
+          "evidence_of_future_information": "Manually verified future fact presence: Rubin architecture",
+          "verification_method": "manual",
+          "future_event_date": "2024-06-02",
+          "parametric_leakage_detected": true,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "hardware_roadmap",
+            "company": "NVDA"
+          }
+        },
+        {
+          "question_id": "PLR-03",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": false,
+          "evidence_of_future_information": "Manually verified future fact presence: Run:ai acquisition completed",
+          "verification_method": "manual",
+          "future_event_date": "2024-04-24",
+          "parametric_leakage_detected": false,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "ma_acquisitions",
+            "company": "NVDA",
+            "note": "False positive in heuristic detector"
+          }
+        },
+        {
+          "question_id": "PLR-04",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": true,
+          "evidence_of_future_information": "Manually verified future fact presence: Gemini 1.5 Pro",
+          "verification_method": "manual",
+          "future_event_date": "2024-02-15",
+          "parametric_leakage_detected": true,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "model_release",
+            "company": "GOOGL"
+          }
+        },
+        {
+          "question_id": "PLR-05",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": true,
+          "evidence_of_future_information": "Manually verified future fact presence: Cybercab Robotaxi",
+          "verification_method": "manual",
+          "future_event_date": "2024-10-10",
+          "parametric_leakage_detected": true,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "vehicle_launch",
+            "company": "TSLA"
+          }
+        }
+      ]
+    }
+  }
+}

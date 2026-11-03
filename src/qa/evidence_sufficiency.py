@@ -56,6 +56,23 @@ class EvidenceSufficiencyChecker:
     def _get_entity_terms(self, ent: str) -> set[str]:
         raw = ent.split(":", 1)[1] if ":" in ent else ent
         terms = {raw.lower(), ent.lower()}
+        if self.graph_retriever and hasattr(self.graph_retriever, "get_entity_terms"):
+            terms.update(self.graph_retriever.get_entity_terms(ent))
+
+        if ent.startswith("regulator:"):
+            reg_type = raw.upper()
+            if reg_type == "FTC":
+                terms.update(["ftc", "federal trade commission", "trade commission", "u.s. federal trade commission"])
+            elif reg_type == "EC":
+                terms.update(["european commission", "the european commission", "ec", "competition authorities in europe", "european union competition"])
+            elif reg_type == "DOJ":
+                terms.update(["doj", "department of justice", "u.s. department of justice", "justice department"])
+            elif reg_type == "SAMR":
+                terms.update(["samr", "state administration for market regulation"])
+            elif reg_type == "SEC":
+                terms.update(["sec", "securities and exchange commission"])
+            return terms
+
         ticker_upper = raw.upper()
         if ticker_upper == "NVDA":
             terms.update(["nvidia", "nvda"])
@@ -222,6 +239,116 @@ class EvidenceSufficiencyChecker:
             "(the identified supplier does not match the entity affected by the risk).",
         )
 
+    def _validate_compound_3hop_chain(
+        self,
+        analysis: QueryAnalysis,
+        evidence: list[RetrievalEvidence],
+    ) -> tuple[bool, str]:
+        """
+        Validate that the retrieved evidence contains a defensible, connected 3-hop chain:
+        Intermediate Entity (e.g. Landlord) -> Intermediate Entity 2 (e.g. Cloud Partner) -> Target Entity,
+        and Intermediate Entity -> Risk.
+        If no such connected chain is supported in the graph or retrieved evidence, fail closed.
+        """
+        if not analysis.entities:
+            return (
+                False,
+                "multi-hop 3-hop query requires connecting intermediate entities to a target entity, "
+                "but no target entity was identified in the query.",
+            )
+
+        target_terms: set[str] = set()
+        for ent in analysis.entities:
+            target_terms.update(self._get_entity_terms(ent))
+
+        def matches_target(node_str: str) -> bool:
+            if not node_str:
+                return False
+            n_clean = node_str.lower().strip()
+            raw = n_clean.split(":", 1)[1] if ":" in n_clean else n_clean
+            return n_clean in target_terms or raw in target_terms or any(t == raw or t == n_clean for t in target_terms)
+
+        def nodes_match(n1: str, n2: str) -> bool:
+            if not n1 or not n2:
+                return False
+            n1_lower = n1.lower().strip()
+            n2_lower = n2.lower().strip()
+            if n1_lower == n2_lower:
+                return True
+            n1_clean = n1_lower.split(":", 1)[1] if ":" in n1_lower else n1_lower
+            n2_clean = n2_lower.split(":", 1)[1] if ":" in n2_lower else n2_lower
+            if n1_clean == n2_clean:
+                return True
+            n1_terms = self._get_entity_terms(n1)
+            n2_terms = self._get_entity_terms(n2)
+            return bool(n1_terms.intersection(n2_terms))
+
+        # Gather all candidate paths and edges from evidence
+        candidate_paths: list[list[dict[str, Any]]] = []
+        all_edges: list[dict[str, Any]] = []
+
+        for ev in evidence[:10]:
+            edge_paths = ev.metadata.get("graph_edge_paths") or []
+            for path in edge_paths:
+                if isinstance(path, list) and path:
+                    valid_path_edges = [
+                        e for e in path
+                        if isinstance(e, dict) and e.get("source") and e.get("target") and e.get("relationship")
+                    ]
+                    if valid_path_edges:
+                        candidate_paths.append(valid_path_edges)
+                        all_edges.extend(valid_path_edges)
+
+            g_edges = ev.metadata.get("graph_edges") or ev.metadata.get("properties", {}).get("graph_edges") or []
+            if isinstance(g_edges, list):
+                for e in g_edges:
+                    if isinstance(e, dict) and e.get("source") and e.get("target") and e.get("relationship"):
+                        all_edges.append(e)
+
+        # Check candidate multi-edge paths for complete 3-hop connection:
+        for path in candidate_paths:
+            if len(path) >= 3:
+                e0, e1, e2 = path[0], path[1], path[2]
+                if nodes_match(str(e0.get("target", "")), str(e1.get("source", ""))) and nodes_match(str(e1.get("target", "")), str(e2.get("source", ""))):
+                    if matches_target(str(e2.get("target", ""))):
+                        landlord_src = str(e0.get("source", ""))
+                        for e_risk in all_edges:
+                            rel_risk = str(e_risk.get("relationship", "")).upper()
+                            if rel_risk in ("HAS_RISK", "AFFECTED_BY") and nodes_match(str(e_risk.get("source", "")), landlord_src):
+                                return True, "Valid connected 3-hop landlord-partner-risk chain verified."
+
+        # Search across collected edges:
+        partner_target_edges: list[tuple[str, str]] = []
+        landlord_partner_edges: list[tuple[str, str]] = []
+        landlord_risk_edges: list[tuple[str, str]] = []
+
+        for e in all_edges:
+            rel = str(e.get("relationship", "")).upper()
+            src = str(e.get("source", "")).strip()
+            tgt = str(e.get("target", "")).strip()
+            if not src or not tgt or not rel:
+                continue
+
+            if matches_target(tgt) and not matches_target(src) and rel in ("PARTNERS_WITH", "SUPPLIES", "DEPENDS_ON"):
+                partner_target_edges.append((src, tgt))
+            elif rel in ("LEASES_TO", "LEASES", "PARTNERS_WITH", "SUPPLIES", "DEPENDS_ON") and not matches_target(tgt) and not matches_target(src):
+                landlord_partner_edges.append((src, tgt))
+            elif rel in ("HAS_RISK", "AFFECTED_BY") and not matches_target(src):
+                landlord_risk_edges.append((src, tgt))
+
+        # Check connectivity: Landlord L -> Partner P -> Target T, and Landlord L -> Risk R
+        for l_src, l_tgt in landlord_partner_edges:
+            for p_src, p_tgt in partner_target_edges:
+                if nodes_match(l_tgt, p_src):
+                    for r_src, r_tgt in landlord_risk_edges:
+                        if nodes_match(l_src, r_src):
+                            return True, "Valid connected 3-hop landlord-partner-risk chain verified."
+
+        return (
+            False,
+            "multi-hop 3-hop query requires a connected chain linking data center landlords through cloud partners to the target entity with landlord risk disclosures, but evidence lacks the connected landlord-partner-risk chain.",
+        )
+
     def check(
         self,
         analysis: QueryAnalysis,
@@ -279,14 +406,16 @@ class EvidenceSufficiencyChecker:
         # 2. Provenance Completeness
         provenance_complete = any(
             bool(ev.document_id and (ev.chunk_id or ev.available_time))
+            and getattr(ev, "provenance_verified", True) is not False
+            and getattr(ev, "attribution_status", "") != "conflicting_attribution"
             for ev in evidence
         )
         if not provenance_complete:
             return SufficiencyResult(
                 sufficient=False,
-                reason="Retrieved evidence lacks complete SEC document provenance.",
-                missing_entities=[],
-                missing_relationships=[],
+                reason="Retrieved evidence lacks complete SEC document provenance or contains contradictory attribution.",
+                missing_entities=list(analysis.entities),
+                missing_relationships=list(analysis.relationship_intent),
                 required_hops=required_hops,
                 observed_hops=1,
                 evidence_count=evidence_count,
@@ -346,32 +475,87 @@ class EvidenceSufficiencyChecker:
 
             entity_covered = False
             for ev in evidence:
-                path = ev.metadata.get("path") or []
-                if ent in path or raw in path:
-                    entity_covered = True
-                    break
+                # If evidence provenance is explicitly unverified or contradictory, it cannot cover entity
+                if getattr(ev, "provenance_verified", True) is False or getattr(ev, "attribution_status", "") in (
+                    "unsupported_cross_company",
+                    "unsupported_cross_company_risk",
+                    "conflicting_attribution",
+                    "missing_provenance",
+                ):
+                    continue
 
                 text_lower = (ev.text or "").lower()
-                path_str = " ".join(str(p).lower() for p in path)
-                metadata_str = str(ev.metadata).lower()
+                source_co = (getattr(ev, "source_company", None) or ev.metadata.get("source_company") or ev.metadata.get("company") or "").upper()
+                is_issuer_match = bool(source_co and source_co == ticker_upper)
 
-                if any(
-                    term in text_lower or term in path_str or term in metadata_str
-                    for term in candidate_terms
-                ):
-                    entity_covered = True
-                    break
+                # Check if entity is mentioned in text
+                text_mentions = any(term in text_lower for term in candidate_terms)
+
+                # Intrinsic filing from the company, or third-party text that explicitly mentions entity
+                if is_issuer_match or text_mentions:
+                    # For regulatory entities, verify that regulatory action context is substantiated if requested
+                    if ent.startswith("regulator:"):
+                        query_lower = analysis.original_query.lower()
+                        query_asks_reg_action = any(
+                            kw in query_lower
+                            for kw in ("regulatory", "action", "investigation", "inquiries", "inquiry", "proceeding", "order", "scrutiny", "penalty", "fine", "settlement")
+                        )
+                        if query_asks_reg_action:
+                            reg_action_context = any(
+                                kw in text_lower
+                                for kw in (
+                                    "regulatory", "regulation", "regulator", "investigation", "inquiry", "inquiries",
+                                    "proceeding", "proceedings", "action", "actions", "consent order", "litigation",
+                                    "penalty", "penalties", "fine", "fines", "compliance", "settlement", "enforcement", "order", "dsa", "gdpr", "coppa"
+                                )
+                            )
+                            if reg_action_context:
+                                entity_covered = True
+                                break
+                        else:
+                            entity_covered = True
+                            break
+                    else:
+                        entity_covered = True
+                        break
+
+                # For graph evidence: path coverage requires that the edge itself is verified and attributable
+                path = ev.metadata.get("path") or []
+                if (ent in path or raw in path) and getattr(ev, "provenance_verified", True) is not False:
+                    # Path node matches, but only if evidence text or issuer supports the entity
+                    if is_issuer_match or text_mentions or not source_co:
+                        entity_covered = True
+                        break
 
             if not entity_covered:
-                missing_entities.append(ent)
+                # Ancillary concept nodes (e.g. Risk, FinancialMetric, Product) should not fail sufficiency
+                # if primary corporate entities are present
+                is_concept_node = ent.startswith(("risk:", "financialmetric:", "product:", "document:", "event:"))
+                has_corporate_entities = any(e.startswith("company:") for e in analysis.entities)
+                if not (is_concept_node and has_corporate_entities):
+                    missing_entities.append(ent)
+
+        # Check disjunctive regulator coverage (e.g. "European Commission or FTC")
+        query_lower_str = analysis.original_query.lower()
+        regulator_entities = [e for e in analysis.entities if e.startswith("regulator:")]
+        if len(regulator_entities) >= 2 and " or " in query_lower_str:
+            covered_regs = [r for r in regulator_entities if r not in missing_entities]
+            if covered_regs:
+                missing_entities = [e for e in missing_entities if not e.startswith("regulator:")]
+
+        # Filter SEC if it was linked but query only referred to SEC filing format framing
+        if "regulator:SEC" in missing_entities:
+            sec_framing = bool(re.search(r"\b(?:across\s+their\s+separate\s+)?sec\s+(?:filing|filings|report|reports|document|documents|disclosure|disclosures)\b", query_lower_str))
+            if sec_framing:
+                missing_entities.remove("regulator:SEC")
 
         # 4. Relationship Intent Coverage
         RELATIONSHIP_PHRASE_MAP: dict[str, list[str]] = {
-            "SUPPLIES": ["suppl", "vendor", "provide", "furnish"],
-            "MANUFACTURES": ["manufactur", "produc", "build", "assembl", "fabricat"],
+            "SUPPLIES": ["suppl", "vendor", "provide", "furnish", "foundry", "foundries", "utilize", "source"],
+            "MANUFACTURES": ["manufactur", "produc", "build", "assembl", "fabricat", "operat", "develop"],
             "HAS_RISK": ["risk", "advers", "threat", "hazard", "vulnerab"],
-            "AFFECTED_BY": ["affect", "impact", "subject to", "disrupt"],
-            "DEPENDS_ON": ["depend", "reli", "subject to"],
+            "AFFECTED_BY": ["affect", "impact", "subject to", "disrupt", "proceeding", "enforcement", "order", "action", "investigation"],
+            "DEPENDS_ON": ["depend", "reli", "subject to", "utilize", "foundry"],
             "PARTNERS_WITH": ["partner", "collaborat", "joint venture", "alliance"],
             "COMPETES_WITH": ["compet", "rival"],
             "ACQUIRED": ["acquir", "merg", "bought", "acquisition"],
@@ -382,6 +566,14 @@ class EvidenceSufficiencyChecker:
         if analysis.relationship_intent:
             rels_found: set[str] = set()
             for ev in evidence:
+                if getattr(ev, "provenance_verified", True) is False or getattr(ev, "attribution_status", "") in (
+                    "unsupported_cross_company",
+                    "unsupported_cross_company_risk",
+                    "conflicting_attribution",
+                    "missing_provenance",
+                ):
+                    continue
+
                 item_rels: list[str] = []
                 if "graph_relations" in ev.metadata and ev.metadata["graph_relations"]:
                     item_rels.extend([str(r).upper() for r in ev.metadata["graph_relations"]])
@@ -419,9 +611,78 @@ class EvidenceSufficiencyChecker:
             if hop > observed_hops:
                 observed_hops = hop
 
+        query_lower = analysis.original_query.lower()
+        wants_supplier = any(w in query_lower for w in ("supply", "supplies", "supplier", "suppliers"))
+        wants_risk = any(w in query_lower for w in ("risk", "risks", "affect", "affects", "affected"))
+        is_compound_supplier_risk = (
+            analysis.is_multi_hop and wants_supplier and wants_risk
+        )
+        is_compound_3hop_landlord_partner_risk = (
+            analysis.is_multi_hop and wants_risk and ("landlord" in query_lower or "leasing" in query_lower)
+        )
+
         # Multi-hop sufficiency check according to hop_mode
         if self.hop_mode == "strict":
             hop_sufficient = (not analysis.is_multi_hop) or (observed_hops >= required_hops)
+        elif self.hop_mode == "adaptive":
+            if not analysis.is_multi_hop:
+                hop_sufficient = True
+            elif observed_hops >= required_hops:
+                hop_sufficient = True
+            else:
+                # Observed hops < required_hops:
+                # Check whether query genuinely requires consecutive compound hops
+                explicit_compound_cues = (
+                    "supplier's supplier", "customer's customer", "chain of suppliers",
+                    "indirectly", "through its supplier", "through a partner", "3-hop", "three hops", "indirectly connected"
+                )
+                is_explicit_compound = any(cue in query_lower for cue in explicit_compound_cues)
+
+                if is_compound_supplier_risk:
+                    chain_valid, _ = self._validate_compound_supplier_risk_chain(analysis, evidence)
+                    hop_sufficient = chain_valid
+                elif is_compound_3hop_landlord_partner_risk:
+                    chain_valid, _ = self._validate_compound_3hop_chain(analysis, evidence)
+                    hop_sufficient = chain_valid
+                elif is_explicit_compound:
+                    # Explicit multi-hop compound phrasing requires consecutive observed multi-hop depth
+                    hop_sufficient = False
+                else:
+                    # Direct relationship or direct factual disclosure
+                    has_verified_direct_evidence = False
+
+                    # Case 1: Multi-entity inquiry (e.g. RMH-01: NVIDIA and TSMC)
+                    corporate_entities = [e for e in analysis.entities if e.startswith("company:") or e.startswith("regulator:")]
+                    if len(corporate_entities) >= 2:
+                        target_terms_list = [self._get_entity_terms(e) for e in corporate_entities]
+                        target_tickers = [e.split(":", 1)[1].upper() if ":" in e else e.upper() for e in corporate_entities]
+                        for ev in evidence:
+                            if getattr(ev, "provenance_verified", True) is False or getattr(ev, "attribution_status", "") in (
+                                "unsupported_cross_company", "unsupported_cross_company_risk", "conflicting_attribution", "missing_provenance"
+                            ):
+                                continue
+                            t_lower = (ev.text or "").lower()
+                            src_co = (getattr(ev, "source_company", None) or ev.metadata.get("source_company") or ev.metadata.get("company") or "").upper()
+                            # Direct snippet connecting target entities via text mentions or filing issuer attribution
+                            e1_match = any(term in t_lower for term in target_terms_list[0]) or bool(src_co and src_co == target_tickers[0])
+                            e2_match = any(term in t_lower for term in target_terms_list[1]) or bool(src_co and src_co == target_tickers[1])
+                            if e1_match and e2_match:
+                                has_verified_direct_evidence = True
+                                break
+                    # Case 2: Single entity inquiry with direct product/dependency disclosures (e.g. RMH-09: Tesla)
+                    elif len(corporate_entities) == 1:
+                        target_terms = self._get_entity_terms(corporate_entities[0])
+                        for ev in evidence:
+                            if getattr(ev, "provenance_verified", True) is False or getattr(ev, "attribution_status", "") in (
+                                "unsupported_cross_company", "unsupported_cross_company_risk", "conflicting_attribution", "missing_provenance"
+                            ):
+                                continue
+                            t_lower = (ev.text or "").lower()
+                            if any(term in t_lower for term in target_terms):
+                                has_verified_direct_evidence = True
+                                break
+
+                    hop_sufficient = has_verified_direct_evidence
         else:
             # Soft or disabled hop mode: allows single-hop evidence synthesis
             hop_sufficient = True
@@ -458,13 +719,6 @@ class EvidenceSufficiencyChecker:
                     )
 
         # B. Relationship Coverage Gate
-        query_lower = analysis.original_query.lower()
-        wants_supplier = any(w in query_lower for w in ("supply", "supplies", "supplier", "suppliers"))
-        wants_risk = any(w in query_lower for w in ("risk", "risks", "affect", "affects", "affected"))
-        is_compound_supplier_risk = (
-            analysis.is_multi_hop and wants_supplier and wants_risk
-        )
-
         if is_compound_supplier_risk:
             if self.relationship_mode == "strict":
                 chain_valid, chain_reason = self._validate_compound_supplier_risk_chain(analysis, evidence)
@@ -498,6 +752,47 @@ class EvidenceSufficiencyChecker:
                     return SufficiencyResult(
                         sufficient=False,
                         reason="Insufficient compound relationship coverage: textual mode requires mentions of supplier and risk.",
+                        missing_entities=[],
+                        missing_relationships=["HAS_RISK", "AFFECTED_BY"],
+                        required_hops=required_hops,
+                        observed_hops=observed_hops,
+                        evidence_count=evidence_count,
+                        temporal_valid=True,
+                        provenance_complete=True,
+                    )
+
+        is_compound_3hop_landlord_partner_risk = (
+            analysis.is_multi_hop and wants_risk and ("landlord" in query_lower or "leasing" in query_lower)
+        )
+
+        if is_compound_3hop_landlord_partner_risk:
+            if self.relationship_mode == "strict":
+                chain_valid, chain_reason = self._validate_compound_3hop_chain(analysis, evidence)
+                if not chain_valid:
+                    return SufficiencyResult(
+                        sufficient=False,
+                        reason=f"Insufficient compound relationship coverage: {chain_reason}",
+                        missing_entities=[],
+                        missing_relationships=["HAS_RISK", "AFFECTED_BY"],
+                        required_hops=required_hops,
+                        observed_hops=observed_hops,
+                        evidence_count=evidence_count,
+                        temporal_valid=True,
+                        provenance_complete=True,
+                    )
+            elif self.relationship_mode == "textual":
+                has_text_landlord = any(
+                    any(kw in (ev.text or "").lower() for kw in ("landlord", "lease", "leasing", "datacenter", "data center"))
+                    for ev in evidence[:5]
+                )
+                has_text_risk = any(
+                    any(kw in (ev.text or "").lower() for kw in ("risk", "advers", "threat", "disrupt", "shortage"))
+                    for ev in evidence[:5]
+                )
+                if not (has_text_landlord and has_text_risk):
+                    return SufficiencyResult(
+                        sufficient=False,
+                        reason="Insufficient compound relationship coverage: textual mode requires mentions of landlord/leasing and risk.",
                         missing_entities=[],
                         missing_relationships=["HAS_RISK", "AFFECTED_BY"],
                         required_hops=required_hops,

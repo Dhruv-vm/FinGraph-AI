@@ -1,0 +1,1606 @@
+{
+  "timestamp": "2026-10-29T05:36:58.613983+00:00",
+  "total_questions": 64,
+  "entries": [
+    {
+      "question_id": "FSH-01",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "question": "What products does Apple manufacture according to its filings?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.1143,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.5263,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.6,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "FSH-02",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "question": "What cloud services or server products does Microsoft manufacture or provide?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.4651,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.6667,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.6667,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "FSH-03",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "question": "What products does NVIDIA manufacture according to its filings?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2222,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3636,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.4348,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "FSH-04",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "question": "What primary software platform does Meta Platforms operate?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.1875,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.1818,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.1739,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "FSH-05",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "question": "What automated driving technology does Tesla manufacture or deploy?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.4,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.0741,
+        "exact_match": 0.0,
+        "failure_mode": "GENERATOR_FAILURE",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.0741,
+        "exact_match": 0.0,
+        "failure_mode": "GENERATOR_FAILURE"
+      }
+    },
+    {
+      "question_id": "FSH-06",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "question": "What cybersecurity firm did Alphabet announce an acquisition or agreement for in its filings?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "SUFFICIENCY_GATE_FALSE_REFUSAL",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for key query entities: ['risk:1d58c7f87cec47e3']"
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "SUFFICIENCY_GATE_FALSE_REFUSAL"
+      }
+    },
+    {
+      "question_id": "FSH-07",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "question": "What major video gaming and entertainment company did Microsoft acquire?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2105,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "FSH-08",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "question": "What networking technology company was acquired by NVIDIA as documented in its filings?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2727,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3333,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "FSH-09",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "question": "What healthcare company did NVIDIA acquire or partner with according to corporate filings?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.125,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.0741,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "FSH-10",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "question": "What major messaging application did Meta Platforms acquire?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.6154,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.7273,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "FSH-11",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "question": "What energy storage products does Tesla manufacture?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2308,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2222,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2308,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "FSH-12",
+      "category": "factual_single_hop",
+      "answerable": false,
+      "question": "What quantum computing hardware company did ExxonMobil acquire in 2025?",
+      "b1": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0
+      },
+      "k5": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for key query entities: ['product:e3f3a567d0741bcd']"
+      },
+      "k8": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL"
+      }
+    },
+    {
+      "question_id": "FSH-13",
+      "category": "factual_single_hop",
+      "answerable": false,
+      "question": "What space exploration spacecraft did JPMorgan Chase manufacture in 2026?",
+      "b1": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0
+      },
+      "k5": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL"
+      }
+    },
+    {
+      "question_id": "RSH-01",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "question": "Which technology companies are identified as competitors to Apple in its filings?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2727,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.4,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.4,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "RSH-02",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "question": "Which companies compete with Alphabet Inc. in enterprise cloud and digital advertising?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.375,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2857,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2909,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "RSH-03",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "question": "Who are key competitors mentioned by Microsoft in its filings?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.087,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.24,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.24,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "RSH-04",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "question": "Which artificial intelligence lab has an extensive commercial partnership with Microsoft?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.4211,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3478,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "RSH-05",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "question": "Which accounting and auditing firm supplies professional services to NVIDIA?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.6,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.6667,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.6667,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "RSH-06",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "question": "What regulatory agency is cited as a legal or antitrust risk adversary for Meta Platforms?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.375,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.303,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.4118,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "RSH-07",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "question": "Which semiconductor design company is listed as a partner or collaboration for NVIDIA?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.0952,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2222,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "RSH-08",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "question": "Which major investment bank provides financial and treasury services to Apple Inc.?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.5714,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "RSH-09",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "question": "What public cloud infrastructure partner does NVIDIA depend on for datacenter deployments?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.4828,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.4828,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "RSH-10",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "question": "What social entertainment company competes with Apple in application distribution and gaming?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_RANKED_TOO_LOW",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for key query entities: ['company:1ca596a9cbe35a7e', 'product:c3bb655f6e1d1daf']"
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "SUFFICIENCY_GATE_FALSE_REFUSAL"
+      }
+    },
+    {
+      "question_id": "RSH-11",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "question": "Which executive performance award plan was approved for Elon Musk by Tesla?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.4138,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_RANKED_TOO_LOW",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2273,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "RSH-12",
+      "category": "relational_single_hop",
+      "answerable": false,
+      "question": "Which commercial commercial aircraft manufacturer does Apple directly compete with in manufacturing passenger jets?",
+      "b1": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0
+      },
+      "k5": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Insufficient multi-hop reasoning depth: observed 1 hops, required 2."
+      },
+      "k8": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL"
+      }
+    },
+    {
+      "question_id": "RSH-13",
+      "category": "relational_single_hop",
+      "answerable": false,
+      "question": "Which pharmaceutical company did Microsoft acquire to manufacture mRNA vaccines?",
+      "b1": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0
+      },
+      "k5": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL"
+      }
+    },
+    {
+      "question_id": "TPT-01",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "question": "What financial or cloud service revenue did Microsoft disclose as of May 1, 2025?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2222,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2083,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2308,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "TPT-02",
+      "category": "temporal_point_in_time",
+      "answerable": false,
+      "question": "What risks affected NVIDIA as of June 1, 2025?",
+      "b1": {
+        "outcome": "FN_hallucination",
+        "token_f1": 0.0345,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FN_hallucination",
+        "token_f1": 0.0465,
+        "exact_match": 0.0,
+        "failure_mode": "UNGROUNDED_HALLUCINATION",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "FN_hallucination",
+        "token_f1": 0.0385,
+        "exact_match": 0.0,
+        "failure_mode": "UNGROUNDED_HALLUCINATION"
+      }
+    },
+    {
+      "question_id": "TPT-03",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "question": "What risks affected Alphabet Inc. as of August 1, 2025?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2286,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3256,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2373,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "TPT-04",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "question": "What operational risks affected Tesla, Inc. as of August 1, 2025?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2895,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2373,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2414,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "TPT-05",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "question": "What risks affected Apple Inc. as of August 15, 2025?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.386,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3704,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3492,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "TPT-06",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "question": "What risks affected Meta Platforms as of August 15, 2025?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3467,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.339,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2807,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "TPT-07",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "question": "What risks affected NVIDIA as of September 1, 2025?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3607,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3721,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.4082,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "TPT-08",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "question": "What risks affected ExxonMobil as of September 1, 2025?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3158,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3019,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3636,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "TPT-09",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "question": "What corporate agreements or acquisitions did Alphabet disclose as of December 1, 2025?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for key query entities: ['company:ef0c15fe5fd551f0', 'financialmetric:3007aeb842bad03b', 'person:fc052bbe3d725283']"
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "TPT-10",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "question": "What regulatory investigations affected NVIDIA as of March 1, 2026?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3175,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0606,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for key query entities: ['financialmetric:1cac7c2dbeb884d8', 'risk:68ba33f27c871b51']"
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0606,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "TPT-11",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "question": "What supplier dependencies did NVIDIA disclose as of June 1, 2026?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0833,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.5143,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.5333,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "TPT-12",
+      "category": "temporal_point_in_time",
+      "answerable": false,
+      "question": "What risks affected Apple Inc. as of May 1, 2025?",
+      "b1": {
+        "outcome": "FN_hallucination",
+        "token_f1": 0.0,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for intended relationships: ['AFFECTED_BY', 'HAS_RISK']"
+      },
+      "k8": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL"
+      }
+    },
+    {
+      "question_id": "TPT-13",
+      "category": "temporal_point_in_time",
+      "answerable": false,
+      "question": "What quarterly results did Tesla report in its 2027 annual report as of January 1, 2026?",
+      "b1": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0
+      },
+      "k5": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL"
+      }
+    },
+    {
+      "question_id": "RMH-01",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "question": "How is NVIDIA connected to TSMC through supply and manufacturing relationships?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.125,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Insufficient multi-hop reasoning depth: observed 1 hops, required 2."
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "RMH-02",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "question": "What companies does NVIDIA depend on, and what regulatory body restricts its exports to them?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3019,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.186,
+        "exact_match": 0.0,
+        "failure_mode": "GRAPH_PATH_FAILURE",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.1739,
+        "exact_match": 0.0,
+        "failure_mode": "GRAPH_PATH_FAILURE"
+      }
+    },
+    {
+      "question_id": "RMH-03",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "question": "What products manufactured by NVIDIA depend on advanced semiconductor manufacturing?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2667,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for key query entities: ['company:288ef2f068999d47']"
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "RMH-04",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "question": "Which technology competitor of Apple also partners with Apple for search distribution?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0741,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0741,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0741,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "RMH-05",
+      "category": "relational_multi_hop",
+      "answerable": false,
+      "question": "What risks affect companies that supply NVIDIA with third-party components?",
+      "b1": {
+        "outcome": "FN_hallucination",
+        "token_f1": 0.037,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Insufficient compound relationship coverage: formal risk relationship (HAS_RISK or AFFECTED_BY) for suppliers is missing in graph metadata."
+      },
+      "k8": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL"
+      }
+    },
+    {
+      "question_id": "RMH-06",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "question": "What software products manufactured by Meta Platforms are affected by regulatory actions from the European Commission or FTC?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.4,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for key query entities: ['company:301ca8a36eb6e25d', 'company:961eea56a2d4f6d7', 'company:b99e841d990b61c4', 'country:1e1333734e8ab56e', 'country:f744257734cf209d', 'risk:6483d5570cad71fb']"
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "RMH-07",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "question": "What gaming company acquired by Microsoft had its transaction challenged by competition regulators?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "SUFFICIENCY_GATE_FALSE_REFUSAL",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for key query entities: ['company:4052d1b2e9146ec0']"
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "SUFFICIENCY_GATE_FALSE_REFUSAL"
+      }
+    },
+    {
+      "question_id": "RMH-08",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "question": "What cloud competitor of Microsoft also supplies cloud computing infrastructure to mutual enterprise customers?",
+      "b1": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0952,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0952,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0952,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "RMH-09",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "question": "What products does Tesla manufacture that rely on neural network processing hardware from suppliers?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.25,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for key query entities: ['product:e3f3a567d0741bcd', 'product:fd3e38cccce990e0']"
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "RMH-10",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "question": "Which social platforms acquired by Meta Platforms generate advertising revenue subject to privacy regulation changes?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.3636,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for key query entities: ['financialmetric:329ecfe8d6bd2fbf', 'financialmetric:545ddbb2e88356d2', 'risk:b9a84418d446242e']"
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "RMH-11",
+      "category": "relational_multi_hop",
+      "answerable": false,
+      "question": "What internal manufacturing facility risks affect the contract semiconductor fabricators that supply Apple?",
+      "b1": {
+        "outcome": "FN_hallucination",
+        "token_f1": 0.0444,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Insufficient compound relationship coverage: multi-hop query requires formal graph edges linking risks affecting supplier companies, but evidence lacks formal supplier and risk edge metadata."
+      },
+      "k8": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL"
+      }
+    },
+    {
+      "question_id": "RMH-12",
+      "category": "relational_multi_hop",
+      "answerable": false,
+      "question": "What risks affect the mining subcontractors that supply rare earth metals to Tesla's battery cell suppliers?",
+      "b1": {
+        "outcome": "FN_hallucination",
+        "token_f1": 0.0769,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Insufficient compound relationship coverage: formal supplier relationship (SUPPLIES) to the requested entity is missing in graph metadata."
+      },
+      "k8": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL"
+      }
+    },
+    {
+      "question_id": "RMH-13",
+      "category": "relational_multi_hop",
+      "answerable": false,
+      "question": "What risks affect the real estate landlords leasing data centers to Microsoft's cloud infrastructure partners?",
+      "b1": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0
+      },
+      "k5": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for intended relationships: ['AFFECTED_BY', 'HAS_RISK', 'PARTNERS_WITH']"
+      },
+      "k8": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL"
+      }
+    },
+    {
+      "question_id": "CDC-01",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "question": "Compare the commercial competition between Apple and Alphabet as disclosed across their respective filings.",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2105,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0667,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Insufficient multi-hop reasoning depth: observed 1 hops, required 2."
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0667,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "CDC-02",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "question": "How do Microsoft and Amazon describe their competition in cloud services across their separate SEC filings?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.25,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2564,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "CDC-03",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "question": "Compare the antitrust and regulatory risk disclosures between Meta Platforms and Alphabet Inc.",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.1404,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Insufficient multi-hop reasoning depth: observed 1 hops, required 2."
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "CDC-04",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "question": "How do NVIDIA and Microsoft disclose their respective relationships with AI cloud computing infrastructure?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.25,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Insufficient multi-hop reasoning depth: observed 1 hops, required 2."
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "CDC-05",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "question": "Compare the supply chain dependency disclosures of Apple and NVIDIA regarding contract manufacturing.",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.1887,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.1923,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2414,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "CDC-06",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "question": "Compare the artificial intelligence deployment models disclosed by Tesla and Alphabet in their filings.",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.1818,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.1395,
+        "exact_match": 0.0,
+        "failure_mode": "GRAPH_PATH_FAILURE",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.1818,
+        "exact_match": 0.0,
+        "failure_mode": "GRAPH_PATH_FAILURE"
+      }
+    },
+    {
+      "question_id": "CDC-07",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "question": "Compare the independent financial audit firms disclosed by NVIDIA and Apple.",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "CDC-08",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "question": "How do ExxonMobil and Tesla disclose energy transition and regulatory credit impacts in their filings?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2162,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for key query entities: ['financialmetric:b23c604d2a3850f0', 'risk:fef0e823b8c8ed12']"
+      },
+      "k8": {
+        "outcome": "FP_false_refusal",
+        "token_f1": 0.0,
+        "exact_match": 0.0,
+        "failure_mode": "EVIDENCE_NOT_RETRIEVED"
+      }
+    },
+    {
+      "question_id": "CDC-10",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "question": "How do Microsoft and Meta disclose their respective strategic gaming and virtual reality initiatives?",
+      "b1": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2791,
+        "exact_match": 0.0
+      },
+      "k5": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2791,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TN_correct_decision_to_answer",
+        "token_f1": 0.2299,
+        "exact_match": 0.0,
+        "failure_mode": "NONE_SUCCESS"
+      }
+    },
+    {
+      "question_id": "CDC-11",
+      "category": "cross_document_comparative",
+      "answerable": false,
+      "question": "Compare the submarine oceanic fiber optic cable fleets owned and operated by ExxonMobil and JPMorgan Chase.",
+      "b1": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0
+      },
+      "k5": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL",
+        "sufficient_evidence": true,
+        "sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+      },
+      "k8": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL"
+      }
+    },
+    {
+      "question_id": "CDC-12",
+      "category": "cross_document_comparative",
+      "answerable": false,
+      "question": "Compare the commercial aerospace lunar launch vehicle revenues reported by Apple and Meta Platforms.",
+      "b1": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0
+      },
+      "k5": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for key query entities: ['product:53f498ab9b6c068c']"
+      },
+      "k8": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL"
+      }
+    },
+    {
+      "question_id": "CDC-13",
+      "category": "cross_document_comparative",
+      "answerable": false,
+      "question": "Compare the pharmaceutical retail pharmacy chain stores operated by NVIDIA and Tesla in North America.",
+      "b1": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0
+      },
+      "k5": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL",
+        "sufficient_evidence": false,
+        "sufficiency_reason": "Missing evidence coverage for key query entities: ['company:dac61a38b3d55e14', 'country:96b1ff0c47149efc']"
+      },
+      "k8": {
+        "outcome": "TP_correct_refusal",
+        "token_f1": 1.0,
+        "exact_match": 1.0,
+        "failure_mode": "CORRECT_REFUSAL"
+      }
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "question_id": "RSH-08",
+    "category": "relational_single_hop",
+    "question": "Which major investment bank provides financial and treasury services to Apple Inc.?",
+    "expected_answer": "JPMorgan Chase & Co. partners with Apple Inc. as a financial and banking services institution.",
+    "system_answer": "Insufficient evidence in the retrieved corpus.",
+    "failure_type": "false_refusal",
+    "retrieved_chunks": [
+      "doc:sec:f8641de8eec63d93:chunk:34",
+      "doc:sec:f4a1c47f51758a65:chunk:134",
+      "doc:sec:f4a1c47f51758a65:chunk:175",
+      "doc:sec:f4a1c47f51758a65:chunk:169",
+      "doc:sec:f4a1c47f51758a65:chunk:472",
+      "doc:sec:f4a1c47f51758a65:chunk:167",
+      "doc:sec:e0ba72210ca7deb2:chunk:70",
+      "doc:sec:e0ba72210ca7deb2:chunk:94"
+    ]
+  },
+  {
+    "question_id": "RMH-01",
+    "category": "relational_multi_hop",
+    "question": "How is NVIDIA connected to TSMC through supply and manufacturing relationships?",
+    "expected_answer": "NVIDIA is connected to TSMC as its primary third-party semiconductor foundry partner responsible for manufacturing advanced GPU chips.",
+    "system_answer": "The provided evidence does not contain information regarding NVIDIA's connection to TSMC through supply and manufacturing relationships.",
+    "failure_type": "false_refusal",
+    "retrieved_chunks": [
+      "doc:sec:98d8cee8a8ae0f7d:chunk:24",
+      "doc:sec:6aadaca6341c317e:chunk:35",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:131",
+      "doc:sec:878a73f0f4488fc2:chunk:44",
+      "doc:sec:7715829946225165:chunk:3",
+      "doc:sec:878a73f0f4488fc2:chunk:77",
+      "doc:sec:1ad2e96011122307:chunk:83",
+      "doc:sec:1ad2e96011122307:chunk:46"
+    ]
+  },
+  {
+    "question_id": "RMH-04",
+    "category": "relational_multi_hop",
+    "question": "Which technology competitor of Apple also partners with Apple for search distribution?",
+    "expected_answer": "Alphabet Inc. (Google) both competes with Apple in mobile platforms and operating systems and partners with Apple as the default Safari search provider.",
+    "system_answer": "Insufficient evidence in the retrieved corpus.",
+    "failure_type": "false_refusal",
+    "retrieved_chunks": [
+      "doc:sec:38008a9845a2c105:chunk:46",
+      "doc:sec:f8641de8eec63d93:chunk:45",
+      "doc:sec:e0ba72210ca7deb2:chunk:66",
+      "doc:sec:2fde24a7f31cff96:chunk:265",
+      "doc:sec:2fde24a7f31cff96:chunk:6",
+      "doc:sec:e0ba72210ca7deb2:chunk:124",
+      "doc:sec:38008a9845a2c105:chunk:36",
+      "doc:sec:6b5300f8289ff6c0:chunk:69"
+    ]
+  },
+  {
+    "question_id": "RMH-08",
+    "category": "relational_multi_hop",
+    "question": "What cloud competitor of Microsoft also supplies cloud computing infrastructure to mutual enterprise customers?",
+    "expected_answer": "Amazon.com, Inc. competes directly with Microsoft Azure through Amazon Web Services (AWS) in enterprise cloud services.",
+    "system_answer": "Insufficient evidence in the retrieved corpus.",
+    "failure_type": "false_refusal",
+    "retrieved_chunks": [
+      "doc:sec:98d8cee8a8ae0f7d:chunk:25",
+      "doc:sec:6a50d47d6a8dc43d:chunk:134",
+      "doc:sec:ae98d6934ba5fdd6:chunk:78",
+      "doc:sec:ae98d6934ba5fdd6:chunk:65",
+      "doc:sec:ae98d6934ba5fdd6:chunk:79",
+      "doc:sec:6a50d47d6a8dc43d:chunk:22",
+      "doc:sec:ae98d6934ba5fdd6:chunk:79",
+      "doc:sec:ae98d6934ba5fdd6:chunk:79"
+    ]
+  },
+  {
+    "question_id": "CDC-02",
+    "category": "cross_document_comparative",
+    "question": "How do Microsoft and Amazon describe their competition in cloud services across their separate SEC filings?",
+    "expected_answer": "Microsoft documents competition with Amazon across enterprise cloud computing, while Amazon filings identify Microsoft as a primary commercial cloud competitor.",
+    "system_answer": "The provided evidence does not contain information describing how Microsoft or Amazon characterize their competition in cloud services within SEC filings.",
+    "failure_type": "false_refusal",
+    "retrieved_chunks": [
+      "doc:sec:98d8cee8a8ae0f7d:chunk:25",
+      "doc:sec:91f8f44052e2c383:chunk:150",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:26",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:26",
+      "doc:sec:e312824081333ffd:chunk:33",
+      "doc:sec:ae98d6934ba5fdd6:chunk:30",
+      "doc:sec:8bd1c03865e238f6:chunk:33",
+      "doc:sec:91f8f44052e2c383:chunk:150"
+    ]
+  }
+]

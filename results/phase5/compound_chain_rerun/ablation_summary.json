@@ -1,0 +1,85 @@
+{
+  "run_id": "ablation_20261018_103441",
+  "timestamp": "2026-10-18T10:34:41.386832+00:00",
+  "total_benchmark_questions": 64,
+  "selected_configurations": [
+    "CFG0",
+    "CFG2"
+  ],
+  "retrieval_mode": "fresh_retrieval_in_memory_cached",
+  "reference_time_policy": "strict_point_in_time",
+  "configurations": {
+    "CFG0": {
+      "config": {
+        "config_id": "CFG0",
+        "name": "Phase 5 Strict Gate (Baseline)",
+        "description": "Strict entity (100%), strict relationship & compound chains, strict hop depth.",
+        "entity_mode": "strict",
+        "relationship_mode": "strict",
+        "hop_mode": "strict",
+        "gate_enabled": true
+      },
+      "confusion_matrix": {
+        "TP": 13,
+        "FN": 1,
+        "FP": 28,
+        "TN": 22,
+        "total_questions": 64,
+        "total_answerable": 50,
+        "total_unanswerable": 14
+      },
+      "classification_metrics": {
+        "refusal_precision": 0.3171,
+        "refusal_recall": 0.9286,
+        "refusal_f1": 0.4727,
+        "decision_accuracy": 0.5469,
+        "hallucination_rate_on_unanswerable": 0.0714,
+        "false_refusal_rate_on_answerable": 0.56,
+        "answer_coverage_on_answerable": 0.44
+      },
+      "generation_metrics": {
+        "mean_token_f1_all": 0.3309,
+        "mean_token_f1_answerable": 0.1635,
+        "mean_token_f1_unanswerable": 0.9286,
+        "mean_exact_match": 0.2188,
+        "validation_pass_rate": 0.9219
+      }
+    },
+    "CFG2": {
+      "config": {
+        "config_id": "CFG2",
+        "name": "Partial Entity + Soft Hop",
+        "description": "Partial entity coverage (>=50%), strict relationship, soft hop depth.",
+        "entity_mode": "partial",
+        "relationship_mode": "strict",
+        "hop_mode": "soft",
+        "gate_enabled": true
+      },
+      "confusion_matrix": {
+        "TP": 11,
+        "FN": 3,
+        "FP": 11,
+        "TN": 39,
+        "total_questions": 64,
+        "total_answerable": 50,
+        "total_unanswerable": 14
+      },
+      "classification_metrics": {
+        "refusal_precision": 0.5,
+        "refusal_recall": 0.7857,
+        "refusal_f1": 0.6111,
+        "decision_accuracy": 0.7812,
+        "hallucination_rate_on_unanswerable": 0.2143,
+        "false_refusal_rate_on_answerable": 0.22,
+        "answer_coverage_on_answerable": 0.78
+      },
+      "generation_metrics": {
+        "mean_token_f1_all": 0.3801,
+        "mean_token_f1_answerable": 0.2634,
+        "mean_token_f1_unanswerable": 0.7967,
+        "mean_exact_match": 0.1875,
+        "validation_pass_rate": 0.875
+      }
+    }
+  }
+}

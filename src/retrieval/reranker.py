@@ -7,6 +7,7 @@ from typing import Any
 from src.data.graph.snapshot import is_available, parse_datetime
 from src.retrieval.evidence import RetrievalEvidence
 from src.retrieval.graph import detect_relationship_intents
+from src.retrieval.hybrid import apply_entity_balanced_allocation
 
 
 class BaseReranker:
@@ -18,6 +19,9 @@ class BaseReranker:
         candidates: list[RetrievalEvidence],
         top_k: int | None = None,
         reference_time: str | datetime | None = None,
+        balanced_reranking: bool = False,
+        target_entities: list[str] | None = None,
+        min_per_entity: int = 3,
     ) -> list[RetrievalEvidence]:
         raise NotImplementedError
 
@@ -31,6 +35,9 @@ class IdentityReranker(BaseReranker):
         candidates: list[RetrievalEvidence],
         top_k: int | None = None,
         reference_time: str | datetime | None = None,
+        balanced_reranking: bool = False,
+        target_entities: list[str] | None = None,
+        min_per_entity: int = 3,
     ) -> list[RetrievalEvidence]:
         # Filter temporally if reference_time provided
         if reference_time is not None:
@@ -79,6 +86,9 @@ class DeterministicReranker(BaseReranker):
         candidates: list[RetrievalEvidence],
         top_k: int | None = None,
         reference_time: str | datetime | None = None,
+        balanced_reranking: bool = False,
+        target_entities: list[str] | None = None,
+        min_per_entity: int = 3,
     ) -> list[RetrievalEvidence]:
         """
         Rerank retrieval evidence using multi-signal transparent scoring.
@@ -203,4 +213,12 @@ class DeterministicReranker(BaseReranker):
             results.append(item)
 
         k = top_k if top_k is not None else len(results)
+        if balanced_reranking and target_entities and len(target_entities) >= 2:
+            return apply_entity_balanced_allocation(
+                candidates=results,
+                target_entities=target_entities,
+                top_k=k,
+                min_per_entity=min_per_entity,
+            )
+
         return results[:k]

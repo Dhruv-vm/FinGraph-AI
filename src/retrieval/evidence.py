@@ -26,6 +26,9 @@ class GraphEvidence:
     publication_date: str | None = None
     fiscal_period: str | None = None
     properties: dict[str, Any] = field(default_factory=dict)
+    source_company: str | None = None
+    provenance_verified: bool = True
+    attribution_status: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -51,6 +54,9 @@ class RetrievalEvidence:
     original_scores: dict[str, float] = field(default_factory=dict)
     original_ranks: dict[str, int] = field(default_factory=dict)
     metadata: dict[str, Any] = field(default_factory=dict)
+    source_company: str | None = None
+    provenance_verified: bool = True
+    attribution_status: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

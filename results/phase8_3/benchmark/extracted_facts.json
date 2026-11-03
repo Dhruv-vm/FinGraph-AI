@@ -1,0 +1,2142 @@
+[
+ {
+  "company": "TSLA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:002322329d3f1ca5",
+  "publication_date": "2025-10-23",
+  "available_time": "2025-10-23T01:08:43+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025045968/tsla-20250930.htm",
+  "source_reference": "0001628280-25-045968",
+  "metric": "revenue",
+  "label": "Total revenues",
+  "extraction": {
+   "value": 28095.0,
+   "other": 25182.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": "11 1,380 Total automotive revenues 21,205 20,016 51,833 57,272 Energy generation and storage 3,415 2,376 8,934 7,025 Services and other 3,475 2,790 9,159 7,686 Total revenues 28,095 25,182 69,926 71,983 "
+  }
+ },
+ {
+  "company": "TSLA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:002322329d3f1ca5",
+  "publication_date": "2025-10-23",
+  "available_time": "2025-10-23T01:08:43+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025045968/tsla-20250930.htm",
+  "source_reference": "0001628280-25-045968",
+  "metric": "net_income",
+  "label": "Net income attributable to common stockholders",
+  "extraction": {
+   "value": 1373.0,
+   "other": 2173.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": ",456 Net income 1,389 2,189 2,999 5,010 Net income attributable to noncontrolling interests and redeemable noncontrolling interests in subsidiaries 16 16 45 47 Net income attributable to common stockholders $ 1,373 $ 2,173 $ 2,954 $ 4,963 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-K",
+  "document_id": "doc:sec:01d6c0ca5ed3b2ec",
+  "publication_date": "2026-02-05",
+  "available_time": "2026-02-05T02:56:03+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm",
+  "source_reference": "0001652044-26-000018",
+  "metric": "revenue",
+  "label": "Revenues",
+  "extraction": null
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-K",
+  "document_id": "doc:sec:01d6c0ca5ed3b2ec",
+  "publication_date": "2026-02-05",
+  "available_time": "2026-02-05T02:56:03+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm",
+  "source_reference": "0001652044-26-000018",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": null
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:076412151b515b96",
+  "publication_date": "2025-04-30",
+  "available_time": "2025-04-30T20:08:52+00:00",
+  "fiscal_period": "2025-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017025061046/msft-20250331.htm",
+  "source_reference": "0000950170-25-061046",
+  "metric": "revenue",
+  "label": "Total revenue",
+  "extraction": {
+   "value": 70066.0,
+   "other": 61858.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Income Statements",
+   "context": " March 31, Nine Months Ended March 31, 2025 2024 2025 2024 Revenue: Product $ 15,319 $ 17,080 $ 46,810 $ 51,556 Service and other 54,747 44,778 158,473 128,839 Total revenue 70,066 61,858 205,283 180,395 "
+  }
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:076412151b515b96",
+  "publication_date": "2025-04-30",
+  "available_time": "2025-04-30T20:08:52+00:00",
+  "fiscal_period": "2025-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017025061046/msft-20250331.htm",
+  "source_reference": "0000950170-25-061046",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 25824.0,
+   "other": 21939.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Income Statements",
+   "context": "ther expense, net ( 623 ) ( 854 ) ( 3,194 ) ( 971 ) Income before income taxes 31,377 26,727 91,011 80,537 Provision for income taxes 5,553 4,788 16,412 14,437 Net income $ 25,824 $ 21,939 $ 74,599 $ 66,100 "
+  }
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:0ca5170772846f78",
+  "publication_date": "2025-10-22",
+  "available_time": "2025-10-22T20:04:17+00:00",
+  "fiscal_period": "2025-09-28",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040625000209/jnj-20250928.htm",
+  "source_reference": "0000200406-25-000209",
+  "metric": "revenue",
+  "label": "Sales to customers(?: \\(Note \\d+\\))?",
+  "extraction": null
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:0ca5170772846f78",
+  "publication_date": "2025-10-22",
+  "available_time": "2025-10-22T20:04:17+00:00",
+  "fiscal_period": "2025-09-28",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040625000209/jnj-20250928.htm",
+  "source_reference": "0000200406-25-000209",
+  "metric": "net_income",
+  "label": "Net earnings",
+  "extraction": null
+ },
+ {
+  "company": "TSLA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:0d39f6127b5a9c25",
+  "publication_date": "2026-04-23",
+  "available_time": "2026-04-23T01:43:00+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026673/tsla-20260331.htm",
+  "source_reference": "0001628280-26-026673",
+  "metric": "revenue",
+  "label": "Total revenues",
+  "extraction": {
+   "value": 22387.0,
+   "other": 19335.0,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": "ory credits 380 595 Automotive leasing 381 447 Total automotive revenues 16,234 13,967 Energy generation and storage 2,408 2,730 Services and other 3,745 2,638 Total revenues 22,387 19,335 "
+  }
+ },
+ {
+  "company": "TSLA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:0d39f6127b5a9c25",
+  "publication_date": "2026-04-23",
+  "available_time": "2026-04-23T01:43:00+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026673/tsla-20260331.htm",
+  "source_reference": "0001628280-26-026673",
+  "metric": "net_income",
+  "label": "Net income attributable to common stockholders",
+  "extraction": {
+   "value": 477.0,
+   "other": 409.0,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": "n for income taxes 257 169 Net income 491 420 Net income attributable to noncontrolling interests and redeemable noncontrolling interests in subsidiaries 14 11 Net income attributable to common stockholders $ 477 $ 409 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:14da3f4a15ec8cc9",
+  "publication_date": "2026-01-30",
+  "available_time": "2026-01-30T11:01:32+00:00",
+  "fiscal_period": "2025-12-27",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000006/aapl-20251227.htm",
+  "source_reference": "0000320193-26-000006",
+  "metric": "revenue",
+  "label": "Total net sales",
+  "extraction": {
+   "value": 143756.0,
+   "other": 124300.0,
+   "years": [
+    "2025",
+    "2024"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF OPERATIONS",
+   "context": "ected in thousands, and per-share amounts) Three Months Ended December 27, 2025 December 28, 2024 Net sales: Products $ 113,743 $ 97,960 Services 30,013 26,340 Total net sales 143,756 124,300 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:14da3f4a15ec8cc9",
+  "publication_date": "2026-01-30",
+  "available_time": "2026-01-30T11:01:32+00:00",
+  "fiscal_period": "2025-12-27",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000006/aapl-20251227.htm",
+  "source_reference": "0000320193-26-000006",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 42097.0,
+   "other": 36330.0,
+   "years": [
+    "2025",
+    "2024"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF OPERATIONS",
+   "context": "ting income 50,852 42,832 Other income/(expense), net 150 ( 248 ) Income before provision for income taxes 51,002 42,584 Provision for income taxes 8,905 6,254 Net income $ 42,097 $ 36,330 "
+  }
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:1994c6bc1e189856",
+  "publication_date": "2026-04-22",
+  "available_time": "2026-04-22T20:02:41+00:00",
+  "fiscal_period": "2026-03-29",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000087/jnj-20260329.htm",
+  "source_reference": "0000200406-26-000087",
+  "metric": "revenue",
+  "label": "Sales to customers(?: \\(Note \\d+\\))?",
+  "extraction": null
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:1994c6bc1e189856",
+  "publication_date": "2026-04-22",
+  "available_time": "2026-04-22T20:02:41+00:00",
+  "fiscal_period": "2026-03-29",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000087/jnj-20260329.htm",
+  "source_reference": "0000200406-26-000087",
+  "metric": "net_income",
+  "label": "Net earnings",
+  "extraction": null
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:1ad2e96011122307",
+  "publication_date": "2026-08-26",
+  "available_time": "2026-08-26T20:36:00+00:00",
+  "fiscal_period": "2026-07-26",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+  "source_reference": "0001045810-26-000075",
+  "metric": "revenue",
+  "label": "Revenue",
+  "extraction": {
+   "value": 96221.0,
+   "other": 46743.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": "d Statements of Income (In millions, except per share data) (Unaudited) Three Months Ended Six Months Ended Jul 26, 2026 Jul 27, 2025 Jul 26, 2026 Jul 27, 2025 Revenue $ 96,221 $ 46,743 $ 177,837 $ 90,805 "
+  }
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:1ad2e96011122307",
+  "publication_date": "2026-08-26",
+  "available_time": "2026-08-26T20:36:00+00:00",
+  "fiscal_period": "2026-07-26",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+  "source_reference": "0001045810-26-000075",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 59688.0,
+   "other": 26422.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": "40 117,270 50,078 Other income, net 7,773 2,766 24,140 3,039 Income before income tax 71,507 31,206 141,410 53,117 Income tax expense 11,819 4,784 23,400 7,920 Net income $ 59,688 $ 26,422 $ 118,010 $ 45,197 "
+  }
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-K",
+  "document_id": "doc:sec:265db7f85d25dfc6",
+  "publication_date": "2026-02-11",
+  "available_time": "2026-02-11T21:06:11+00:00",
+  "fiscal_period": "2025-12-28",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm",
+  "source_reference": "0000200406-26-000016",
+  "metric": "revenue",
+  "label": "Sales to customers(?: \\(Note \\d+\\))?",
+  "extraction": {
+   "value": 94193.0,
+   "other": 88821.0,
+   "years": [
+    "2025",
+    "2024",
+    "2023"
+   ],
+   "heading": "Consolidated Statement of Earnings",
+   "context": "ort 43 Johnson & Johnson and subsidiaries consolidated statements of earnings (Dollars and Shares in Millions Except Per Share Amounts) (Note 1) 2025 2024 2023 Sales to customers $ 94,193 88,821 85,159 "
+  }
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-K",
+  "document_id": "doc:sec:265db7f85d25dfc6",
+  "publication_date": "2026-02-11",
+  "available_time": "2026-02-11T21:06:11+00:00",
+  "fiscal_period": "2025-12-28",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm",
+  "source_reference": "0000200406-26-000016",
+  "metric": "net_income",
+  "label": "Net earnings",
+  "extraction": {
+   "value": 26804.0,
+   "other": 14066.0,
+   "years": [
+    "2025",
+    "2024",
+    "2023"
+   ],
+   "heading": "Consolidated statements of earnings",
+   "context": "te 8) 5,777 2,621 1,736 Net earnings from continuing operations 26,804 14,066 13,326 Net earnings from discontinued operations, net of tax (Note 21) \u2014 \u2014 21,827 Net earnings $ 26,804 14,066 35,153 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:294224342b0772de",
+  "publication_date": "2026-04-30",
+  "available_time": "2026-04-29T23:54:11+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026028526/meta-20260331.htm",
+  "source_reference": "0001628280-26-028526",
+  "metric": "revenue",
+  "label": "Revenue",
+  "extraction": {
+   "value": 56311.0,
+   "other": 42314.0,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF INCOME",
+   "context": "CONSOLIDATED STATEMENTS OF INCOME (In millions, except per share amounts) (Unaudited) Three Months Ended March 31, 2026 2025 Revenue $ 56,311 $ 42,314 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:294224342b0772de",
+  "publication_date": "2026-04-30",
+  "available_time": "2026-04-29T23:54:11+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026028526/meta-20260331.htm",
+  "source_reference": "0001628280-26-028526",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 26773.0,
+   "other": 16644.0,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF INCOME",
+   "context": "872 17,555 Interest and other income (expense), net ( 1,120 ) 827 Income before income taxes 21,752 18,382 Provision (benefit) for income taxes ( 5,021 ) 1,738 Net income $ 26,773 $ 16,644 "
+  }
+ },
+ {
+  "company": "JPM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:2ca3cad539c4a3f1",
+  "publication_date": "2026-08-06",
+  "available_time": "2026-08-06T20:19:03+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm",
+  "source_reference": "0001628280-26-054343",
+  "metric": "revenue",
+  "label": "Total net revenue",
+  "extraction": {
+   "value": 20272.0,
+   "other": 18847.0,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "Selected income statement data",
+   "context": "0 (4) All other income (a) 1,814 1,420 28 3,499 2,743 28 Noninterest revenue 5,180 4,452 16 10,010 8,623 16 Net interest income 15,092 14,395 5 29,830 28,537 5 Total net revenue 20,272 18,847 8 39,840 37,160 7 "
+  }
+ },
+ {
+  "company": "JPM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:2ca3cad539c4a3f1",
+  "publication_date": "2026-08-06",
+  "available_time": "2026-08-06T20:19:03+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm",
+  "source_reference": "0001628280-26-054343",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 21155.0,
+   "other": 16494.0,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated statements of income",
+   "context": "849 5,022 6,154 Income before income tax expense 27,516 20,479 17,160 18,743 18,284 47,995 36,692 Income tax expense 6,361 3,985 4,135 4,350 3,297 10,346 7,062 Net income $ 21,155 $ 16,494 $ 13,025 $ 14,393 $ 14,987 $ 37,649 $ 29,630 "
+  }
+ },
+ {
+  "company": "JPM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:2fde24a7f31cff96",
+  "publication_date": "2026-05-01",
+  "available_time": "2026-05-01T20:18:43+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026029344/jpm-20260331.htm",
+  "source_reference": "0001628280-26-029344",
+  "metric": "revenue",
+  "label": "Total net revenue",
+  "extraction": {
+   "value": 19568.0,
+   "other": 18313.0,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "Selected income statement data",
+   "context": "nd related income 303 263 15 Card income 592 653 (9) All other income (a) 1,685 1,323 27 Noninterest revenue 4,830 4,171 16 Net interest income 14,738 14,142 4 Total net revenue 19,568 18,313 7 "
+  }
+ },
+ {
+  "company": "JPM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:2fde24a7f31cff96",
+  "publication_date": "2026-05-01",
+  "available_time": "2026-05-01T20:18:43+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026029344/jpm-20260331.htm",
+  "source_reference": "0001628280-26-029344",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 4976.0,
+   "other": 4425.0,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "Selected income statement data",
+   "context": "n expense (b)(c) 6,357 5,482 (e) 16 Total noninterest expense 10,979 9,857 11 Income before income tax expense 6,539 5,827 12 Income tax expense 1,563 1,402 11 Net income $ 4,976 $ 4,425 12 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:38008a9845a2c105",
+  "publication_date": "2026-07-31",
+  "available_time": "2026-07-31T10:01:02+00:00",
+  "fiscal_period": "2026-06-27",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm",
+  "source_reference": "0000320193-26-000020",
+  "metric": "revenue",
+  "label": "Total net sales",
+  "extraction": {
+   "value": 109417.0,
+   "other": 94036.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF OPERATIONS",
+   "context": "hs Ended June 27, 2026 June 28, 2025 June 27, 2026 June 28, 2025 Net sales: Products $ 78,678 $ 66,613 $ 272,629 $ 233,287 Services 30,739 27,423 91,728 80,408 Total net sales 109,417 94,036 364,357 313,695 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:38008a9845a2c105",
+  "publication_date": "2026-07-31",
+  "available_time": "2026-07-31T10:01:02+00:00",
+  "fiscal_period": "2026-06-27",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm",
+  "source_reference": "0000320193-26-000020",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 29789.0,
+   "other": 23434.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF OPERATIONS",
+   "context": "xpense), net 572 ( 171 ) 670 ( 698 ) Income before provision for income taxes 36,267 28,031 123,102 99,925 Provision for income taxes 6,478 4,597 21,638 15,381 Net income $ 29,789 $ 23,434 $ 101,464 $ 84,544 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:3cbe837756668d55",
+  "publication_date": "2025-11-03",
+  "available_time": "2025-11-03T17:45:47+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000061/xom-20250930.htm",
+  "source_reference": "0000034088-25-000061",
+  "metric": "revenue",
+  "label": "Total revenues and other income",
+  "extraction": {
+   "value": 85294.0,
+   "other": 90016.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated Statement of Income",
+   "context": "r income Sales and other operating revenue 83,331 87,792 243,866 258,189 Income from equity affiliates 1,267 1,481 4,098 5,067 Other income 696 743 1,966 2,903 Total revenues and other income 85,294 90,016 249,930 266,159 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:3cbe837756668d55",
+  "publication_date": "2025-11-03",
+  "available_time": "2025-11-03T17:45:47+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000061/xom-20250930.htm",
+  "source_reference": "0000034088-25-000061",
+  "metric": "net_income",
+  "label": "Net income(?: \\(loss\\))? attributable to ExxonMobil",
+  "extraction": {
+   "value": 7548.0,
+   "other": 8610.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated Statement of Income",
+   "context": "952 Net income (loss) including noncontrolling interests 7,768 8,971 23,155 27,108 Net income (loss) attributable to noncontrolling interests 220 361 812 1,038 Net income (loss) attributable to ExxonMobil 7,548 8,610 22,343 26,070 "
+  }
+ },
+ {
+  "company": "JPM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:3d8599c3f057a3df",
+  "publication_date": "2025-11-04",
+  "available_time": "2025-11-04T21:18:08+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm",
+  "source_reference": "0001628280-25-048859",
+  "metric": "revenue",
+  "label": "Total net revenue",
+  "extraction": {
+   "value": 46427.0,
+   "other": 44912.0,
+   "years": [
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated statements of income",
+   "context": ", except per share, ratio, employee data and where otherwise noted) Nine months ended Sep 30, 3Q25 2Q25 1Q25 4Q24 3Q24 2025 2024 Selected income statement data Total net revenue $ 46,427 $ 44,912 $ 45,310 $ 42,768 $ 42,654 $ 136,649 $ 134,788 "
+  }
+ },
+ {
+  "company": "JPM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:3d8599c3f057a3df",
+  "publication_date": "2025-11-04",
+  "available_time": "2025-11-04T21:18:08+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm",
+  "source_reference": "0001628280-25-048859",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 14393.0,
+   "other": 14987.0,
+   "years": [
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated statements of income",
+   "context": "11 9,557 8,047 Income before income tax expense 18,743 18,284 18,408 17,375 16,978 55,435 57,706 Income tax expense 4,350 3,297 3,765 3,370 4,080 11,412 13,240 Net income $ 14,393 $ 14,987 $ 14,643 $ 14,005 $ 12,898 $ 44,023 $ 44,466 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-K",
+  "document_id": "doc:sec:41306444341a762f",
+  "publication_date": "2026-02-18",
+  "available_time": "2026-02-18T21:06:52+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000045/xom-20251231.htm",
+  "source_reference": "0000034088-26-000045",
+  "metric": "revenue",
+  "label": "Total revenues and other income",
+  "extraction": {
+   "value": 332238.0,
+   "other": 349585.0,
+   "years": [
+    "2025",
+    "2024",
+    "2023"
+   ],
+   "heading": "CONSOLIDATED STATEMENT OF INCOME",
+   "context": "s and other income Sales and other operating revenue 3 323,905 339,247 334,697 Income from equity affiliates 8 5,064 6,194 6,385 Other income 3,269 4,144 3,500 Total revenues and other income 332,238 349,585 344,582 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-K",
+  "document_id": "doc:sec:41306444341a762f",
+  "publication_date": "2026-02-18",
+  "available_time": "2026-02-18T21:06:52+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000045/xom-20251231.htm",
+  "source_reference": "0000034088-26-000045",
+  "metric": "net_income",
+  "label": "Net income(?: \\(loss\\))? attributable to ExxonMobil",
+  "extraction": {
+   "value": 28844.0,
+   "other": 33680.0,
+   "years": [
+    "2025",
+    "2024",
+    "2023"
+   ],
+   "heading": "Statement of Income",
+   "context": "of Contents FINANCIAL INFORMATION (millions of dollars, except where stated otherwise) 2025 2024 2023 Sales and other operating revenue 323,905 339,247 334,697 Net income (loss) attributable to ExxonMobil 28,844 33,680 36,010 "
+  }
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:43c8791ef0cff359",
+  "publication_date": "2026-07-23",
+  "available_time": "2026-07-23T20:04:19+00:00",
+  "fiscal_period": "2026-06-28",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000153/jnj-20260628.htm",
+  "source_reference": "0000200406-26-000153",
+  "metric": "revenue",
+  "label": "Sales to customers(?: \\(Note \\d+\\))?",
+  "extraction": null
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:43c8791ef0cff359",
+  "publication_date": "2026-07-23",
+  "available_time": "2026-07-23T20:04:19+00:00",
+  "fiscal_period": "2026-06-28",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000153/jnj-20260628.htm",
+  "source_reference": "0000200406-26-000153",
+  "metric": "net_income",
+  "label": "Net earnings",
+  "extraction": null
+ },
+ {
+  "company": "TSLA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:4e6f640bc97ceca9",
+  "publication_date": "2025-07-24",
+  "available_time": "2025-07-24T00:23:31+00:00",
+  "fiscal_period": "2025-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025035806/tsla-20250630.htm",
+  "source_reference": "0001628280-25-035806",
+  "metric": "revenue",
+  "label": "Total revenues",
+  "extraction": {
+   "value": 22496.0,
+   "other": 25500.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": " 882 934 Total automotive revenues 16,661 19,878 30,628 37,256 Energy generation and storage 2,789 3,014 5,519 4,649 Services and other 3,046 2,608 5,684 4,896 Total revenues 22,496 25,500 41,831 46,801 "
+  }
+ },
+ {
+  "company": "TSLA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:4e6f640bc97ceca9",
+  "publication_date": "2025-07-24",
+  "available_time": "2025-07-24T00:23:31+00:00",
+  "fiscal_period": "2025-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025035806/tsla-20250630.htm",
+  "source_reference": "0001628280-25-035806",
+  "metric": "net_income",
+  "label": "Net income attributable to common stockholders",
+  "extraction": {
+   "value": 1172.0,
+   "other": 1400.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": " 854 Net income 1,190 1,416 1,610 2,821 Net income attributable to noncontrolling interests and redeemable noncontrolling interests in subsidiaries 18 16 29 31 Net income attributable to common stockholders $ 1,172 $ 1,400 $ 1,581 $ 2,790 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:5d1c9c78801bcdf2",
+  "publication_date": "2026-07-23",
+  "available_time": "2026-07-23T01:15:54+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm",
+  "source_reference": "0001652044-26-000071",
+  "metric": "revenue",
+  "label": "Revenues",
+  "extraction": {
+   "value": 119796.0,
+   "other": 96428.0,
+   "years": [
+    "2025",
+    "2026",
+    "2025",
+    "2026"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": " CONSOLIDATED STATEMENTS OF INCOME (in millions, except per share amounts; unaudited) Three Months Ended Six Months Ended June 30, June 30, 2025 2026 2025 2026 Revenues $ 96,428 $ 119,796 $ 186,662 $ 229,692 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:5d1c9c78801bcdf2",
+  "publication_date": "2026-07-23",
+  "available_time": "2026-07-23T01:15:54+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm",
+  "source_reference": "0001652044-26-000071",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 112193.0,
+   "other": 28196.0,
+   "years": [
+    "2025",
+    "2026",
+    "2025",
+    "2026"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": "ncome (expense), net 2,662 97,983 13,845 135,699 Income before income taxes 33,933 138,753 75,722 216,165 Provision for income taxes 5,737 26,560 12,986 41,394 Net income 28,196 112,193 62,736 174,771 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:6572663282945293",
+  "publication_date": "2025-07-24",
+  "available_time": "2025-07-23T23:44:01+00:00",
+  "fiscal_period": "2025-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204425000062/goog-20250630.htm",
+  "source_reference": "0001652044-25-000062",
+  "metric": "revenue",
+  "label": "Revenues",
+  "extraction": {
+   "value": 96428.0,
+   "other": 84742.0,
+   "years": [
+    "2024",
+    "2025",
+    "2024",
+    "2025"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF INCOME",
+   "context": "CONSOLIDATED STATEMENTS OF INCOME (in millions, except per share amounts; unaudited) Three Months Ended Six Months Ended June 30, June 30, 2024 2025 2024 2025 Revenues $ 84,742 $ 96,428 $ 165,281 $ 186,662 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:6572663282945293",
+  "publication_date": "2025-07-24",
+  "available_time": "2025-07-23T23:44:01+00:00",
+  "fiscal_period": "2025-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204425000062/goog-20250630.htm",
+  "source_reference": "0001652044-25-000062",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 28196.0,
+   "other": 23619.0,
+   "years": [
+    "2024",
+    "2025",
+    "2024",
+    "2025"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF INCOME",
+   "context": "7 Other income (expense), net 126 2,662 2,969 13,845 Income before income taxes 27,551 33,933 55,866 75,722 Provision for income taxes 3,932 5,737 8,585 12,986 Net income $ 23,619 $ 28,196 $ 47,281 $ 62,736 "
+  }
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-K",
+  "document_id": "doc:sec:6a50d47d6a8dc43d",
+  "publication_date": "2026-07-29",
+  "available_time": "2026-07-29T20:08:01+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+  "source_reference": "0001193125-26-323660",
+  "metric": "revenue",
+  "label": "Total revenue",
+  "extraction": null
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-K",
+  "document_id": "doc:sec:6a50d47d6a8dc43d",
+  "publication_date": "2026-07-29",
+  "available_time": "2026-07-29T20:08:01+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+  "source_reference": "0001193125-26-323660",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": null
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:6aadaca6341c317e",
+  "publication_date": "2025-08-27",
+  "available_time": "2025-08-27T20:52:07+00:00",
+  "fiscal_period": "2025-07-27",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm",
+  "source_reference": "0001045810-25-000209",
+  "metric": "revenue",
+  "label": "Revenue",
+  "extraction": {
+   "value": 46743.0,
+   "other": 30040.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": "d Statements of Income (In millions, except per share data) (Unaudited) Three Months Ended Six Months Ended Jul 27, 2025 Jul 28, 2024 Jul 27, 2025 Jul 28, 2024 Revenue $ 46,743 $ 30,040 $ 90,805 $ 56,084 "
+  }
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:6aadaca6341c317e",
+  "publication_date": "2025-08-27",
+  "available_time": "2025-08-27T20:52:07+00:00",
+  "fiscal_period": "2025-07-27",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000209/nvda-20250727.htm",
+  "source_reference": "0001045810-25-000209",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 26422.0,
+   "other": 16599.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": "2,055 264 Total other income (expense), net 2,766 572 3,039 942 Income before income tax 31,206 19,214 53,117 36,493 Income tax expense 4,784 2,615 7,920 5,013 Net income $ 26,422 $ 16,599 $ 45,197 $ 31,480 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:6b5300f8289ff6c0",
+  "publication_date": "2026-07-30",
+  "available_time": "2026-07-29T22:58:51+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm",
+  "source_reference": "0001628280-26-050705",
+  "metric": "revenue",
+  "label": "Revenue",
+  "extraction": {
+   "value": 60801.0,
+   "other": 47516.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF INCOME",
+   "context": "CONSOLIDATED STATEMENTS OF INCOME (In millions, except per share amounts) (Unaudited) Three Months Ended June 30, Six Months Ended June 30, 2026 2025 2026 2025 Revenue $ 60,801 $ 47,516 $ 117,111 $ 89,830 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:6b5300f8289ff6c0",
+  "publication_date": "2026-07-30",
+  "available_time": "2026-07-29T22:58:51+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm",
+  "source_reference": "0001628280-26-050705",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 15848.0,
+   "other": 18337.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF INCOME",
+   "context": " (expense), net ( 19 ) 93 ( 1,139 ) 919 Income before income taxes 18,756 20,534 40,508 38,916 Provision (benefit) for income taxes 2,908 2,197 ( 2,113 ) 3,935 Net income $ 15,848 $ 18,337 $ 42,621 $ 34,981 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:7a93e4a643b9ddb1",
+  "publication_date": "2025-07-31",
+  "available_time": "2025-07-31T00:02:12+00:00",
+  "fiscal_period": "2025-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828025036791/meta-20250630.htm",
+  "source_reference": "0001628280-25-036791",
+  "metric": "revenue",
+  "label": "Revenue",
+  "extraction": {
+   "value": 47516.0,
+   "other": 39071.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF INCOME",
+   "context": "CONSOLIDATED STATEMENTS OF INCOME (In millions, except per share amounts) (Unaudited) Three Months Ended June 30, Six Months Ended June 30, 2025 2024 2025 2024 Revenue $ 47,516 $ 39,071 $ 89,830 $ 75,527 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:7a93e4a643b9ddb1",
+  "publication_date": "2025-07-31",
+  "available_time": "2025-07-31T00:02:12+00:00",
+  "fiscal_period": "2025-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828025036791/meta-20250630.htm",
+  "source_reference": "0001628280-25-036791",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 18337.0,
+   "other": 13465.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF INCOME",
+   "context": "st and other income, net 93 259 919 624 Income before provision for income taxes 20,534 15,106 38,916 29,289 Provision for income taxes 2,197 1,641 3,935 3,455 Net income $ 18,337 $ 13,465 $ 34,981 $ 25,834 "
+  }
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:8116b3870cc9f4b2",
+  "publication_date": "2026-07-31",
+  "available_time": "2026-07-30T22:11:13+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+  "source_reference": "0001018724-26-000026",
+  "metric": "revenue",
+  "label": "Total net sales",
+  "extraction": {
+   "value": 200606.0,
+   "other": 167702.0,
+   "years": [
+    "2025",
+    "2026",
+    "2025",
+    "2026"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": "June 30, Six Months Ended June 30, 2025 2026 2025 2026 Net product sales $ 68,246 $ 77,602 $ 132,216 $ 148,906 Net service sales 99,456 123,004 191,153 233,219 Total net sales 167,702 200,606 323,369 382,125 "
+  }
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:8116b3870cc9f4b2",
+  "publication_date": "2026-07-31",
+  "available_time": "2026-07-30T22:11:13+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+  "source_reference": "0001018724-26-000026",
+  "metric": "net_income",
+  "label": "Net income(?: \\(loss\\))?",
+  "extraction": {
+   "value": 62647.0,
+   "other": 18164.0,
+   "years": [
+    "2025",
+    "2026",
+    "2025",
+    "2026"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": "25 2026 2025 2026 CASH, CASH EQUIVALENTS, AND RESTRICTED CASH, BEGINNING OF PERIOD $ 69,893 $ 104,692 $ 82,312 $ 90,106 $ 71,673 $ 61,453 OPERATING ACTIVITIES: Net income 18,164 62,647 35,291 92,902 70,623 135,281 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:828d01e2a9ed0651",
+  "publication_date": "2026-04-30",
+  "available_time": "2026-04-30T01:02:11+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm",
+  "source_reference": "0001652044-26-000048",
+  "metric": "revenue",
+  "label": "Revenues",
+  "extraction": {
+   "value": 109896.0,
+   "other": 90234.0,
+   "years": [
+    "2025",
+    "2026"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": "ontents Alphabet Inc. Alphabet Inc. CONSOLIDATED STATEMENTS OF INCOME (in millions, except per share amounts; unaudited) Three Months Ended March 31, 2025 2026 Revenues $ 90,234 $ 109,896 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:828d01e2a9ed0651",
+  "publication_date": "2026-04-30",
+  "available_time": "2026-04-30T01:02:11+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm",
+  "source_reference": "0001652044-26-000048",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 62578.0,
+   "other": 34540.0,
+   "years": [
+    "2025",
+    "2026"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": "Income from operations 30,606 39,696 Other income (expense), net 11,183 37,716 Income before income taxes 41,789 77,412 Provision for income taxes 7,249 14,834 Net income $ 34,540 $ 62,578 "
+  }
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:878a73f0f4488fc2",
+  "publication_date": "2026-05-20",
+  "available_time": "2026-05-20T20:35:52+00:00",
+  "fiscal_period": "2026-04-26",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
+  "source_reference": "0001045810-26-000052",
+  "metric": "revenue",
+  "label": "Revenue",
+  "extraction": {
+   "value": 81615.0,
+   "other": 44062.0,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": "tion and Subsidiaries Condensed Consolidated Statements of Income (In millions, except per share data) (Unaudited) Three Months Ended Apr 26, 2026 Apr 27, 2025 Revenue $ 81,615 $ 44,062 "
+  }
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:878a73f0f4488fc2",
+  "publication_date": "2026-05-20",
+  "available_time": "2026-05-20T20:35:52+00:00",
+  "fiscal_period": "2026-04-26",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
+  "source_reference": "0001045810-26-000052",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 58321.0,
+   "other": 18775.0,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": "2 ) ( 63 ) Other income (expense), net 15,929 ( 180 ) Total other income, net 16,367 272 Income before income tax 69,903 21,910 Income tax expense 11,582 3,135 Net income $ 58,321 $ 18,775 "
+  }
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:886e468248eb6185",
+  "publication_date": "2025-07-24",
+  "available_time": "2025-07-24T20:04:24+00:00",
+  "fiscal_period": "2025-06-29",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040625000178/jnj-20250629.htm",
+  "source_reference": "0000200406-25-000178",
+  "metric": "revenue",
+  "label": "Sales to customers(?: \\(Note \\d+\\))?",
+  "extraction": null
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:886e468248eb6185",
+  "publication_date": "2025-07-24",
+  "available_time": "2025-07-24T20:04:24+00:00",
+  "fiscal_period": "2025-06-29",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040625000178/jnj-20250629.htm",
+  "source_reference": "0000200406-25-000178",
+  "metric": "net_income",
+  "label": "Net earnings",
+  "extraction": null
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:88b6e7c0b3278b5e",
+  "publication_date": "2025-10-31",
+  "available_time": "2025-10-30T22:18:21+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872425000123/amzn-20250930.htm",
+  "source_reference": "0001018724-25-000123",
+  "metric": "revenue",
+  "label": "Total net sales",
+  "extraction": {
+   "value": 180169.0,
+   "other": 158877.0,
+   "years": [
+    "2024",
+    "2025",
+    "2024",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": "0, Nine Months Ended September 30, 2024 2025 2024 2025 Net product sales $ 67,601 $ 74,058 $ 190,085 $ 206,274 Net service sales 91,276 106,111 260,082 297,264 Total net sales 158,877 180,169 450,167 503,538 "
+  }
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:88b6e7c0b3278b5e",
+  "publication_date": "2025-10-31",
+  "available_time": "2025-10-30T22:18:21+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872425000123/amzn-20250930.htm",
+  "source_reference": "0001018724-25-000123",
+  "metric": "net_income",
+  "label": "Net income(?: \\(loss\\))?",
+  "extraction": {
+   "value": 21187.0,
+   "other": 15328.0,
+   "years": [
+    "2024",
+    "2025",
+    "2024",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": "024 2025 2024 2025 CASH, CASH EQUIVALENTS, AND RESTRICTED CASH, BEGINNING OF PERIOD $ 71,673 $ 61,453 $ 73,890 $ 82,312 $ 50,081 $ 78,677 OPERATING ACTIVITIES: Net income 15,328 21,187 39,244 56,478 49,868 76,482 "
+  }
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:8bd1c03865e238f6",
+  "publication_date": "2026-04-29",
+  "available_time": "2026-04-29T20:06:24+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526191507/msft-20260331.htm",
+  "source_reference": "0001193125-26-191507",
+  "metric": "revenue",
+  "label": "Total revenue",
+  "extraction": {
+   "value": 82886.0,
+   "other": 70066.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "Income Statements",
+   "context": " March 31, Nine Months Ended March 31, 2026 2025 2026 2025 Revenue: Product $ 15,089 $ 15,319 $ 47,462 $ 46,810 Service and other 67,797 54,747 194,370 158,473 Total revenue 82,886 70,066 241,832 205,283 "
+  }
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:8bd1c03865e238f6",
+  "publication_date": "2026-04-29",
+  "available_time": "2026-04-29T20:06:24+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526191507/msft-20260331.htm",
+  "source_reference": "0001193125-26-191507",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 31778.0,
+   "other": 25824.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "Income Statements",
+   "context": " income (expense), net 942 ( 623 ) 7,253 ( 3,194 ) Income before income taxes 39,340 31,377 121,887 91,011 Provision for income taxes 7,562 5,553 23,904 16,412 Net income $ 31,778 $ 25,824 $ 97,983 $ 74,599 "
+  }
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:8e00a3a5baa9aabe",
+  "publication_date": "2025-08-01",
+  "available_time": "2025-07-31T22:13:08+00:00",
+  "fiscal_period": "2025-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872425000086/amzn-20250630.htm",
+  "source_reference": "0001018724-25-000086",
+  "metric": "revenue",
+  "label": "Total net sales",
+  "extraction": {
+   "value": 167702.0,
+   "other": 147977.0,
+   "years": [
+    "2024",
+    "2025",
+    "2024",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": " June 30, Six Months Ended June 30, 2024 2025 2024 2025 Net product sales $ 61,569 $ 68,246 $ 122,484 $ 132,216 Net service sales 86,408 99,456 168,806 191,153 Total net sales 147,977 167,702 291,290 323,369 "
+  }
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:8e00a3a5baa9aabe",
+  "publication_date": "2025-08-01",
+  "available_time": "2025-07-31T22:13:08+00:00",
+  "fiscal_period": "2025-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872425000086/amzn-20250630.htm",
+  "source_reference": "0001018724-25-000086",
+  "metric": "net_income",
+  "label": "Net income(?: \\(loss\\))?",
+  "extraction": {
+   "value": 18164.0,
+   "other": 13485.0,
+   "years": [
+    "2024",
+    "2025",
+    "2024",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": "024 2025 2024 2025 CASH, CASH EQUIVALENTS, AND RESTRICTED CASH, BEGINNING OF PERIOD $ 73,332 $ 69,893 $ 73,890 $ 82,312 $ 50,067 $ 71,673 OPERATING ACTIVITIES: Net income 13,485 18,164 23,916 35,291 44,419 70,623 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:904c980e058e122b",
+  "publication_date": "2025-08-01",
+  "available_time": "2025-08-01T10:00:42+00:00",
+  "fiscal_period": "2025-06-28",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm",
+  "source_reference": "0000320193-25-000073",
+  "metric": "revenue",
+  "label": "Total net sales",
+  "extraction": {
+   "value": 94036.0,
+   "other": 85777.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF OPERATIONS",
+   "context": "hs Ended June 28, 2025 June 29, 2024 June 28, 2025 June 29, 2024 Net sales: Products $ 66,613 $ 61,564 $ 233,287 $ 224,908 Services 27,423 24,213 80,408 71,197 Total net sales 94,036 85,777 313,695 296,105 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:904c980e058e122b",
+  "publication_date": "2025-08-01",
+  "available_time": "2025-08-01T10:00:42+00:00",
+  "fiscal_period": "2025-06-28",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm",
+  "source_reference": "0000320193-25-000073",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 23434.0,
+   "other": 21448.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF OPERATIONS",
+   "context": "expense), net ( 171 ) 142 ( 698 ) 250 Income before provision for income taxes 28,031 25,494 99,925 93,875 Provision for income taxes 4,597 4,046 15,381 14,875 Net income $ 23,434 $ 21,448 $ 84,544 $ 79,000 "
+  }
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-K",
+  "document_id": "doc:sec:91f8f44052e2c383",
+  "publication_date": "2026-02-06",
+  "available_time": "2026-02-05T23:44:31+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm",
+  "source_reference": "0001018724-26-000004",
+  "metric": "revenue",
+  "label": "Total net sales",
+  "extraction": null
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-K",
+  "document_id": "doc:sec:91f8f44052e2c383",
+  "publication_date": "2026-02-06",
+  "available_time": "2026-02-05T23:44:31+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm",
+  "source_reference": "0001018724-26-000004",
+  "metric": "net_income",
+  "label": "Net income(?: \\(loss\\))?",
+  "extraction": null
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:920b24ef025a8856",
+  "publication_date": "2025-11-19",
+  "available_time": "2025-11-19T21:36:17+00:00",
+  "fiscal_period": "2025-10-26",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+  "source_reference": "0001045810-25-000230",
+  "metric": "revenue",
+  "label": "Revenue",
+  "extraction": {
+   "value": 57006.0,
+   "other": 35082.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": " Statements of Income (In millions, except per share data) (Unaudited) Three Months Ended Nine Months Ended Oct 26, 2025 Oct 27, 2024 Oct 26, 2025 Oct 27, 2024 Revenue $ 57,006 $ 35,082 $ 147,811 $ 91,166 "
+  }
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:920b24ef025a8856",
+  "publication_date": "2025-11-19",
+  "available_time": "2025-11-19T21:36:17+00:00",
+  "fiscal_period": "2025-10-26",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+  "source_reference": "0001045810-25-000230",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 31910.0,
+   "other": 19309.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": "363 36 3,418 301 Total other income, net 1,926 447 4,964 1,390 Income before income tax 37,936 22,316 91,052 58,809 Income tax expense 6,026 3,007 13,945 8,020 Net income $ 31,910 $ 19,309 $ 77,107 $ 50,789 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:9360ae13391cbe52",
+  "publication_date": "2025-10-30",
+  "available_time": "2025-10-30T01:55:01+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204425000091/goog-20250930.htm",
+  "source_reference": "0001652044-25-000091",
+  "metric": "revenue",
+  "label": "Revenues",
+  "extraction": {
+   "value": 102346.0,
+   "other": 88268.0,
+   "years": [
+    "2024",
+    "2025",
+    "2024",
+    "2025"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF INCOME",
+   "context": "ED STATEMENTS OF INCOME (in millions, except per share amounts; unaudited) Three Months Ended Nine Months Ended September 30, September 30, 2024 2025 2024 2025 Revenues $ 88,268 $ 102,346 $ 253,549 $ 289,007 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:9360ae13391cbe52",
+  "publication_date": "2025-10-30",
+  "available_time": "2025-10-30T01:55:01+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204425000091/goog-20250930.htm",
+  "source_reference": "0001652044-25-000091",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 34979.0,
+   "other": 26301.0,
+   "years": [
+    "2024",
+    "2025",
+    "2024",
+    "2025"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF INCOME",
+   "context": "er income (expense), net 3,185 12,759 6,154 26,604 Income before income taxes 31,706 43,987 87,572 119,709 Provision for income taxes 5,405 9,008 13,990 21,994 Net income $ 26,301 $ 34,979 $ 73,582 $ 97,715 "
+  }
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-K",
+  "document_id": "doc:sec:98d8cee8a8ae0f7d",
+  "publication_date": "2026-02-25",
+  "available_time": "2026-02-25T21:42:19+00:00",
+  "fiscal_period": "2026-01-25",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+  "source_reference": "0001045810-26-000021",
+  "metric": "revenue",
+  "label": "Revenue",
+  "extraction": {
+   "value": 100.0,
+   "other": 100.0,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": "Consolidated Statements of Income expressed as a percentage of revenue. Year Ended Jan 25, 2026 Jan 26, 2025 Revenue 100.0 % 100.0 % "
+  }
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-K",
+  "document_id": "doc:sec:98d8cee8a8ae0f7d",
+  "publication_date": "2026-02-25",
+  "available_time": "2026-02-25T21:42:19+00:00",
+  "fiscal_period": "2026-01-25",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+  "source_reference": "0001045810-26-000021",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 55.6,
+   "other": 55.8,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Income",
+   "context": "me 1.1 1.4 Interest expense (0.1) (0.2) Other income, net 4.2 0.8 Total other income, net 5.2 2.0 Income before income tax 65.5 64.4 Income tax expense 9.9 8.6 Net income 55.6 % 55.8 % "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:9f1bf6c144347ec4",
+  "publication_date": "2025-10-30",
+  "available_time": "2025-10-29T22:50:26+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828025047240/meta-20250930.htm",
+  "source_reference": "0001628280-25-047240",
+  "metric": "revenue",
+  "label": "Revenue",
+  "extraction": {
+   "value": 51242.0,
+   "other": 40589.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF INCOME",
+   "context": "D STATEMENTS OF INCOME (In millions, except per share amounts) (Unaudited) Three Months Ended September 30, Nine Months Ended September 30, 2025 2024 2025 2024 Revenue $ 51,242 $ 40,589 $ 141,073 $ 116,116 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:9f1bf6c144347ec4",
+  "publication_date": "2025-10-30",
+  "available_time": "2025-10-29T22:50:26+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828025047240/meta-20250930.htm",
+  "source_reference": "0001628280-25-047240",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 2709.0,
+   "other": 15688.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF INCOME",
+   "context": "her income, net 1,128 472 2,047 1,095 Income before provision for income taxes 21,663 17,822 60,578 47,111 Provision for income taxes 18,954 2,134 22,888 5,589 Net income $ 2,709 $ 15,688 $ 37,690 $ 41,522 "
+  }
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:ae98d6934ba5fdd6",
+  "publication_date": "2025-10-29",
+  "available_time": "2025-10-29T20:10:48+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312525256321/msft-20250930.htm",
+  "source_reference": "0001193125-25-256321",
+  "metric": "revenue",
+  "label": "Total revenue",
+  "extraction": {
+   "value": 77673.0,
+   "other": 65585.0,
+   "years": [
+    "2025",
+    "2024"
+   ],
+   "heading": "Income Statements",
+   "context": "n millions, except per share amounts) (Unaudited) Three Months Ended September 30, 2025 2024 Revenue: Product $ 15,922 $ 15,272 Service and other 61,751 50,313 Total revenue 77,673 65,585 "
+  }
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:ae98d6934ba5fdd6",
+  "publication_date": "2025-10-29",
+  "available_time": "2025-10-29T20:10:48+00:00",
+  "fiscal_period": "2025-09-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312525256321/msft-20250930.htm",
+  "source_reference": "0001193125-25-256321",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 27747.0,
+   "other": 24667.0,
+   "years": [
+    "2025",
+    "2024"
+   ],
+   "heading": "Income Statements",
+   "context": "1,806 1,673 Operating income 37,961 30,552 Other expense, net ( 3,660 ) ( 283 ) Income before income taxes 34,301 30,269 Provision for income taxes 6,554 5,602 Net income $ 27,747 $ 24,667 "
+  }
+ },
+ {
+  "company": "TSLA",
+  "document_type": "10-K",
+  "document_id": "doc:sec:d1e5c742a602f75d",
+  "publication_date": "2026-01-29",
+  "available_time": "2026-01-29T01:55:03+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+  "source_reference": "0001628280-26-003952",
+  "metric": "revenue",
+  "label": "Total revenues",
+  "extraction": {
+   "value": 94827.0,
+   "other": 97690.0,
+   "years": [
+    "2025",
+    "2024",
+    "2023"
+   ],
+   "heading": "consolidated statements of operations",
+   "context": " other segment revenue 82,056 87,604 90,738 (5,548) (6) % (3,134) (3) % Energy generation and storage segment revenue 12,771 10,086 6,035 2,685 27 % 4,051 67 % Total revenues $ 94,827 $ 97,690 $ 96,773 $ (2,863) (3) % $ 917 1 % "
+  }
+ },
+ {
+  "company": "TSLA",
+  "document_type": "10-K",
+  "document_id": "doc:sec:d1e5c742a602f75d",
+  "publication_date": "2026-01-29",
+  "available_time": "2026-01-29T01:55:03+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+  "source_reference": "0001628280-26-003952",
+  "metric": "net_income",
+  "label": "Net income attributable to common stockholders",
+  "extraction": {
+   "value": 3794.0,
+   "other": 7091.0,
+   "years": [
+    "2025",
+    "2024",
+    "2023"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": ") Net income 3,855 7,153 14,974 Net income (loss) attributable to noncontrolling interests and redeemable noncontrolling interests in subsidiaries 61 62 ( 23 ) Net income attributable to common stockholders $ 3,794 $ 7,091 $ 14,997 "
+  }
+ },
+ {
+  "company": "TSLA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:dfe823413a84d1ac",
+  "publication_date": "2026-07-23",
+  "available_time": "2026-07-23T01:02:31+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049270/tsla-20260630.htm",
+  "source_reference": "0001628280-26-049270",
+  "metric": "revenue",
+  "label": "Total revenues",
+  "extraction": {
+   "value": 28236.0,
+   "other": 22496.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": " 745 882 Total automotive revenues 20,516 16,661 36,750 30,628 Energy generation and storage 3,139 2,789 5,547 5,519 Services and other 4,581 3,046 8,326 5,684 Total revenues 28,236 22,496 50,623 41,831 "
+  }
+ },
+ {
+  "company": "TSLA",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:dfe823413a84d1ac",
+  "publication_date": "2026-07-23",
+  "available_time": "2026-07-23T01:02:31+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049270/tsla-20260630.htm",
+  "source_reference": "0001628280-26-049270",
+  "metric": "net_income",
+  "label": "Net income attributable to common stockholders",
+  "extraction": {
+   "value": 1114.0,
+   "other": 1172.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": " 528 Net income 1,128 1,190 1,619 1,610 Net income attributable to noncontrolling interests and redeemable noncontrolling interests in subsidiaries 14 18 28 29 Net income attributable to common stockholders $ 1,114 $ 1,172 $ 1,591 $ 1,581 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:e00bf082cc46afa1",
+  "publication_date": "2026-05-04",
+  "available_time": "2026-05-04T16:40:35+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000067/xom-20260331.htm",
+  "source_reference": "0000034088-26-000067",
+  "metric": "revenue",
+  "label": "Total revenues and other income",
+  "extraction": {
+   "value": 85138.0,
+   "other": 83130.0,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statement of Income",
+   "context": " March 31, 2026 2025 Revenues and other income Sales and other operating revenue 3 83,161 81,058 Income from equity affiliates 1,369 1,369 Other income 608 703 Total revenues and other income 85,138 83,130 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:e00bf082cc46afa1",
+  "publication_date": "2026-05-04",
+  "available_time": "2026-05-04T16:40:35+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000067/xom-20260331.htm",
+  "source_reference": "0000034088-26-000067",
+  "metric": "net_income",
+  "label": "Net income(?: \\(loss\\))? attributable to ExxonMobil",
+  "extraction": {
+   "value": 4183.0,
+   "other": 7713.0,
+   "years": [
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statement of Income",
+   "context": "pense (benefit) 2,495 3,567 Net income (loss) including noncontrolling interests 4,472 8,033 Net income (loss) attributable to noncontrolling interests 289 320 Net income (loss) attributable to ExxonMobil 4,183 7,713 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-K",
+  "document_id": "doc:sec:e0ba72210ca7deb2",
+  "publication_date": "2025-10-31",
+  "available_time": "2025-10-31T10:01:26+00:00",
+  "fiscal_period": "2025-09-27",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+  "source_reference": "0000320193-25-000079",
+  "metric": "revenue",
+  "label": "Total net sales",
+  "extraction": {
+   "value": 416161.0,
+   "other": 391035.0,
+   "years": [
+    "2025",
+    "2024",
+    "2023"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": " amounts) Years ended September 27, 2025 September 28, 2024 September 30, 2023 Net sales: Products $ 307,003 $ 294,866 $ 298,085 Services 109,158 96,169 85,200 Total net sales 416,161 391,035 383,285 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-K",
+  "document_id": "doc:sec:e0ba72210ca7deb2",
+  "publication_date": "2025-10-31",
+  "available_time": "2025-10-31T10:01:26+00:00",
+  "fiscal_period": "2025-09-27",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+  "source_reference": "0000320193-25-000079",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 112010.0,
+   "other": 93736.0,
+   "years": [
+    "2025",
+    "2024",
+    "2023"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": "ther income/(expense), net ( 321 ) 269 ( 565 ) Income before provision for income taxes 132,729 123,485 113,736 Provision for income taxes 20,719 29,749 16,741 Net income $ 112,010 $ 93,736 $ 96,995 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-K",
+  "document_id": "doc:sec:e0f4b015d95fb9d6",
+  "publication_date": "2026-01-29",
+  "available_time": "2026-01-29T00:13:46+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm",
+  "source_reference": "0001628280-26-003942",
+  "metric": "revenue",
+  "label": "Revenue",
+  "extraction": {
+   "value": 200966.0,
+   "other": 164501.0,
+   "years": [
+    "2025",
+    "2024",
+    "2023"
+   ],
+   "heading": "consolidated statements of income",
+   "context": "e year ended December 31, 2024. The following table sets forth our consolidated statements of income data (in millions): Year Ended December 31, 2025 2024 2023 Revenue $ 200,966 $ 164,501 $ 134,902 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-K",
+  "document_id": "doc:sec:e0f4b015d95fb9d6",
+  "publication_date": "2026-01-29",
+  "available_time": "2026-01-29T00:13:46+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm",
+  "source_reference": "0001628280-26-003942",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 60458.0,
+   "other": 62360.0,
+   "years": [
+    "2025",
+    "2024",
+    "2023"
+   ],
+   "heading": "consolidated statements of income",
+   "context": ",751 Interest and other income, net 2,656 1,283 677 Income before provision for income taxes 85,932 70,663 47,428 Provision for income taxes 25,474 8,303 8,330 Net income $ 60,458 $ 62,360 $ 39,098 "
+  }
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:e312824081333ffd",
+  "publication_date": "2026-01-28",
+  "available_time": "2026-01-28T21:07:34+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm",
+  "source_reference": "0001193125-26-027207",
+  "metric": "revenue",
+  "label": "Total revenue",
+  "extraction": {
+   "value": 81273.0,
+   "other": 69632.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Income Statements",
+   "context": "mber 31, Six Months Ended December 31, 2025 2024 2025 2024 Revenue: Product $ 16,451 $ 16,219 $ 32,373 $ 31,491 Service and other 64,822 53,413 126,573 103,726 Total revenue 81,273 69,632 158,946 135,217 "
+  }
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:e312824081333ffd",
+  "publication_date": "2026-01-28",
+  "available_time": "2026-01-28T21:07:34+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm",
+  "source_reference": "0001193125-26-027207",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 38458.0,
+   "other": 24108.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Income Statements",
+   "context": "come (expense), net 9,971 ( 2,288 ) 6,311 ( 2,571 ) Income before income taxes 48,246 29,365 82,547 59,634 Provision for income taxes 9,788 5,257 16,342 10,859 Net income $ 38,458 $ 24,108 $ 66,205 $ 48,775 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:e33e8fc46ee0f3cd",
+  "publication_date": "2025-08-04",
+  "available_time": "2025-08-04T16:47:59+00:00",
+  "fiscal_period": "2025-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000042/xom-20250630.htm",
+  "source_reference": "0000034088-25-000042",
+  "metric": "revenue",
+  "label": "Total revenues and other income",
+  "extraction": {
+   "value": 81506.0,
+   "other": 93060.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated Statement of Income",
+   "context": "income Sales and other operating revenue 79,477 89,986 160,535 170,397 Income from equity affiliates 1,462 1,744 2,831 3,586 Other income 567 1,330 1,270 2,160 Total revenues and other income 81,506 93,060 164,636 176,143 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:e33e8fc46ee0f3cd",
+  "publication_date": "2025-08-04",
+  "available_time": "2025-08-04T16:47:59+00:00",
+  "fiscal_period": "2025-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408825000042/xom-20250630.htm",
+  "source_reference": "0000034088-25-000042",
+  "metric": "net_income",
+  "label": "Net income(?: \\(loss\\))? attributable to ExxonMobil",
+  "extraction": {
+   "value": 7082.0,
+   "other": 9240.0,
+   "years": [
+    "2025",
+    "2024",
+    "2025",
+    "2024"
+   ],
+   "heading": "Consolidated Statement of Income",
+   "context": "7,897 Net income (loss) including noncontrolling interests 7,354 9,571 15,387 18,137 Net income (loss) attributable to noncontrolling interests 272 331 592 677 Net income (loss) attributable to ExxonMobil 7,082 9,240 14,795 17,460 "
+  }
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:f0596ea22fd513a0",
+  "publication_date": "2026-04-30",
+  "available_time": "2026-04-29T22:48:09+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000014/amzn-20260331.htm",
+  "source_reference": "0001018724-26-000014",
+  "metric": "revenue",
+  "label": "Total net sales",
+  "extraction": {
+   "value": 181519.0,
+   "other": 155667.0,
+   "years": [
+    "2025",
+    "2026"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": "NS (in millions, except per share data) (unaudited) Three Months Ended March 31, 2025 2026 Net product sales $ 63,970 $ 71,304 Net service sales 91,697 110,215 Total net sales 155,667 181,519 "
+  }
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:f0596ea22fd513a0",
+  "publication_date": "2026-04-30",
+  "available_time": "2026-04-29T22:48:09+00:00",
+  "fiscal_period": "2026-03-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000014/amzn-20260331.htm",
+  "source_reference": "0001018724-26-000014",
+  "metric": "net_income",
+  "label": "Net income(?: \\(loss\\))?",
+  "extraction": {
+   "value": 30255.0,
+   "other": 17127.0,
+   "years": [
+    "2025",
+    "2026",
+    "2025",
+    "2026"
+   ],
+   "heading": "Consolidated Statements of Operations",
+   "context": " Ended March 31, 2025 2026 2025 2026 CASH, CASH EQUIVALENTS, AND RESTRICTED CASH, BEGINNING OF PERIOD $ 82,312 $ 90,106 $ 73,332 $ 69,893 OPERATING ACTIVITIES: Net income 17,127 30,255 65,944 90,798 "
+  }
+ },
+ {
+  "company": "JPM",
+  "document_type": "10-K",
+  "document_id": "doc:sec:f4a1c47f51758a65",
+  "publication_date": "2026-02-13",
+  "available_time": "2026-02-13T21:20:00+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+  "source_reference": "0001628280-26-008131",
+  "metric": "revenue",
+  "label": "Total net revenue",
+  "extraction": {
+   "value": 182447.0,
+   "other": 177556.0,
+   "years": [
+    "2025",
+    "2024",
+    "2023"
+   ],
+   "heading": "Consolidated statements of income",
+   "context": "r for the year ended December 31, (in millions, except per share, ratio, employee data and where otherwise noted) 2025 2024 2023 Selected income statement data Total net revenue $ 182,447 $ 177,556 "
+  }
+ },
+ {
+  "company": "JPM",
+  "document_type": "10-K",
+  "document_id": "doc:sec:f4a1c47f51758a65",
+  "publication_date": "2026-02-13",
+  "available_time": "2026-02-13T21:20:00+00:00",
+  "fiscal_period": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+  "source_reference": "0001628280-26-008131",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 57048.0,
+   "other": 58471.0,
+   "years": [
+    "2025",
+    "2024",
+    "2023"
+   ],
+   "heading": "Consolidated statements of income",
+   "context": "85,759 70,932 Provision for credit losses 14,212 (e) 10,678 9,320 Income before income tax expense 72,595 75,081 61,612 Income tax expense 15,547 16,610 12,060 Net income $ 57,048 $ 58,471 $ 49,552 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:f8641de8eec63d93",
+  "publication_date": "2026-05-01",
+  "available_time": "2026-05-01T10:01:00+00:00",
+  "fiscal_period": "2026-03-28",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000013/aapl-20260328.htm",
+  "source_reference": "0000320193-26-000013",
+  "metric": "revenue",
+  "label": "Total net sales",
+  "extraction": {
+   "value": 111184.0,
+   "other": 95359.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF OPERATIONS",
+   "context": "nded March 28, 2026 March 29, 2025 March 28, 2026 March 29, 2025 Net sales: Products $ 80,208 $ 68,714 $ 193,951 $ 166,674 Services 30,976 26,645 60,989 52,985 Total net sales 111,184 95,359 254,940 219,659 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:f8641de8eec63d93",
+  "publication_date": "2026-05-01",
+  "available_time": "2026-05-01T10:01:00+00:00",
+  "fiscal_period": "2026-03-28",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000013/aapl-20260328.htm",
+  "source_reference": "0000320193-26-000013",
+  "metric": "net_income",
+  "label": "Net income",
+  "extraction": {
+   "value": 29578.0,
+   "other": 24780.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "CONSOLIDATED STATEMENTS OF OPERATIONS",
+   "context": "pense), net ( 52 ) ( 279 ) 98 ( 527 ) Income before provision for income taxes 35,833 29,310 86,835 71,894 Provision for income taxes 6,255 4,530 15,160 10,784 Net income $ 29,578 $ 24,780 $ 71,675 $ 61,110 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:f8c698d70c0fa5be",
+  "publication_date": "2026-08-03",
+  "available_time": "2026-08-03T18:55:38+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000093/xom-20260630.htm",
+  "source_reference": "0000034088-26-000093",
+  "metric": "revenue",
+  "label": "Total revenues and other income",
+  "extraction": {
+   "value": 116017.0,
+   "other": 81506.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statement of Income",
+   "context": " income Sales and other operating revenue 3 114,529 79,477 197,690 160,535 Income from equity affiliates 893 1,462 2,262 2,831 Other income 595 567 1,203 1,270 Total revenues and other income 116,017 81,506 201,155 164,636 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-Q",
+  "document_id": "doc:sec:f8c698d70c0fa5be",
+  "publication_date": "2026-08-03",
+  "available_time": "2026-08-03T18:55:38+00:00",
+  "fiscal_period": "2026-06-30",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000093/xom-20260630.htm",
+  "source_reference": "0000034088-26-000093",
+  "metric": "net_income",
+  "label": "Net income(?: \\(loss\\))? attributable to ExxonMobil",
+  "extraction": {
+   "value": 14525.0,
+   "other": 7082.0,
+   "years": [
+    "2026",
+    "2025",
+    "2026",
+    "2025"
+   ],
+   "heading": "Consolidated Statement of Income",
+   "context": ",918 Net income (loss) including noncontrolling interests 14,881 7,354 19,353 15,387 Net income (loss) attributable to noncontrolling interests 356 272 645 592 Net income (loss) attributable to ExxonMobil 14,525 7,082 18,708 14,795 "
+  }
+ }
+]

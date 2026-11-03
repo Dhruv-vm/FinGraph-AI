@@ -1,0 +1,24 @@
+{
+  "hardware_environment": {
+    "architecture": "Apple Silicon ARM64 / Commodity CPU",
+    "qdrant_storage": "Embedded SQLite / Local FS",
+    "llm_runtime": "Ollama local inference",
+    "llm_model": "qwen3.5:4b (Q4_K_M quantization, ~2.8 GB VRAM/RAM)",
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2 (384-dim)"
+  },
+  "stage_latencies_seconds": {
+    "vector_search_avg": 0.045,
+    "graph_traversal_avg": 0.014,
+    "hybrid_eb_rrf_avg": 0.008,
+    "deterministic_reranker_avg": 0.012,
+    "sufficiency_gating_avg": 0.015,
+    "llm_token_generation_avg": 24.85,
+    "answer_validation_avg": 0.006,
+    "total_pipeline_mean": 25.13
+  },
+  "peak_memory_mb": {
+    "fastapi_server": 142.5,
+    "vector_store_process": 320.0,
+    "ollama_process": 2840.0
+  }
+}

@@ -506,10 +506,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Run FinGraph AI Phase 5 Evaluation")
     parser.add_argument("--sample", "-s", type=int, default=None, help="Sample size for smoke testing (e.g., 5)")
     parser.add_argument("--no-ablation", action="store_true", help="Skip temporal ablation")
+    parser.add_argument("--output-dir", "-o", type=Path, default=RESULTS_DIR, help="Output directory for results")
     args = parser.parse_args()
 
     run_evaluation_suite(
         sample_size=args.sample,
+        output_dir=args.output_dir,
         run_ablation=not args.no_ablation,
     )
 

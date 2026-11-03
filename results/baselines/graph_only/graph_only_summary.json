@@ -1,0 +1,17 @@
+{
+  "system_name": "B2_Graph_Only_Baseline",
+  "timestamp": "2026-11-01T19:16:36Z",
+  "total_questions": 64,
+  "answerable_questions": 50,
+  "unanswerable_questions": 14,
+  "decision_accuracy": 0.7969,
+  "correct_answers": 50,
+  "false_refusals": 0,
+  "correct_refusals": 1,
+  "hallucinations": 13,
+  "refusal_recall": 0.0714,
+  "hallucination_rate": 0.9286,
+  "answerable_token_f1": 0.0253,
+  "answerable_exact_match": 0.0,
+  "mean_latency_seconds": 0.0138
+}

@@ -82,12 +82,14 @@ class AnswerGenerator:
         temperature: float = 0.0,
         validator: AnswerValidator | None = None,
         llm_client: Any | None = None,
+        max_evidence_items: int = 5,
     ) -> None:
         self.model = model or os.getenv("LLM_MODEL", "qwen3.5:4b")
         self.host = host or os.getenv("OLLAMA_HOST", "http://localhost:11434")
         self.temperature = temperature
         self.validator = validator or AnswerValidator()
         self.llm_client = llm_client
+        self.max_evidence_items = max_evidence_items
 
     def _serialize_evidence(self, evidence: list[RetrievalEvidence]) -> list[dict[str, Any]]:
         """Deterministically serialize evidence items for prompt injection."""
@@ -114,12 +116,17 @@ class AnswerGenerator:
             serialized.append(item)
         return serialized
 
-    def generate(self, package: QAEvidencePackage) -> QAAnswer:
+    def generate(
+        self,
+        package: QAEvidencePackage,
+        max_evidence_items: int | None = None,
+    ) -> QAAnswer:
         """
         Generate evidence-grounded structured QAAnswer from QAEvidencePackage.
 
         Args:
             package: Consolidated, point-in-time filtered QAEvidencePackage.
+            max_evidence_items: Optional override for the number of evidence items injected.
 
         Returns:
             QAAnswer: Structured answer with verified citations and provenance.
@@ -157,8 +164,8 @@ class AnswerGenerator:
             )
 
         # 3. Deterministically serialize candidate evidence
-        # Top 5 items to maintain focused context window and ensure valid completion
-        serialized_evidence = self._serialize_evidence(package.all_evidence[:5])
+        evidence_limit = max_evidence_items or self.max_evidence_items
+        serialized_evidence = self._serialize_evidence(package.all_evidence[:evidence_limit])
 
         user_prompt = (
             f"Question:\n{package.query}\n\n"

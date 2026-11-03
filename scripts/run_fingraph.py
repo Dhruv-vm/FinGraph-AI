@@ -53,11 +53,19 @@ class FinGraphPipeline:
         model: str | None = None,
         temperature: float = 0.0,
         max_agent_iterations: int = 2,
+        hop_mode: str = "strict",
+        balanced_fusion: bool = False,
+        min_per_entity: int = 3,
+        regulatory_linking: bool = True,
     ) -> None:
         self.kg_path = Path(kg_path or (ROOT / "data" / "processed" / "unified" / "fingraph_semantic_kg.json"))
         self.vector_path = Path(vector_path or (ROOT / "data" / "vector_store"))
+        self.hop_mode = hop_mode
+        self.balanced_fusion = balanced_fusion
+        self.min_per_entity = min_per_entity
+        self.regulatory_linking = regulatory_linking
 
-        self.graph_retriever = GraphRetriever(self.kg_path)
+        self.graph_retriever = GraphRetriever(self.kg_path, regulatory_linking=self.regulatory_linking)
         if vector_store is not None:
             self.vector_store = vector_store
         else:
@@ -71,7 +79,10 @@ class FinGraphPipeline:
 
         self.query_analyzer = QueryAnalyzer(graph_retriever=self.graph_retriever)
         self.reranker = DeterministicReranker()
-        self.sufficiency_checker = EvidenceSufficiencyChecker(graph_retriever=self.graph_retriever)
+        self.sufficiency_checker = EvidenceSufficiencyChecker(
+            graph_retriever=self.graph_retriever,
+            hop_mode=self.hop_mode,
+        )
 
         self.orchestrator = RetrievalOrchestrator(
             hybrid_retriever=self.hybrid_retriever,
@@ -96,14 +107,24 @@ class FinGraphPipeline:
         self,
         query: str,
         reference_time: str | datetime | None = None,
+        top_k: int = 10,
+        max_evidence_items: int | None = None,
+        candidate_pool_size: int | None = None,
     ) -> tuple[QAEvidencePackage, QAAnswer]:
         """
         Execute full FinGraph AI pipeline: query analysis, hybrid retrieval, agentic loop,
         evidence packaging, and structured answer generation.
         """
         ref_str = reference_time.isoformat() if isinstance(reference_time, datetime) else reference_time
-        package = self.agent.run(query=query, reference_time=ref_str)
-        answer = self.generator.generate(package)
+        package = self.agent.run(
+            query=query,
+            reference_time=ref_str,
+            top_k=top_k,
+            candidate_pool_size=candidate_pool_size,
+            balanced_fusion=self.balanced_fusion,
+            min_per_entity=self.min_per_entity,
+        )
+        answer = self.generator.generate(package, max_evidence_items=max_evidence_items)
         return package, answer
 
 

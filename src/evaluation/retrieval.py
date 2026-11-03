@@ -59,6 +59,120 @@ class AggregatedRetrievalMetrics:
         }
 
 
+def _normalize_entity_token(s: Any) -> str:
+    """Normalize entity token for robust identifier comparison."""
+    cleaned = str(s).strip().lower().replace("_", "").replace(" ", "").replace(":", "").replace("-", "")
+    return cleaned
+
+
+def _edge_matches(ret_e: Any, exp_e: list[Any] | tuple[Any, ...]) -> bool:
+    """
+    Check if a retrieved directed edge matches an expected directed edge [source, relationship, target].
+    Enforces strict directionality (source -> target) and canonical relationship match.
+    Rejects reversed edges where source and target are swapped.
+    """
+    if isinstance(ret_e, dict):
+        s = ret_e.get("source", "")
+        r = ret_e.get("relationship", "")
+        t = ret_e.get("target", "")
+    elif isinstance(ret_e, (list, tuple)) and len(ret_e) >= 3:
+        s, r, t = ret_e[0], ret_e[1], ret_e[2]
+    elif isinstance(ret_e, (list, tuple)) and len(ret_e) == 2:
+        s, r, t = ret_e[0], "", ret_e[1]
+    else:
+        return False
+
+    exp_s = exp_e[0]
+    exp_r = exp_e[1] if len(exp_e) >= 2 else ""
+    exp_t = exp_e[2] if len(exp_e) >= 3 else None
+
+    # Relationship must match (case-insensitive)
+    if exp_r and str(r).upper() != str(exp_r).upper():
+        return False
+
+    s_norm = _normalize_entity_token(s)
+    exp_s_norm = _normalize_entity_token(exp_s)
+    t_norm = _normalize_entity_token(t) if t is not None else ""
+    exp_t_norm = _normalize_entity_token(exp_t) if exp_t is not None else ""
+
+    # Check reversed edge: if source matches expected target and target matches expected source
+    if exp_t is not None and s_norm and exp_t_norm and t_norm and exp_s_norm:
+        if (s_norm == exp_t_norm or exp_t_norm in s_norm) and (t_norm == exp_s_norm or exp_s_norm in t_norm):
+            return False  # Strict failure: reversed edge!
+
+    # Source check (directed)
+    s_matched = bool(s_norm and exp_s_norm and (s_norm == exp_s_norm or exp_s_norm in s_norm or s_norm in exp_s_norm))
+    if not s_matched:
+        return False
+
+    # Target check (directed)
+    if exp_t is not None:
+        t_matched = bool(t_norm and exp_t_norm and (t_norm == exp_t_norm or exp_t_norm in t_norm or t_norm in exp_t_norm))
+        if not t_matched:
+            return False
+
+    return True
+
+
+def _candidate_path_matches(ret_path: Any, exp_path: list[list[Any]]) -> bool:
+    """
+    Evaluate whether a candidate retrieved path satisfies the expected directed multi-hop path.
+    For single-edge expected paths: checks if any edge in ret_path matches.
+    For multi-hop expected paths: checks that all expected hops are present in connected sequence.
+    """
+    if not ret_path or not exp_path:
+        return False
+
+    # Normalize candidate path into list of edge representations
+    candidate_edges: list[Any] = []
+    # If ret_path is directly a single edge [source, rel, target]
+    if (
+        isinstance(ret_path, (list, tuple))
+        and len(ret_path) in (2, 3)
+        and isinstance(ret_path[0], str)
+        and isinstance(ret_path[1], str)
+    ):
+        candidate_edges = [ret_path]
+    elif isinstance(ret_path, list):
+        for item in ret_path:
+            if isinstance(item, dict) and item.get("source") and item.get("relationship"):
+                candidate_edges.append(item)
+            elif isinstance(item, (list, tuple)) and len(item) >= 2:
+                candidate_edges.append(item)
+
+    if not candidate_edges:
+        return False
+
+    if len(exp_path) == 1:
+        return any(_edge_matches(e, exp_path[0]) for e in candidate_edges)
+
+    # Multi-hop path: each expected edge in exp_path must be matched by an edge in candidate_edges,
+    # and consecutive matched edges must be connected (target of hop i connects to source of hop i+1).
+    matched_edges = []
+    for exp_e in exp_path:
+        found_edge = None
+        for cand_e in candidate_edges:
+            if _edge_matches(cand_e, exp_e):
+                found_edge = cand_e
+                break
+        if not found_edge:
+            return False
+        matched_edges.append(found_edge)
+
+    # Check connection between consecutive edges in the path
+    for i in range(len(matched_edges) - 1):
+        e1 = matched_edges[i]
+        e2 = matched_edges[i + 1]
+        t1 = e1.get("target") if isinstance(e1, dict) else e1[2]
+        s2 = e2.get("source") if isinstance(e2, dict) else e2[0]
+        t1_norm = _normalize_entity_token(t1)
+        s2_norm = _normalize_entity_token(s2)
+        if not (t1_norm == s2_norm or t1_norm in s2_norm or s2_norm in t1_norm):
+            return False
+
+    return True
+
+
 class RetrievalEvaluator:
     """
     Evaluates chunk-level and document-level retrieval accuracy, multi-hop path accuracy,
@@ -144,33 +258,15 @@ class RetrievalEvaluator:
                 doc_hit_at_k[k] = 1.0 if doc_hits > 0 else 0.0
                 doc_rec_at_k[k] = doc_hits / len(rel_doc_set)
 
-        # 3. Multi-hop path accuracy: verify relation type and directionality
+        # 3. Multi-hop path accuracy: verify relation type, sequence, and directionality
         path_acc = 0.0
         if expected_graph_paths and is_answerable:
             ret_paths = retrieved_graph_paths or []
-            # Check if all required edges in expected path exist in retrieved paths
-            all_paths_matched = True
-            for exp_edge in expected_graph_paths:
-                # exp_edge is [source, relation, target]
-                matched = False
-                for rp in ret_paths:
-                    # rp could be a list of node/rel strings or formatted path
-                    rp_str = " ".join(rp).upper() if isinstance(rp, list) else str(rp).upper()
-                    if len(exp_edge) == 3:
-                        s, r, t = exp_edge
-                        # Must match relation and entity keywords
-                        if r.upper() in rp_str:
-                            matched = True
-                            break
-                    elif len(exp_edge) == 2:
-                        s, r = exp_edge
-                        if r.upper() in rp_str:
-                            matched = True
-                            break
-                if not matched:
-                    all_paths_matched = False
+            # Check whether ANY candidate retrieved path satisfies the expected directed path
+            for cand_path in ret_paths:
+                if _candidate_path_matches(cand_path, expected_graph_paths):
+                    path_acc = 1.0
                     break
-            path_acc = 1.0 if all_paths_matched else 0.0
 
         # 4. Cross-document coverage
         cross_doc_cov = 0.0

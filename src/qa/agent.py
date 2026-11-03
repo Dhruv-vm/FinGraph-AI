@@ -87,6 +87,9 @@ class RetrievalAgent:
         query: str,
         reference_time: str | datetime | None = None,
         top_k: int = 10,
+        candidate_pool_size: int | None = None,
+        balanced_fusion: bool = False,
+        min_per_entity: int = 3,
     ) -> QAEvidencePackage:
         """
         Execute bounded retrieval loop and return verified evidence package.
@@ -95,6 +98,9 @@ class RetrievalAgent:
             query: Question text.
             reference_time: Optional point-in-time cutoff.
             top_k: Target evidence count.
+            candidate_pool_size: Optional override for candidate pool size entering reranker.
+            balanced_fusion: Whether to apply entity-balanced evidence allocation for comparative queries.
+            min_per_entity: Minimum candidate quota reserved per required entity.
 
         Returns:
             QAEvidencePackage: Bounded, temporally valid evidence package.
@@ -107,6 +113,9 @@ class RetrievalAgent:
             query=query,
             reference_time=reference_time,
             top_k=top_k,
+            candidate_pool_size=candidate_pool_size,
+            balanced_fusion=balanced_fusion,
+            min_per_entity=min_per_entity,
         )
 
         for ev in current_evidence:
@@ -234,9 +243,33 @@ class RetrievalAgent:
                 current_evidence = sanitized_evidence
 
         for ev in current_evidence:
-            if "path" in ev.metadata and isinstance(ev.metadata["path"], list):
-                if ev.metadata["path"] not in graph_paths:
-                    graph_paths.append(ev.metadata["path"])
+            # 1. Structured edge paths from graph or hybrid retrieval
+            edge_paths = ev.metadata.get("graph_edge_paths")
+            if edge_paths and isinstance(edge_paths, list):
+                for p in edge_paths:
+                    if isinstance(p, list) and p and p not in graph_paths:
+                        graph_paths.append(p)
+
+            # 2. Direct edge list in metadata
+            g_edges = ev.metadata.get("graph_edges")
+            if g_edges and isinstance(g_edges, list) and g_edges and g_edges not in graph_paths:
+                graph_paths.append(g_edges)
+
+            # 3. Path with relationship string fallback
+            p_nodes = ev.metadata.get("path")
+            rel_str = ev.metadata.get("relationship")
+            if isinstance(p_nodes, list) and len(p_nodes) >= 2 and isinstance(rel_str, str):
+                rels = [r.strip() for r in rel_str.split("->")]
+                if len(rels) == len(p_nodes) - 1:
+                    constructed_path = [
+                        {"source": p_nodes[i], "relationship": rels[i], "target": p_nodes[i + 1]}
+                        for i in range(len(rels))
+                    ]
+                    if constructed_path not in graph_paths:
+                        graph_paths.append(constructed_path)
+            elif isinstance(p_nodes, list) and p_nodes and p_nodes not in graph_paths:
+                graph_paths.append(p_nodes)
+
             if ev.document_id and ev.document_id not in sources:
                 sources.append(ev.document_id)
 

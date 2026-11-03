@@ -1,0 +1,151 @@
+{
+  "experiment_title": "FinGraph AI Phase 6 Retrieval-Depth Experiment",
+  "timestamp": "2026-10-27T18:34:05.816370+00:00",
+  "target_categories": [
+    "relational_multi_hop",
+    "cross_document_comparative"
+  ],
+  "question_count": 25,
+  "answerable_count": 18,
+  "unanswerable_count": 7,
+  "configurations": {
+    "K5_DEFAULT": {
+      "config": {
+        "name": "K5_DEFAULT",
+        "description": "Standard retrieval depth (5 evidence items for LLM context)",
+        "top_k": 10,
+        "max_evidence_items": 5
+      },
+      "duration_seconds": 132.43,
+      "avg_latency_seconds": 5.295,
+      "denominators": {
+        "total_questions": 25,
+        "answerable": 18,
+        "unanswerable": 7
+      },
+      "decision_accuracy": 0.48,
+      "confusion_matrix": {
+        "TP_correct_refusal": 7,
+        "FN_hallucination": 0,
+        "FP_false_refusal": 13,
+        "TN_correct_answer": 5
+      },
+      "refusal_metrics": {
+        "refusal_recall": 1.0,
+        "false_refusal_rate": 0.7222,
+        "hallucination_rate": 0.0,
+        "hallucinations_count": 0
+      },
+      "answerable_qa_metrics": {
+        "answerable_count": 18,
+        "mean_exact_match": 0.0,
+        "mean_token_f1": 0.0716
+      },
+      "overall_qa_metrics": {
+        "mean_exact_match": 0.28,
+        "mean_token_f1": 0.3316
+      },
+      "retrieval_metrics": {
+        "hit_at_5": 0.1667,
+        "mrr": 0.0574,
+        "path_accuracy": 0.0
+      },
+      "temporal_metrics": {
+        "compliance_rate": 0.0,
+        "post_filter_feir": 0.0
+      }
+    },
+    "K8_EXPANDED": {
+      "config": {
+        "name": "K8_EXPANDED",
+        "description": "Expanded retrieval depth (8 evidence items for LLM context)",
+        "top_k": 10,
+        "max_evidence_items": 8
+      },
+      "duration_seconds": 254.13,
+      "avg_latency_seconds": 10.161,
+      "denominators": {
+        "total_questions": 25,
+        "answerable": 18,
+        "unanswerable": 7
+      },
+      "decision_accuracy": 0.48,
+      "confusion_matrix": {
+        "TP_correct_refusal": 7,
+        "FN_hallucination": 0,
+        "FP_false_refusal": 13,
+        "TN_correct_answer": 5
+      },
+      "refusal_metrics": {
+        "refusal_recall": 1.0,
+        "false_refusal_rate": 0.7222,
+        "hallucination_rate": 0.0,
+        "hallucinations_count": 0
+      },
+      "answerable_qa_metrics": {
+        "answerable_count": 18,
+        "mean_exact_match": 0.0,
+        "mean_token_f1": 0.0702
+      },
+      "overall_qa_metrics": {
+        "mean_exact_match": 0.28,
+        "mean_token_f1": 0.3305
+      },
+      "retrieval_metrics": {
+        "hit_at_5": 0.1667,
+        "mrr": 0.0574,
+        "path_accuracy": 0.0
+      },
+      "temporal_metrics": {
+        "compliance_rate": 0.0,
+        "post_filter_feir": 0.0
+      }
+    },
+    "K10_DEEP": {
+      "config": {
+        "name": "K10_DEEP",
+        "description": "Deep retrieval depth (10 evidence items for LLM context)",
+        "top_k": 10,
+        "max_evidence_items": 10
+      },
+      "duration_seconds": 275.73,
+      "avg_latency_seconds": 11.024,
+      "denominators": {
+        "total_questions": 25,
+        "answerable": 18,
+        "unanswerable": 7
+      },
+      "decision_accuracy": 0.48,
+      "confusion_matrix": {
+        "TP_correct_refusal": 6,
+        "FN_hallucination": 1,
+        "FP_false_refusal": 12,
+        "TN_correct_answer": 6
+      },
+      "refusal_metrics": {
+        "refusal_recall": 0.8571,
+        "false_refusal_rate": 0.6667,
+        "hallucination_rate": 0.1429,
+        "hallucinations_count": 1
+      },
+      "answerable_qa_metrics": {
+        "answerable_count": 18,
+        "mean_exact_match": 0.0,
+        "mean_token_f1": 0.0877
+      },
+      "overall_qa_metrics": {
+        "mean_exact_match": 0.24,
+        "mean_token_f1": 0.3061
+      },
+      "retrieval_metrics": {
+        "hit_at_5": 0.1667,
+        "mrr": 0.0574,
+        "path_accuracy": 0.0
+      },
+      "temporal_metrics": {
+        "compliance_rate": 0.0,
+        "post_filter_feir": 0.0
+      }
+    }
+  }
+}

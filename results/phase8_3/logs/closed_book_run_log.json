@@ -1,0 +1,14 @@
+{
+ "started": "2026-11-03T12:50:01.903Z",
+ "records": 426,
+ "errors": 0,
+ "models": [
+  "qwen3.5:4b"
+ ],
+ "done_reasons": [
+  "stop"
+ ],
+ "first_created": "2026-11-03T12:50:07.172039Z",
+ "last_created": "2026-11-03T13:26:28.869255Z",
+ "mean_latency_ms": 5114
+}

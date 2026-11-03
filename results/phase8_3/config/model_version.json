@@ -1,0 +1,18 @@
+{
+  "recorded_at": "2026-11-03T12:49Z",
+  "ollama_version": "0.33.3",
+  "model_tag": "qwen3.5:4b",
+  "digest": "sha256:2a654d98e6fba55d452b7043684e9b57a947e393bbffa62485a7aac05ee4eefd",
+  "size_bytes": 3389983735,
+  "format": "gguf",
+  "family": "qwen35",
+  "parameter_count": 4659865088,
+  "parameter_size": "4.7B",
+  "quantization": "Q4_K_M",
+  "context_length": 262144,
+  "local_modified_at": "2026-09-08T19:09:23+05:30",
+  "modelfile_default_parameters": {"presence_penalty": 1.5, "temperature": 1, "top_k": 20, "top_p": 0.95},
+  "request_overrides": {"temperature": 0.0, "seed": 0, "num_predict": 256, "think": false, "format": "json"},
+  "note": "Production FinGraph generator (src/qa/generator.py) uses the same tag with temperature 0.0, think=False, format=json, num_predict=2048; other Modelfile defaults apply identically.",
+  "public_release_date": "2026-03-02 (OpenCode model registry; knowledge cutoff not published)"
+}

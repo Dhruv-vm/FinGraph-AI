@@ -1,0 +1,670 @@
+[
+ {
+  "company": "TSLA",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-09-30",
+  "document_id": "doc:sec:002322329d3f1ca5",
+  "eps": {
+   "values": [
+    0.39,
+    0.62,
+    0.84,
+    1.43
+   ],
+   "context": " $ 1,373 $ 2,173 $ 2,954 $ 4,963 Net income per share of common stock attributable to common stockholders Basic $ 0.43 $ 0.68 $ 0.92 $ 1.57 Diluted $ 0.39 $ 0.62 $ 0.84 $ 1.43 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-K",
+  "fiscal_period": "2025-12-31",
+  "document_id": "doc:sec:01d6c0ca5ed3b2ec",
+  "eps": {
+   "values": [
+    5.8,
+    8.04,
+    10.81
+   ],
+   "context": "on for income taxes 11,922 19,697 26,656 Net income $ 73,795 $ 100,118 $ 132,170 Basic net income per share (Note 12) $ 5.84 $ 8.13 $ 10.91 Diluted net income per share (Note 12) $ 5.80 $ 8.04 $ 10.81 "
+  }
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-03-31",
+  "document_id": "doc:sec:076412151b515b96",
+  "eps": {
+   "values": [
+    3.46,
+    2.94,
+    9.99,
+    8.85
+   ],
+   "context": "ncome taxes 5,553 4,788 16,412 14,437 Net income $ 25,824 $ 21,939 $ 74,599 $ 66,100 Earnings per share: Basic $ 3.47 $ 2.95 $ 10.03 $ 8.90 Diluted $ 3.46 $ 2.94 $ 9.99 $ 8.85 "
+  }
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-09-28",
+  "document_id": "doc:sec:0ca5170772846f78",
+  "eps": {
+   "values": [
+    2.12,
+    1.11
+   ],
+   "context": "r taxes on income (Note 5) 2,341 9.7 644 2.9 Net earnings $ 5,152 21.5 % $ 2,694 12.0 % Net earnings per share (Note 8) Basic $ 2.14 $ 1.12 Diluted $ 2.12 $ 1.11 "
+  }
+ },
+ {
+  "company": "TSLA",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-03-31",
+  "document_id": "doc:sec:0d39f6127b5a9c25",
+  "eps": {
+   "values": [
+    0.13,
+    0.12
+   ],
+   "context": "ttributable to common stockholders $ 477 $ 409 Net income per share of common stock attributable to common stockholders Basic $ 0.15 $ 0.13 Diluted $ 0.13 $ 0.12 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-12-27",
+  "document_id": "doc:sec:14da3f4a15ec8cc9",
+  "eps": {
+   "values": [
+    2.84,
+    2.4
+   ],
+   "context": " for income taxes 51,002 42,584 Provision for income taxes 8,905 6,254 Net income $ 42,097 $ 36,330 Earnings per share: Basic $ 2.85 $ 2.41 Diluted $ 2.84 $ 2.40 "
+  }
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-03-29",
+  "document_id": "doc:sec:1994c6bc1e189856",
+  "eps": {
+   "values": [
+    2.14,
+    4.54
+   ],
+   "context": "taxes on income (Note 5) 755 3.1 2,632 12.1 Net earnings $ 5,235 21.8 % $ 10,999 50.2 % Net earnings per share (Note 8) Basic $ 2.17 $ 4.57 Diluted $ 2.14 $ 4.54 "
+  }
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-07-26",
+  "document_id": "doc:sec:1ad2e96011122307",
+  "eps": {
+   "values": [
+    2.46,
+    1.08,
+    4.85,
+    1.84
+   ],
+   "context": "x expense 11,819 4,784 23,400 7,920 Net income $ 59,688 $ 26,422 $ 118,010 $ 45,197 Net income per share: Basic $ 2.47 $ 1.08 $ 4.87 $ 1.85 Diluted $ 2.46 $ 1.08 $ 4.85 $ 1.84 "
+  }
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-K",
+  "fiscal_period": "2025-12-28",
+  "document_id": "doc:sec:265db7f85d25dfc6",
+  "eps": {
+   "values": [
+    11.03,
+    5.79,
+    5.2
+   ],
+   "context": " $ 11.13 5.84 5.26 Discontinued operations - basic \u2014 \u2014 8.62 Total net earnings per share - basic $ 11.13 5.84 13.88 Continuing operations - diluted $ 11.03 5.79 5.20 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-03-31",
+  "document_id": "doc:sec:294224342b0772de",
+  "eps": {
+   "values": [
+    10.44,
+    6.43
+   ],
+   "context": "es 21,752 18,382 Provision (benefit) for income taxes ( 5,021 ) 1,738 Net income $ 26,773 $ 16,644 Earnings per share: Basic $ 10.57 $ 6.59 Diluted $ 10.44 $ 6.43 "
+  }
+ },
+ {
+  "company": "JPM",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-06-30",
+  "document_id": "doc:sec:2ca3cad539c4a3f1",
+  "eps": {
+   "values": [
+    7.7,
+    5.94,
+    4.63,
+    5.07,
+    5.24,
+    13.63
+   ],
+   "context": "4 $ 13,025 $ 14,393 $ 14,987 $ 37,649 $ 29,630 Earnings per share data Net income: Basic $ 7.71 $ 5.95 $ 4.64 $ 5.08 $ 5.25 $ 13.65 $ 10.32 Diluted 7.70 5.94 4.63 5.07 5.24 13.63 "
+  }
+ },
+ {
+  "company": "JPM",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-03-31",
+  "document_id": "doc:sec:2fde24a7f31cff96",
+  "eps": {
+   "values": [
+    5.94,
+    4.63,
+    5.07,
+    5.24,
+    5.07
+   ],
+   "context": " 3,765 Net income $ 16,494 $ 13,025 $ 14,393 $ 14,987 $ 14,643 Earnings per share data Net income: Basic $ 5.95 $ 4.64 $ 5.08 $ 5.25 $ 5.08 Diluted 5.94 4.63 5.07 5.24 5.07 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-06-27",
+  "document_id": "doc:sec:38008a9845a2c105",
+  "eps": {
+   "values": [
+    2.02,
+    1.57,
+    6.88,
+    5.62
+   ],
+   "context": "ncome taxes 6,478 4,597 21,638 15,381 Net income $ 29,789 $ 23,434 $ 101,464 $ 84,544 Earnings per share: Basic $ 2.03 $ 1.57 $ 6.91 $ 5.64 Diluted $ 2.02 $ 1.57 $ 6.88 $ 5.62 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-09-30",
+  "document_id": "doc:sec:3cbe837756668d55",
+  "eps": null
+ },
+ {
+  "company": "JPM",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-09-30",
+  "document_id": "doc:sec:3d8599c3f057a3df",
+  "eps": {
+   "values": [
+    5.07,
+    5.24,
+    5.07,
+    4.81,
+    4.37,
+    15.38
+   ],
+   "context": "7 $ 14,643 $ 14,005 $ 12,898 $ 44,023 $ 44,466 Earnings per share data Net income: Basic $ 5.08 $ 5.25 $ 5.08 $ 4.82 $ 4.38 $ 15.41 $ 14.97 Diluted 5.07 5.24 5.07 4.81 4.37 15.38 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-K",
+  "fiscal_period": "2025-12-31",
+  "document_id": "doc:sec:41306444341a762f",
+  "eps": null
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-06-28",
+  "document_id": "doc:sec:43c8791ef0cff359",
+  "eps": {
+   "values": [
+    2.27,
+    2.29
+   ],
+   "context": "r taxes on income (Note 5) 1,213 4.8 954 4.0 Net earnings $ 5,534 21.9 % $ 5,537 23.3 % Net earnings per share (Note 8) Basic $ 2.30 $ 2.30 Diluted $ 2.27 $ 2.29 "
+  }
+ },
+ {
+  "company": "TSLA",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-06-30",
+  "document_id": "doc:sec:4e6f640bc97ceca9",
+  "eps": {
+   "values": [
+    0.33,
+    0.4,
+    0.45,
+    0.81
+   ],
+   "context": " $ 1,172 $ 1,400 $ 1,581 $ 2,790 Net income per share of common stock attributable to common stockholders Basic $ 0.36 $ 0.44 $ 0.49 $ 0.89 Diluted $ 0.33 $ 0.40 $ 0.45 $ 0.81 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-06-30",
+  "document_id": "doc:sec:5d1c9c78801bcdf2",
+  "eps": {
+   "values": [
+    2.31,
+    9.11,
+    5.12,
+    14.24
+   ],
+   "context": "lable to common stockholders $ 28,196 $ 112,107 $ 62,736 $ 174,685 Basic net income per common share (Note 12) $ 2.33 $ 9.23 $ 5.16 $ 14.41 Diluted net income per common share (Note 12) $ 2.31 $ 9.11 $ 5.12 $ 14.24 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-06-30",
+  "document_id": "doc:sec:6572663282945293",
+  "eps": {
+   "values": [
+    1.89,
+    2.31,
+    3.78,
+    5.12
+   ],
+   "context": "es 3,932 5,737 8,585 12,986 Net income $ 23,619 $ 28,196 $ 47,281 $ 62,736 Basic net income per share (Note 12) $ 1.91 $ 2.33 $ 3.82 $ 5.16 Diluted net income per share (Note 12) $ 1.89 $ 2.31 $ 3.78 $ 5.12 "
+  }
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-K",
+  "fiscal_period": "2026-06-30",
+  "document_id": "doc:sec:6a50d47d6a8dc43d",
+  "eps": {
+   "values": [
+    11.82,
+    9.55
+   ],
+   "context": "on July 1, 2022: (In millions, except per share amounts) Year Ended June 30, 2024 2023 Revenue $ 247,442 $ 219,790 Net income 88,308 71,383 Diluted earnings per share 11.82 9.55 "
+  }
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-07-27",
+  "document_id": "doc:sec:6aadaca6341c317e",
+  "eps": {
+   "values": [
+    1.08,
+    0.67,
+    1.84,
+    1.27
+   ],
+   "context": " tax expense 4,784 2,615 7,920 5,013 Net income $ 26,422 $ 16,599 $ 45,197 $ 31,480 Net income per share: Basic $ 1.08 $ 0.68 $ 1.85 $ 1.28 Diluted $ 1.08 $ 0.67 $ 1.84 $ 1.27 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-06-30",
+  "document_id": "doc:sec:6b5300f8289ff6c0",
+  "eps": {
+   "values": [
+    6.18,
+    7.14,
+    16.62,
+    13.56
+   ],
+   "context": "me taxes 2,908 2,197 ( 2,113 ) 3,935 Net income $ 15,848 $ 18,337 $ 42,621 $ 34,981 Earnings per share: Basic $ 6.23 $ 7.28 $ 16.79 $ 13.87 Diluted $ 6.18 $ 7.14 $ 16.62 $ 13.56 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-06-30",
+  "document_id": "doc:sec:7a93e4a643b9ddb1",
+  "eps": {
+   "values": [
+    7.14,
+    5.16,
+    13.56,
+    9.86
+   ],
+   "context": "income taxes 2,197 1,641 3,935 3,455 Net income $ 18,337 $ 13,465 $ 34,981 $ 25,834 Earnings per share: Basic $ 7.28 $ 5.31 $ 13.87 $ 10.17 Diluted $ 7.14 $ 5.16 $ 13.56 $ 9.86 "
+  }
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-06-30",
+  "document_id": "doc:sec:8116b3870cc9f4b2",
+  "eps": {
+   "values": [
+    1.68,
+    5.75,
+    3.27,
+    8.53
+   ],
+   "context": " net of tax ( 15 ) ( 11 ) ( 14 ) ( 30 ) Net income $ 18,164 $ 62,647 $ 35,291 $ 92,902 Basic earnings per share $ 1.71 $ 5.82 $ 3.32 $ 8.64 Diluted earnings per share $ 1.68 $ 5.75 $ 3.27 $ 8.53 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-03-31",
+  "document_id": "doc:sec:828d01e2a9ed0651",
+  "eps": {
+   "values": [
+    2.81,
+    5.11
+   ],
+   "context": "taxes 41,789 77,412 Provision for income taxes 7,249 14,834 Net income $ 34,540 $ 62,578 Basic net income per share (Note 12) $ 2.84 $ 5.17 Diluted net income per share (Note 12) $ 2.81 $ 5.11 "
+  }
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-04-26",
+  "document_id": "doc:sec:878a73f0f4488fc2",
+  "eps": {
+   "values": [
+    2.39,
+    0.76
+   ],
+   "context": "come before income tax 69,903 21,910 Income tax expense 11,582 3,135 Net income $ 58,321 $ 18,775 Net income per share: Basic $ 2.40 $ 0.77 Diluted $ 2.39 $ 0.76 "
+  }
+ },
+ {
+  "company": "JNJ",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-06-29",
+  "document_id": "doc:sec:886e468248eb6185",
+  "eps": {
+   "values": [
+    2.29,
+    1.93
+   ],
+   "context": "r taxes on income (Note 5) 954 4.0 1,062 4.7 Net earnings $ 5,537 23.3 % $ 4,686 20.9 % Net earnings per share (Note 8) Basic $ 2.30 $ 1.95 Diluted $ 2.29 $ 1.93 "
+  }
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-09-30",
+  "document_id": "doc:sec:88b6e7c0b3278b5e",
+  "eps": {
+   "values": [
+    1.43,
+    1.95,
+    3.67,
+    5.22
+   ],
+   "context": ", net of tax ( 3 ) ( 73 ) ( 81 ) ( 87 ) Net income $ 15,328 $ 21,187 $ 39,244 $ 56,478 Basic earnings per share $ 1.46 $ 1.98 $ 3.76 $ 5.31 Diluted earnings per share $ 1.43 $ 1.95 $ 3.67 $ 5.22 "
+  }
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-03-31",
+  "document_id": "doc:sec:8bd1c03865e238f6",
+  "eps": {
+   "values": [
+    4.27,
+    3.46,
+    13.14,
+    9.99
+   ],
+   "context": "come taxes 7,562 5,553 23,904 16,412 Net income $ 31,778 $ 25,824 $ 97,983 $ 74,599 Earnings per share: Basic $ 4.28 $ 3.47 $ 13.19 $ 10.03 Diluted $ 4.27 $ 3.46 $ 13.14 $ 9.99 "
+  }
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-06-30",
+  "document_id": "doc:sec:8e00a3a5baa9aabe",
+  "eps": {
+   "values": [
+    1.26,
+    1.68,
+    2.24,
+    3.27
+   ],
+   "context": "vity, net of tax 7 ( 15 ) ( 78 ) ( 14 ) Net income $ 13,485 $ 18,164 $ 23,916 $ 35,291 Basic earnings per share $ 1.29 $ 1.71 $ 2.30 $ 3.32 Diluted earnings per share $ 1.26 $ 1.68 $ 2.24 $ 3.27 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-06-28",
+  "document_id": "doc:sec:904c980e058e122b",
+  "eps": {
+   "values": [
+    1.57,
+    1.4,
+    5.62,
+    5.11
+   ],
+   "context": "income taxes 4,597 4,046 15,381 14,875 Net income $ 23,434 $ 21,448 $ 84,544 $ 79,000 Earnings per share: Basic $ 1.57 $ 1.40 $ 5.64 $ 5.13 Diluted $ 1.57 $ 1.40 $ 5.62 $ 5.11 "
+  }
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-K",
+  "fiscal_period": "2025-12-31",
+  "document_id": "doc:sec:91f8f44052e2c383",
+  "eps": {
+   "values": [
+    2.9,
+    5.53,
+    7.17
+   ],
+   "context": " investment activity, net of tax ( 12 ) ( 101 ) ( 554 ) Net income $ 30,425 $ 59,248 $ 77,670 Basic earnings per share $ 2.95 $ 5.66 $ 7.29 Diluted earnings per share $ 2.90 $ 5.53 $ 7.17 "
+  }
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-10-26",
+  "document_id": "doc:sec:920b24ef025a8856",
+  "eps": {
+   "values": [
+    1.3,
+    0.78,
+    3.14,
+    2.04
+   ],
+   "context": "tax expense 6,026 3,007 13,945 8,020 Net income $ 31,910 $ 19,309 $ 77,107 $ 50,789 Net income per share: Basic $ 1.31 $ 0.79 $ 3.16 $ 2.07 Diluted $ 1.30 $ 0.78 $ 3.14 $ 2.04 "
+  }
+ },
+ {
+  "company": "GOOGL",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-09-30",
+  "document_id": "doc:sec:9360ae13391cbe52",
+  "eps": {
+   "values": [
+    2.12,
+    2.87,
+    5.9,
+    7.99
+   ],
+   "context": "s 5,405 9,008 13,990 21,994 Net income $ 26,301 $ 34,979 $ 73,582 $ 97,715 Basic net income per share (Note 12) $ 2.14 $ 2.89 $ 5.96 $ 8.06 Diluted net income per share (Note 12) $ 2.12 $ 2.87 $ 5.90 $ 7.99 "
+  }
+ },
+ {
+  "company": "NVDA",
+  "document_type": "10-K",
+  "fiscal_period": "2026-01-25",
+  "document_id": "doc:sec:98d8cee8a8ae0f7d",
+  "eps": {
+   "values": [
+    4.9,
+    2.94,
+    1.19
+   ],
+   "context": "4,026 33,818 Income tax expense 21,383 11,146 4,058 Net income $ 120,067 $ 72,880 $ 29,760 Net income per share: Basic $ 4.93 $ 2.97 $ 1.21 Diluted $ 4.90 $ 2.94 $ 1.19 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-09-30",
+  "document_id": "doc:sec:9f1bf6c144347ec4",
+  "eps": {
+   "values": [
+    1.05,
+    6.03,
+    14.62,
+    15.88
+   ],
+   "context": "ncome taxes 18,954 2,134 22,888 5,589 Net income $ 2,709 $ 15,688 $ 37,690 $ 41,522 Earnings per share: Basic $ 1.08 $ 6.20 $ 14.96 $ 16.37 Diluted $ 1.05 $ 6.03 $ 14.62 $ 15.88 "
+  }
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-09-30",
+  "document_id": "doc:sec:ae98d6934ba5fdd6",
+  "eps": {
+   "values": [
+    3.72,
+    3.3
+   ],
+   "context": "fore income taxes 34,301 30,269 Provision for income taxes 6,554 5,602 Net income $ 27,747 $ 24,667 Earnings per share: Basic $ 3.73 $ 3.32 Diluted $ 3.72 $ 3.30 "
+  }
+ },
+ {
+  "company": "TSLA",
+  "document_type": "10-K",
+  "fiscal_period": "2025-12-31",
+  "document_id": "doc:sec:d1e5c742a602f75d",
+  "eps": {
+   "values": [
+    1.08,
+    2.04,
+    4.3
+   ],
+   "context": "n stockholders $ 3,794 $ 7,091 $ 14,997 Net income per share of common stock attributable to common stockholders Basic $ 1.18 $ 2.23 $ 4.73 Diluted $ 1.08 $ 2.04 $ 4.30 "
+  }
+ },
+ {
+  "company": "TSLA",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-06-30",
+  "document_id": "doc:sec:dfe823413a84d1ac",
+  "eps": {
+   "values": [
+    0.32,
+    0.33,
+    0.45,
+    0.45
+   ],
+   "context": " $ 1,114 $ 1,172 $ 1,591 $ 1,581 Net income per share of common stock attributable to common stockholders Basic $ 0.34 $ 0.36 $ 0.49 $ 0.49 Diluted $ 0.32 $ 0.33 $ 0.45 $ 0.45 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-03-31",
+  "document_id": "doc:sec:e00bf082cc46afa1",
+  "eps": null
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-K",
+  "fiscal_period": "2025-09-27",
+  "document_id": "doc:sec:e0ba72210ca7deb2",
+  "eps": {
+   "values": [
+    7.46,
+    6.08,
+    6.13
+   ],
+   "context": "3,736 Provision for income taxes 20,719 29,749 16,741 Net income $ 112,010 $ 93,736 $ 96,995 Earnings per share: Basic $ 7.49 $ 6.11 $ 6.16 Diluted $ 7.46 $ 6.08 $ 6.13 "
+  }
+ },
+ {
+  "company": "META",
+  "document_type": "10-K",
+  "fiscal_period": "2025-12-31",
+  "document_id": "doc:sec:e0f4b015d95fb9d6",
+  "eps": {
+   "values": [
+    23.49,
+    23.86,
+    14.87
+   ],
+   "context": "7,428 Provision for income taxes 25,474 8,303 8,330 Net income $ 60,458 $ 62,360 $ 39,098 Earnings per share: Basic $ 23.98 $ 24.61 $ 15.19 Diluted $ 23.49 $ 23.86 $ 14.87 "
+  }
+ },
+ {
+  "company": "MSFT",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-12-31",
+  "document_id": "doc:sec:e312824081333ffd",
+  "eps": {
+   "values": [
+    5.16,
+    3.23,
+    8.87,
+    6.53
+   ],
+   "context": "income taxes 9,788 5,257 16,342 10,859 Net income $ 38,458 $ 24,108 $ 66,205 $ 48,775 Earnings per share: Basic $ 5.18 $ 3.24 $ 8.91 $ 6.56 Diluted $ 5.16 $ 3.23 $ 8.87 $ 6.53 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-Q",
+  "fiscal_period": "2025-06-30",
+  "document_id": "doc:sec:e33e8fc46ee0f3cd",
+  "eps": null
+ },
+ {
+  "company": "AMZN",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-03-31",
+  "document_id": "doc:sec:f0596ea22fd513a0",
+  "eps": {
+   "values": [
+    1.59,
+    2.78
+   ],
+   "context": ",553 ) ( 9,560 ) Equity-method investment activity, net of tax 1 ( 19 ) Net income $ 17,127 $ 30,255 Basic earnings per share $ 1.62 $ 2.82 Diluted earnings per share $ 1.59 $ 2.78 "
+  }
+ },
+ {
+  "company": "JPM",
+  "document_type": "10-K",
+  "fiscal_period": "2025-12-31",
+  "document_id": "doc:sec:f4a1c47f51758a65",
+  "eps": {
+   "values": [
+    20.02,
+    19.75,
+    16.23
+   ],
+   "context": "me tax expense 15,547 16,610 12,060 Net income $ 57,048 $ 58,471 $ 49,552 Earnings per share data Net income: Basic $ 20.05 $ 19.79 $ 16.25 Diluted 20.02 19.75 16.23 "
+  }
+ },
+ {
+  "company": "AAPL",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-03-28",
+  "document_id": "doc:sec:f8641de8eec63d93",
+  "eps": {
+   "values": [
+    2.01,
+    1.65,
+    4.85,
+    4.05
+   ],
+   "context": "income taxes 6,255 4,530 15,160 10,784 Net income $ 29,578 $ 24,780 $ 71,675 $ 61,110 Earnings per share: Basic $ 2.02 $ 1.65 $ 4.87 $ 4.06 Diluted $ 2.01 $ 1.65 $ 4.85 $ 4.05 "
+  }
+ },
+ {
+  "company": "XOM",
+  "document_type": "10-Q",
+  "fiscal_period": "2026-06-30",
+  "document_id": "doc:sec:f8c698d70c0fa5be",
+  "eps": null
+ }
+]

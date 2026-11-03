@@ -1,0 +1,651 @@
+{
+  "timestamp": "2026-10-29T16:40:40.735790+00:00",
+  "total_questions": 64,
+  "cross_company_misattributions": {
+    "B1": 1,
+    "K5": 0,
+    "K8": 0
+  },
+  "entries": [
+    {
+      "question_id": "FSH-01",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "FSH-02",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "FSH-03",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "FSH-04",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "FSH-05",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "FSH-06",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['risk:1d58c7f87cec47e3']"
+    },
+    {
+      "question_id": "FSH-07",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for intended relationships: ['ACQUIRED']"
+    },
+    {
+      "question_id": "FSH-08",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "FSH-09",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['financialmetric:3d3ec7587a12699d']"
+    },
+    {
+      "question_id": "FSH-10",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "FSH-11",
+      "category": "factual_single_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "FSH-12",
+      "category": "factual_single_hop",
+      "answerable": false,
+      "B1_outcome": "TN_refusal",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['product:e3f3a567d0741bcd']"
+    },
+    {
+      "question_id": "FSH-13",
+      "category": "factual_single_hop",
+      "answerable": false,
+      "B1_outcome": "TN_refusal",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RSH-01",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RSH-02",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RSH-03",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RSH-04",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['product:07d74f7c98f1754a', 'risk:80382362bf4a6fc0']"
+    },
+    {
+      "question_id": "RSH-05",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RSH-06",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RSH-07",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RSH-08",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RSH-09",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RSH-10",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['company:1ca596a9cbe35a7e', 'product:c3bb655f6e1d1daf']"
+    },
+    {
+      "question_id": "RSH-11",
+      "category": "relational_single_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RSH-12",
+      "category": "relational_single_hop",
+      "answerable": false,
+      "B1_outcome": "TN_refusal",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Insufficient multi-hop reasoning depth: observed 1 hops, required 2."
+    },
+    {
+      "question_id": "RSH-13",
+      "category": "relational_single_hop",
+      "answerable": false,
+      "B1_outcome": "TN_refusal",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "TPT-01",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "TPT-02",
+      "category": "temporal_point_in_time",
+      "answerable": false,
+      "B1_outcome": "FN_hallucination",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['company:NVDA']"
+    },
+    {
+      "question_id": "TPT-03",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "TPT-04",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "TPT-05",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "TPT-06",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "TPT-07",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "TPT-08",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "TPT-09",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['company:ef0c15fe5fd551f0', 'financialmetric:3007aeb842bad03b', 'person:fc052bbe3d725283']"
+    },
+    {
+      "question_id": "TPT-10",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['financialmetric:1cac7c2dbeb884d8']"
+    },
+    {
+      "question_id": "TPT-11",
+      "category": "temporal_point_in_time",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "TPT-12",
+      "category": "temporal_point_in_time",
+      "answerable": false,
+      "B1_outcome": "FN_hallucination",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['company:AAPL']"
+    },
+    {
+      "question_id": "TPT-13",
+      "category": "temporal_point_in_time",
+      "answerable": false,
+      "B1_outcome": "TN_refusal",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RMH-01",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['company:994327452d331cd6', 'supplier:422334a37a7c7203']"
+    },
+    {
+      "question_id": "RMH-02",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RMH-03",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['company:288ef2f068999d47']"
+    },
+    {
+      "question_id": "RMH-04",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RMH-05",
+      "category": "relational_multi_hop",
+      "answerable": false,
+      "B1_outcome": "FN_hallucination",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Insufficient compound relationship coverage: multi-hop query requires formal graph edges linking risks affecting supplier companies, but evidence lacks formal supplier and risk edge metadata."
+    },
+    {
+      "question_id": "RMH-06",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['company:301ca8a36eb6e25d', 'company:961eea56a2d4f6d7', 'company:b99e841d990b61c4', 'country:1e1333734e8ab56e', 'country:f744257734cf209d', 'product:a3d13b102cadad16', 'risk:6483d5570cad71fb']"
+    },
+    {
+      "question_id": "RMH-07",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RMH-08",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "B1_outcome": "FP_false_refusal",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "RMH-09",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['product:e3f3a567d0741bcd', 'product:fd3e38cccce990e0']"
+    },
+    {
+      "question_id": "RMH-10",
+      "category": "relational_multi_hop",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['financialmetric:329ecfe8d6bd2fbf', 'financialmetric:545ddbb2e88356d2', 'risk:b9a84418d446242e']"
+    },
+    {
+      "question_id": "RMH-11",
+      "category": "relational_multi_hop",
+      "answerable": false,
+      "B1_outcome": "FN_hallucination",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Insufficient compound relationship coverage: multi-hop query requires formal graph edges linking risks affecting supplier companies, but evidence lacks formal supplier and risk edge metadata."
+    },
+    {
+      "question_id": "RMH-12",
+      "category": "relational_multi_hop",
+      "answerable": false,
+      "B1_outcome": "FN_hallucination",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Insufficient compound relationship coverage: formal supplier relationship (SUPPLIES) to the requested entity is missing in graph metadata."
+    },
+    {
+      "question_id": "RMH-13",
+      "category": "relational_multi_hop",
+      "answerable": false,
+      "B1_outcome": "TN_refusal",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for intended relationships: ['AFFECTED_BY', 'HAS_RISK', 'PARTNERS_WITH']"
+    },
+    {
+      "question_id": "CDC-01",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Insufficient multi-hop reasoning depth: observed 1 hops, required 2."
+    },
+    {
+      "question_id": "CDC-02",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "CDC-03",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['risk:8230040cccd06497']"
+    },
+    {
+      "question_id": "CDC-04",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Insufficient multi-hop reasoning depth: observed 1 hops, required 2."
+    },
+    {
+      "question_id": "CDC-05",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['company:NVDA']"
+    },
+    {
+      "question_id": "CDC-06",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "CDC-07",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "CDC-08",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "FP_false_refusal",
+      "K8_outcome": "FP_false_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['financialmetric:b23c604d2a3850f0', 'risk:fef0e823b8c8ed12']"
+    },
+    {
+      "question_id": "CDC-10",
+      "category": "cross_document_comparative",
+      "answerable": true,
+      "B1_outcome": "TP_answer",
+      "K5_outcome": "TP_answer",
+      "K8_outcome": "TP_answer",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "CDC-11",
+      "category": "cross_document_comparative",
+      "answerable": false,
+      "B1_outcome": "TN_refusal",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": true,
+      "K5_sufficiency_reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth."
+    },
+    {
+      "question_id": "CDC-12",
+      "category": "cross_document_comparative",
+      "answerable": false,
+      "B1_outcome": "TN_refusal",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['product:53f498ab9b6c068c']"
+    },
+    {
+      "question_id": "CDC-13",
+      "category": "cross_document_comparative",
+      "answerable": false,
+      "B1_outcome": "TN_refusal",
+      "K5_outcome": "TN_refusal",
+      "K8_outcome": "TN_refusal",
+      "K5_sufficient": false,
+      "K5_sufficiency_reason": "Missing evidence coverage for key query entities: ['company:dac61a38b3d55e14', 'country:96b1ff0c47149efc']"
+    }
+  ]
+}

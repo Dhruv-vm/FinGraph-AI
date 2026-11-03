@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use FinGraph AI in your research or reference its methodology, please cite it using the metadata below."
+title: "FinGraph AI: A Temporal Knowledge Graph and Hybrid GraphRAG Framework for Multi-Hop Financial Question Answering"
+authors:
+  - family-names: "V."
+    given-names: "Dhruv"
+    alias: "Dhruv-vm"
+    email: "vmdhruv1@gmail.com"
+repository-code: "https://github.com/Dhruv-vm/FinGraph-AI"
+url: "https://github.com/Dhruv-vm/FinGraph-AI"
+version: "0.1.0"
+date-released: "2026-10-27"
+type: software
+keywords:
+  - financial-nlp
+  - temporal-knowledge-graph
+  - graphrag
+  - multi-hop-question-answering
+  - sec-filings
+  - point-in-time-reasoning
+  - temporal-safety
+  - information-retrieval

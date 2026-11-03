@@ -1,5 +1,7 @@
 # FinGraph AI System Architecture
 
+> **Note:** For the comprehensive architectural specification with interactive Mermaid sequence and flow diagrams, refer to [ARCHITECTURE.md](ARCHITECTURE.md).
+
 ## Overview
 
 FinGraph AI is a Temporal Knowledge Graph and Hybrid GraphRAG framework designed for multi-hop financial question answering over SEC filings. The system addresses temporal leakage, semantic entity ambiguity, and relational multi-hop reasoning by combining structure-aware chunking, schema-constrained extraction, a unified Temporal Knowledge Graph (TKG), point-in-time temporal traversal, Reciprocal Rank Fusion (RRF) hybrid retrieval, deterministic reranking, evidence sufficiency checking, and a controlled ReAct-style retrieval loop.
@@ -154,9 +156,10 @@ with weights:
 Evaluates whether candidate evidence satisfies the information needs of the query:
 1. **Entity Coverage:** Ensures all query entities are represented in the evidence pool (using canonical IDs, ticker aliases, and graph node names).
 2. **Relationship Coverage:** Verifies that detected relationship intents have corresponding graph relations or textual mentions.
-3. **Reasoning Hop Depth:** Verifies that observed evidence hop depth meets or exceeds required hop depth.
-4. **Provenance Completeness:** Asserts that every evidence item contains non-empty `document_id`, `chunk_id`, and `available_time`.
-5. **Point-in-Time Validity:** Asserts that zero items violate the reference time cutoff.
+3. **Compound Relationship Chain Validation:** For multi-relationship queries (e.g. supplier-risk queries), validates connected, directionally sound evidence chains ($A \xrightarrow{\text{SUPPLIES}} B \land A \xrightarrow{\text{HAS\_RISK}} C$) rather than disconnected co-occurrences.
+4. **Reasoning Hop Depth:** Verifies that observed evidence hop depth meets or exceeds required hop depth.
+5. **Provenance Completeness:** Asserts that every evidence item contains non-empty `document_id`, `chunk_id`, and `available_time`.
+6. **Point-in-Time Validity:** Asserts that zero items violate the reference time cutoff.
 
 ### 7. Controlled ReAct Retrieval Loop (`RetrievalAgent`)
 Orchestrates an adaptive, bounded retrieval loop without unrestricted LLM tool use:

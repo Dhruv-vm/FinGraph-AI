@@ -213,6 +213,11 @@ class QueryAnalyzer:
         """
         q_lower = query.lower()
 
+        # Cross-document comparative inquiries compare disclosures across entities rather than requiring a connected graph walk
+        comparison_cues = ("compare", "versus", "vs", "differ", "differ in", "differ between", "respective")
+        if any(cue in q_lower for cue in comparison_cues) and not any(cue in q_lower for cue in ("supplier's supplier", "chain of suppliers", "3-hop", "three hops")):
+            return 1, False
+
         # Explicit multi-hop keywords
         three_hop_cues = (
             "3-hop", "three hops", "three steps", "path from", "path between",

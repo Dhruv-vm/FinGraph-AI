@@ -1,0 +1,223 @@
+{
+  "run_id": "ablation_20261013_124727",
+  "timestamp": "2026-10-13T12:47:27.855667+00:00",
+  "total_benchmark_questions": 64,
+  "configurations": {
+    "CFG0": {
+      "config": {
+        "config_id": "CFG0",
+        "name": "Phase 5 Strict Gate (Baseline)",
+        "description": "Strict entity (100%), strict relationship & compound chains, strict hop depth.",
+        "entity_mode": "strict",
+        "relationship_mode": "strict",
+        "hop_mode": "strict",
+        "gate_enabled": true
+      },
+      "confusion_matrix": {
+        "TP": 12,
+        "FN": 2,
+        "FP": 28,
+        "TN": 22,
+        "total_questions": 64,
+        "total_answerable": 50,
+        "total_unanswerable": 14
+      },
+      "classification_metrics": {
+        "refusal_precision": 0.3,
+        "refusal_recall": 0.8571,
+        "refusal_f1": 0.4444,
+        "decision_accuracy": 0.5312,
+        "hallucination_rate_on_unanswerable": 0.1429,
+        "false_refusal_rate_on_answerable": 0.56,
+        "answer_coverage_on_answerable": 0.44
+      },
+      "generation_metrics": {
+        "mean_token_f1_all": 0.3153,
+        "mean_token_f1_answerable": 0.1635,
+        "mean_token_f1_unanswerable": 0.8571,
+        "mean_exact_match": 0.2031,
+        "validation_pass_rate": 0.9062
+      }
+    },
+    "CFG1": {
+      "config": {
+        "config_id": "CFG1",
+        "name": "Soft Hop Gate",
+        "description": "Strict entity (100%), strict relationship, soft hop depth (allows single-hop evidence).",
+        "entity_mode": "strict",
+        "relationship_mode": "strict",
+        "hop_mode": "soft",
+        "gate_enabled": true
+      },
+      "confusion_matrix": {
+        "TP": 11,
+        "FN": 3,
+        "FP": 26,
+        "TN": 24,
+        "total_questions": 64,
+        "total_answerable": 50,
+        "total_unanswerable": 14
+      },
+      "classification_metrics": {
+        "refusal_precision": 0.2973,
+        "refusal_recall": 0.7857,
+        "refusal_f1": 0.4314,
+        "decision_accuracy": 0.5469,
+        "hallucination_rate_on_unanswerable": 0.2143,
+        "false_refusal_rate_on_answerable": 0.52,
+        "answer_coverage_on_answerable": 0.48
+      },
+      "generation_metrics": {
+        "mean_token_f1_all": 0.3078,
+        "mean_token_f1_answerable": 0.1731,
+        "mean_token_f1_unanswerable": 0.789,
+        "mean_exact_match": 0.1875,
+        "validation_pass_rate": 0.9062
+      }
+    },
+    "CFG2": {
+      "config": {
+        "config_id": "CFG2",
+        "name": "Partial Entity + Soft Hop",
+        "description": "Partial entity coverage (>=50%), strict relationship, soft hop depth.",
+        "entity_mode": "partial",
+        "relationship_mode": "strict",
+        "hop_mode": "soft",
+        "gate_enabled": true
+      },
+      "confusion_matrix": {
+        "TP": 9,
+        "FN": 5,
+        "FP": 11,
+        "TN": 39,
+        "total_questions": 64,
+        "total_answerable": 50,
+        "total_unanswerable": 14
+      },
+      "classification_metrics": {
+        "refusal_precision": 0.45,
+        "refusal_recall": 0.6429,
+        "refusal_f1": 0.5294,
+        "decision_accuracy": 0.75,
+        "hallucination_rate_on_unanswerable": 0.3571,
+        "false_refusal_rate_on_answerable": 0.22,
+        "answer_coverage_on_answerable": 0.78
+      },
+      "generation_metrics": {
+        "mean_token_f1_all": 0.3495,
+        "mean_token_f1_answerable": 0.2634,
+        "mean_token_f1_unanswerable": 0.6572,
+        "mean_exact_match": 0.1562,
+        "validation_pass_rate": 0.8594
+      }
+    },
+    "CFG3": {
+      "config": {
+        "config_id": "CFG3",
+        "name": "Textual Relationship + Soft Hop",
+        "description": "Strict entity (100%), textual relationship keyword matching, soft hop depth.",
+        "entity_mode": "strict",
+        "relationship_mode": "textual",
+        "hop_mode": "soft",
+        "gate_enabled": true
+      },
+      "confusion_matrix": {
+        "TP": 10,
+        "FN": 4,
+        "FP": 26,
+        "TN": 24,
+        "total_questions": 64,
+        "total_answerable": 50,
+        "total_unanswerable": 14
+      },
+      "classification_metrics": {
+        "refusal_precision": 0.2778,
+        "refusal_recall": 0.7143,
+        "refusal_f1": 0.4,
+        "decision_accuracy": 0.5312,
+        "hallucination_rate_on_unanswerable": 0.2857,
+        "false_refusal_rate_on_answerable": 0.52,
+        "answer_coverage_on_answerable": 0.48
+      },
+      "generation_metrics": {
+        "mean_token_f1_all": 0.2935,
+        "mean_token_f1_answerable": 0.1731,
+        "mean_token_f1_unanswerable": 0.7238,
+        "mean_exact_match": 0.1719,
+        "validation_pass_rate": 0.8906
+      }
+    },
+    "CFG4": {
+      "config": {
+        "config_id": "CFG4",
+        "name": "Balanced Gate (Partial Entity + Textual Rel + Soft Hop)",
+        "description": "Partial entity coverage, textual relationship matching, soft hop depth.",
+        "entity_mode": "partial",
+        "relationship_mode": "textual",
+        "hop_mode": "soft",
+        "gate_enabled": true
+      },
+      "confusion_matrix": {
+        "TP": 7,
+        "FN": 7,
+        "FP": 11,
+        "TN": 39,
+        "total_questions": 64,
+        "total_answerable": 50,
+        "total_unanswerable": 14
+      },
+      "classification_metrics": {
+        "refusal_precision": 0.3889,
+        "refusal_recall": 0.5,
+        "refusal_f1": 0.4375,
+        "decision_accuracy": 0.7188,
+        "hallucination_rate_on_unanswerable": 0.5,
+        "false_refusal_rate_on_answerable": 0.22,
+        "answer_coverage_on_answerable": 0.78
+      },
+      "generation_metrics": {
+        "mean_token_f1_all": 0.3203,
+        "mean_token_f1_answerable": 0.2634,
+        "mean_token_f1_unanswerable": 0.5235,
+        "mean_exact_match": 0.125,
+        "validation_pass_rate": 0.8438
+      }
+    },
+    "CFG5": {
+      "config": {
+        "config_id": "CFG5",
+        "name": "Disabled Sufficiency Gate (No-Gate Ablation)",
+        "description": "Sufficiency gate disabled; generates answer whenever retrieved evidence exists (distinct from B1 vector-only).",
+        "entity_mode": "disabled",
+        "relationship_mode": "disabled",
+        "hop_mode": "disabled",
+        "gate_enabled": false
+      },
+      "confusion_matrix": {
+        "TP": 7,
+        "FN": 7,
+        "FP": 8,
+        "TN": 42,
+        "total_questions": 64,
+        "total_answerable": 50,
+        "total_unanswerable": 14
+      },
+      "classification_metrics": {
+        "refusal_precision": 0.4667,
+        "refusal_recall": 0.5,
+        "refusal_f1": 0.4828,
+        "decision_accuracy": 0.7656,
+        "hallucination_rate_on_unanswerable": 0.5,
+        "false_refusal_rate_on_answerable": 0.16,
+        "answer_coverage_on_answerable": 0.84
+      },
+      "generation_metrics": {
+        "mean_token_f1_all": 0.3361,
+        "mean_token_f1_answerable": 0.2837,
+        "mean_token_f1_unanswerable": 0.5235,
+        "mean_exact_match": 0.125,
+        "validation_pass_rate": 0.8281
+      }
+    }
+  }
+}

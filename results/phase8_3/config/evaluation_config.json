@@ -1,0 +1,48 @@
+{
+  "experiment": "Phase 8.3 controlled parametric leakage evaluation",
+  "model": "qwen3.5:4b",
+  "ollama_host": "http://localhost:11434",
+  "ollama_endpoint": "/api/chat",
+  "decoding": {
+    "temperature": 0.0,
+    "seed": 0,
+    "num_predict": 256
+  },
+  "think": false,
+  "format": "json",
+  "stream": false,
+  "conversation": "fresh single-turn chat per question (system + user); no history",
+  "retrieval": "disabled for Experiment A (no Qdrant, no knowledge graph, no documents, no tools, no browsing)",
+  "conditions": {
+    "A1_unconstrained": "Recall test: model asked for the figure from its own knowledge, no date framing.",
+    "A2_as_of": "Leakage test: model told today's date is the reference date and to use only information public by then.",
+    "A3_forced_estimate": "Latent-knowledge probe: model must give its best numeric estimate (no abstention). Compared against the post-release control window to separate knowledge from guessing."
+  },
+  "system_prompts": {
+    "A1_unconstrained": "You are a financial analyst. Answer from your own knowledge only; no documents, tools or browsing are available. If you do not know the figure, say so instead of guessing. Respond with JSON only, in exactly this form: {\"status\": \"known\" or \"unknown\", \"value\": number or null, \"answer\": \"one short sentence\"}.",
+    "A2_as_of": "You are a financial analyst. Today's date is {reference_date}. Answer using only information that was publicly available on or before today's date; no documents, tools or browsing are available. If the figure had not been publicly reported by today's date, or you do not know it, say so instead of guessing. Respond with JSON only, in exactly this form: {\"status\": \"known\" or \"not_yet_public\" or \"unknown\", \"value\": number or null, \"answer\": \"one short sentence\"}.",
+    "A3_forced_estimate": "You are a financial analyst. Answer from your own knowledge only; no documents, tools or browsing are available. You must give your single best numeric estimate even if you are uncertain; do not refuse. Respond with JSON only, in exactly this form: {\"status\": \"known\" or \"estimate\", \"value\": number, \"answer\": \"one short sentence\"}."
+  },
+  "grounded": {
+    "endpoint": "POST /api/v1/query (FastAPI FinGraphPipeline, unchanged production configuration)",
+    "payload": {
+      "top_k": 10,
+      "candidate_pool_size": 20
+    },
+    "reference_time": "fact.reference_time"
+  },
+  "scoring": {
+    "primary_tolerance_relative": 0.01,
+    "eps_rule": "exact to the reported cent (abs error <= 0.005)",
+    "sensitivity_tolerances": [
+      0.005,
+      0.02
+    ],
+    "confidence_interval": "Wilson score, 95%"
+  },
+  "condition_order": [
+    "A1_unconstrained",
+    "A2_as_of",
+    "A3_forced_estimate"
+  ]
+}

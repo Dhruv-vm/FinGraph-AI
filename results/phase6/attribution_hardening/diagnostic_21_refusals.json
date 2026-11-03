@@ -1,0 +1,610 @@
+[
+  {
+    "qid": "FSH-06",
+    "question": "What cybersecurity firm did Alphabet announce an acquisition or agreement for in its filings?",
+    "category": "factual_single_hop",
+    "hops": 1,
+    "gt_answer": "Alphabet disclosed acquisition agreements or discussions concerning cloud cybersecurity company Wiz.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 4,
+    "hits": [
+      "doc:sec:01d6c0ca5ed3b2ec:chunk:96",
+      "doc:sec:01d6c0ca5ed3b2ec:chunk:179",
+      "doc:sec:01d6c0ca5ed3b2ec:chunk:95",
+      "doc:sec:01d6c0ca5ed3b2ec:chunk:96"
+    ],
+    "entities": [
+      "company:GOOGL",
+      "risk:1d58c7f87cec47e3"
+    ],
+    "relationships": [
+      "ACQUIRED"
+    ],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['risk:1d58c7f87cec47e3']",
+    "prov_statuses": [
+      "doc:sec:01d6c0ca5ed3b2ec:chunk:96:verified_issuer",
+      "doc:sec:01d6c0ca5ed3b2ec:chunk:179:verified_issuer",
+      "doc:sec:01d6c0ca5ed3b2ec:chunk:95:verified_issuer",
+      "doc:sec:5d1c9c78801bcdf2:chunk:56:verified_issuer",
+      "doc:sec:01d6c0ca5ed3b2ec:chunk:184:verified_issuer"
+    ]
+  },
+  {
+    "qid": "FSH-07",
+    "question": "What major video gaming and entertainment company did Microsoft acquire?",
+    "category": "factual_single_hop",
+    "hops": 1,
+    "gt_answer": "Microsoft acquired Activision Blizzard.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:1ca596a9cbe35a7e",
+      "company:MSFT",
+      "product:c3bb655f6e1d1daf"
+    ],
+    "relationships": [
+      "ACQUIRED"
+    ],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for intended relationships: ['ACQUIRED']",
+    "prov_statuses": [
+      "doc:sec:ae98d6934ba5fdd6:chunk:48:verified_issuer",
+      "doc:sec:6a50d47d6a8dc43d:chunk:19:verified_issuer",
+      "doc:sec:8bd1c03865e238f6:chunk:52:verified_issuer",
+      "doc:sec:076412151b515b96:chunk:60:verified_issuer",
+      "doc:sec:8bd1c03865e238f6:chunk:62:verified_issuer"
+    ]
+  },
+  {
+    "qid": "FSH-09",
+    "question": "What healthcare company did NVIDIA acquire or partner with according to corporate filings?",
+    "category": "factual_single_hop",
+    "hops": 1,
+    "gt_answer": "NVIDIA filings record an acquisition or transaction involving Shockwave Medical.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:NVDA",
+      "company:ef0c15fe5fd551f0",
+      "financialmetric:3007aeb842bad03b",
+      "financialmetric:3d3ec7587a12699d",
+      "person:fc052bbe3d725283"
+    ],
+    "relationships": [
+      "ACQUIRED",
+      "PARTNERS_WITH"
+    ],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['financialmetric:3d3ec7587a12699d']",
+    "prov_statuses": [
+      "doc:sec:920b24ef025a8856:chunk:40:verified_issuer",
+      "doc:sec:1ad2e96011122307:chunk:25:verified_issuer",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:111:verified_issuer",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:40:verified_issuer",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:160:verified_issuer"
+    ]
+  },
+  {
+    "qid": "RSH-04",
+    "question": "Which artificial intelligence lab has an extensive commercial partnership with Microsoft?",
+    "category": "relational_single_hop",
+    "hops": 1,
+    "gt_answer": "Microsoft maintains a strategic partnership with OpenAI to deploy and commercialize AI models.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:MSFT",
+      "product:07d74f7c98f1754a",
+      "risk:80382362bf4a6fc0"
+    ],
+    "relationships": [
+      "PARTNERS_WITH"
+    ],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['product:07d74f7c98f1754a', 'risk:80382362bf4a6fc0']",
+    "prov_statuses": [
+      "doc:sec:8bd1c03865e238f6:chunk:60:verified_issuer",
+      "doc:sec:6a50d47d6a8dc43d:chunk:206:verified_issuer",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:111:verified_issuer",
+      "doc:sec:e312824081333ffd:chunk:41:verified_issuer",
+      "doc:sec:ae98d6934ba5fdd6:chunk:37:verified_issuer"
+    ]
+  },
+  {
+    "qid": "RSH-05",
+    "question": "Which accounting and auditing firm supplies professional services to NVIDIA?",
+    "category": "relational_single_hop",
+    "hops": 1,
+    "gt_answer": "PricewaterhouseCoopers LLP supplies independent auditing and accounting services to NVIDIA.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:NVDA"
+    ],
+    "relationships": [
+      "DEPENDS_ON",
+      "SUPPLIES"
+    ],
+    "sufficient": true,
+    "reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth.",
+    "prov_statuses": [
+      "doc:sec:878a73f0f4488fc2:chunk:41:verified_issuer",
+      "doc:sec:878a73f0f4488fc2:chunk:43:verified_issuer",
+      "doc:sec:878a73f0f4488fc2:chunk:41:verified_issuer",
+      "doc:sec:878a73f0f4488fc2:chunk:43:verified_issuer",
+      "doc:sec:878a73f0f4488fc2:chunk:41:verified_issuer"
+    ]
+  },
+  {
+    "qid": "RSH-10",
+    "question": "What social entertainment company competes with Apple in application distribution and gaming?",
+    "category": "relational_single_hop",
+    "hops": 1,
+    "gt_answer": "Epic Games competes with Apple regarding application marketplace distribution and in-app payment terms.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:1ca596a9cbe35a7e",
+      "company:AAPL",
+      "product:c3bb655f6e1d1daf"
+    ],
+    "relationships": [
+      "COMPETES_WITH"
+    ],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['company:1ca596a9cbe35a7e', 'product:c3bb655f6e1d1daf']",
+    "prov_statuses": [
+      "doc:sec:e0ba72210ca7deb2:chunk:66:verified_issuer",
+      "doc:sec:e0ba72210ca7deb2:chunk:66:verified_issuer",
+      "doc:sec:7a93e4a643b9ddb1:chunk:149:verified_cross_company",
+      "doc:sec:9f1bf6c144347ec4:chunk:65:verified_cross_company",
+      "doc:sec:6b5300f8289ff6c0:chunk:69:verified_cross_company"
+    ]
+  },
+  {
+    "qid": "TPT-09",
+    "question": "What corporate agreements or acquisitions did Alphabet disclose as of December 1, 2025?",
+    "category": "temporal_point_in_time",
+    "hops": 1,
+    "gt_answer": "As of December 1, 2025, Alphabet disclosed corporate transactions and cybersecurity acquisition discussions involving Wiz.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:GOOGL",
+      "company:ef0c15fe5fd551f0",
+      "financialmetric:3007aeb842bad03b",
+      "person:fc052bbe3d725283"
+    ],
+    "relationships": [
+      "ACQUIRED"
+    ],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['company:ef0c15fe5fd551f0', 'financialmetric:3007aeb842bad03b', 'person:fc052bbe3d725283']",
+    "prov_statuses": [
+      "doc:sec:9360ae13391cbe52:chunk:2:verified_issuer",
+      "doc:sec:9360ae13391cbe52:chunk:14:verified_issuer",
+      "doc:sec:e0ba72210ca7deb2:chunk:65:verified_issuer",
+      "doc:sec:88b6e7c0b3278b5e:chunk:113:verified_issuer",
+      "doc:sec:6572663282945293:chunk:7:verified_issuer"
+    ]
+  },
+  {
+    "qid": "TPT-10",
+    "question": "What regulatory investigations affected NVIDIA as of March 1, 2026?",
+    "category": "temporal_point_in_time",
+    "hops": 1,
+    "gt_answer": "As of March 1, 2026, NVIDIA disclosed compliance and regulatory impacts under European Digital Services Act (DSA) and Digital Markets Act (DMA) in filings prior to March 2026.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:NVDA",
+      "financialmetric:1cac7c2dbeb884d8",
+      "risk:68ba33f27c871b51"
+    ],
+    "relationships": [],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['financialmetric:1cac7c2dbeb884d8']",
+    "prov_statuses": [
+      "doc:sec:6aadaca6341c317e:chunk:39:verified_issuer",
+      "doc:sec:920b24ef025a8856:chunk:41:verified_issuer",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:197:verified_issuer",
+      "doc:sec:6aadaca6341c317e:chunk:28:verified_issuer",
+      "doc:sec:6aadaca6341c317e:chunk:26:verified_issuer"
+    ]
+  },
+  {
+    "qid": "RMH-01",
+    "question": "How is NVIDIA connected to TSMC through supply and manufacturing relationships?",
+    "category": "relational_multi_hop",
+    "hops": 2,
+    "gt_answer": "NVIDIA is connected to TSMC as its primary third-party semiconductor foundry partner responsible for manufacturing advanced GPU chips.",
+    "rel_chunks_count": 3,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:994327452d331cd6",
+      "company:NVDA",
+      "supplier:422334a37a7c7203"
+    ],
+    "relationships": [
+      "DEPENDS_ON",
+      "SUPPLIES"
+    ],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['company:994327452d331cd6', 'supplier:422334a37a7c7203']",
+    "prov_statuses": [
+      "doc:sec:878a73f0f4488fc2:chunk:43:verified_issuer",
+      "doc:sec:878a73f0f4488fc2:chunk:83:verified_issuer",
+      "doc:sec:878a73f0f4488fc2:chunk:83:verified_issuer",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:45:verified_issuer",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:45:verified_issuer"
+    ]
+  },
+  {
+    "qid": "RMH-03",
+    "question": "What products manufactured by NVIDIA depend on advanced semiconductor manufacturing?",
+    "category": "relational_multi_hop",
+    "hops": 2,
+    "gt_answer": "NVIDIA manufactures GPUs and Blackwell architecture processors, which depend on external foundry manufacturing partners.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:288ef2f068999d47",
+      "company:NVDA"
+    ],
+    "relationships": [
+      "DEPENDS_ON",
+      "MANUFACTURES",
+      "SUPPLIES"
+    ],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['company:288ef2f068999d47']",
+    "prov_statuses": [
+      "doc:sec:98d8cee8a8ae0f7d:chunk:8:verified_issuer",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:97:verified_issuer",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:97:verified_issuer",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:127:verified_issuer",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:54:verified_issuer"
+    ]
+  },
+  {
+    "qid": "RMH-04",
+    "question": "Which technology competitor of Apple also partners with Apple for search distribution?",
+    "category": "relational_multi_hop",
+    "hops": 2,
+    "gt_answer": "Alphabet Inc. (Google) both competes with Apple in mobile platforms and operating systems and partners with Apple as the default Safari search provider.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:AAPL"
+    ],
+    "relationships": [
+      "COMPETES_WITH",
+      "PARTNERS_WITH"
+    ],
+    "sufficient": true,
+    "reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth.",
+    "prov_statuses": [
+      "doc:sec:38008a9845a2c105:chunk:46:verified_issuer",
+      "doc:sec:f8641de8eec63d93:chunk:45:verified_issuer",
+      "doc:sec:e0ba72210ca7deb2:chunk:66:verified_issuer",
+      "doc:sec:2fde24a7f31cff96:chunk:265:verified_issuer",
+      "doc:sec:2fde24a7f31cff96:chunk:6:verified_issuer"
+    ]
+  },
+  {
+    "qid": "RMH-06",
+    "question": "What software products manufactured by Meta Platforms are affected by regulatory actions from the European Commission or FTC?",
+    "category": "relational_multi_hop",
+    "hops": 2,
+    "gt_answer": "Meta Platforms manufactures and operates Instagram, which is subject to regulatory actions and investigations by the European Commission and FTC.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:301ca8a36eb6e25d",
+      "company:32c5e7b3a1f66bce",
+      "company:961eea56a2d4f6d7",
+      "company:META",
+      "company:b99e841d990b61c4",
+      "country:1e1333734e8ab56e",
+      "country:f744257734cf209d",
+      "product:59a5f320df556d50",
+      "product:a3d13b102cadad16",
+      "risk:6483d5570cad71fb"
+    ],
+    "relationships": [
+      "MANUFACTURES"
+    ],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['company:301ca8a36eb6e25d', 'company:961eea56a2d4f6d7', 'company:b99e841d990b61c4', 'country:1e1333734e8ab56e', 'country:f744257734cf209d', 'product:a3d13b102cadad16', 'risk:6483d5570cad71fb']",
+    "prov_statuses": [
+      "doc:sec:e0f4b015d95fb9d6:chunk:20:verified_issuer",
+      "doc:sec:7a93e4a643b9ddb1:chunk:147:verified_issuer",
+      "doc:sec:e0f4b015d95fb9d6:chunk:15:verified_issuer",
+      "doc:sec:7a93e4a643b9ddb1:chunk:73:verified_issuer",
+      "doc:sec:7a93e4a643b9ddb1:chunk:68:verified_issuer"
+    ]
+  },
+  {
+    "qid": "RMH-07",
+    "question": "What gaming company acquired by Microsoft had its transaction challenged by competition regulators?",
+    "category": "relational_multi_hop",
+    "hops": 2,
+    "gt_answer": "Microsoft acquired Activision Blizzard, an acquisition subject to scrutiny and agreements regarding cross-platform availability.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:1ca596a9cbe35a7e",
+      "company:4052d1b2e9146ec0",
+      "company:MSFT",
+      "product:c3bb655f6e1d1daf"
+    ],
+    "relationships": [
+      "ACQUIRED",
+      "COMPETES_WITH"
+    ],
+    "sufficient": true,
+    "reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth.",
+    "prov_statuses": [
+      "doc:sec:98d8cee8a8ae0f7d:chunk:25:verified_cross_company",
+      "doc:sec:e312824081333ffd:chunk:58:verified_issuer",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:111:verified_issuer",
+      "doc:sec:ae98d6934ba5fdd6:chunk:74:verified_issuer",
+      "doc:sec:076412151b515b96:chunk:56:verified_issuer"
+    ]
+  },
+  {
+    "qid": "RMH-08",
+    "question": "What cloud competitor of Microsoft also supplies cloud computing infrastructure to mutual enterprise customers?",
+    "category": "relational_multi_hop",
+    "hops": 2,
+    "gt_answer": "Amazon.com, Inc. competes directly with Microsoft Azure through Amazon Web Services (AWS) in enterprise cloud services.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:MSFT"
+    ],
+    "relationships": [
+      "COMPETES_WITH",
+      "DEPENDS_ON",
+      "SUPPLIES"
+    ],
+    "sufficient": true,
+    "reason": "Retrieved evidence sufficiently covers entities, relationships, temporal constraints, and reasoning depth.",
+    "prov_statuses": [
+      "doc:sec:98d8cee8a8ae0f7d:chunk:25:verified_cross_company",
+      "doc:sec:6a50d47d6a8dc43d:chunk:134:verified_issuer",
+      "doc:sec:ae98d6934ba5fdd6:chunk:78:verified_issuer",
+      "doc:sec:ae98d6934ba5fdd6:chunk:65:verified_issuer",
+      "doc:sec:ae98d6934ba5fdd6:chunk:79:verified_issuer"
+    ]
+  },
+  {
+    "qid": "RMH-09",
+    "question": "What products does Tesla manufacture that rely on neural network processing hardware from suppliers?",
+    "category": "relational_multi_hop",
+    "hops": 2,
+    "gt_answer": "Tesla manufactures Full Self-Driving (FSD) features that depend on specialized computing hardware and onboard processors.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:TSLA",
+      "product:e3f3a567d0741bcd",
+      "product:fd3e38cccce990e0"
+    ],
+    "relationships": [
+      "DEPENDS_ON",
+      "MANUFACTURES",
+      "SUPPLIES"
+    ],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['product:e3f3a567d0741bcd', 'product:fd3e38cccce990e0']",
+    "prov_statuses": [
+      "doc:sec:0d39f6127b5a9c25:chunk:57:verified_issuer",
+      "doc:sec:d1e5c742a602f75d:chunk:40:verified_issuer",
+      "doc:sec:d1e5c742a602f75d:chunk:101:verified_issuer",
+      "doc:sec:dfe823413a84d1ac:chunk:59:verified_issuer",
+      "doc:sec:0d39f6127b5a9c25:chunk:62:verified_issuer"
+    ]
+  },
+  {
+    "qid": "RMH-10",
+    "question": "Which social platforms acquired by Meta Platforms generate advertising revenue subject to privacy regulation changes?",
+    "category": "relational_multi_hop",
+    "hops": 2,
+    "gt_answer": "Meta acquired Instagram, whose digital advertising revenue is directly affected by privacy regulations and platform platform policies.",
+    "rel_chunks_count": 5,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:32c5e7b3a1f66bce",
+      "company:META",
+      "financialmetric:329ecfe8d6bd2fbf",
+      "financialmetric:545ddbb2e88356d2",
+      "risk:b9a84418d446242e"
+    ],
+    "relationships": [
+      "ACQUIRED"
+    ],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['financialmetric:329ecfe8d6bd2fbf', 'financialmetric:545ddbb2e88356d2', 'risk:b9a84418d446242e']",
+    "prov_statuses": [
+      "doc:sec:7a93e4a643b9ddb1:chunk:175:verified_issuer",
+      "doc:sec:6b5300f8289ff6c0:chunk:192:verified_issuer",
+      "doc:sec:7a93e4a643b9ddb1:chunk:175:verified_issuer",
+      "doc:sec:6b5300f8289ff6c0:chunk:110:verified_issuer",
+      "doc:sec:294224342b0772de:chunk:185:verified_issuer"
+    ]
+  },
+  {
+    "qid": "CDC-01",
+    "question": "Compare the commercial competition between Apple and Alphabet as disclosed across their respective filings.",
+    "category": "cross_document_comparative",
+    "hops": 2,
+    "gt_answer": "Apple filings identify Alphabet as a competitor in digital services and mobile operating systems, while Alphabet filings cite Apple as a competitor across hardware, platforms, and advertising.",
+    "rel_chunks_count": 4,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:AAPL",
+      "company:GOOGL"
+    ],
+    "relationships": [
+      "COMPETES_WITH"
+    ],
+    "sufficient": false,
+    "reason": "Insufficient multi-hop reasoning depth: observed 1 hops, required 2.",
+    "prov_statuses": [
+      "doc:sec:9f1bf6c144347ec4:chunk:158:verified_cross_company",
+      "doc:sec:7a93e4a643b9ddb1:chunk:149:verified_cross_company",
+      "doc:sec:9f1bf6c144347ec4:chunk:65:verified_cross_company",
+      "doc:sec:6b5300f8289ff6c0:chunk:69:verified_cross_company",
+      "doc:sec:7a93e4a643b9ddb1:chunk:59:verified_cross_company"
+    ]
+  },
+  {
+    "qid": "CDC-03",
+    "question": "Compare the antitrust and regulatory risk disclosures between Meta Platforms and Alphabet Inc.",
+    "category": "cross_document_comparative",
+    "hops": 2,
+    "gt_answer": "Meta filings highlight FTC lawsuits and youth online privacy regulations, while Alphabet filings highlight European competition investigations and digital advertising antitrust scrutiny.",
+    "rel_chunks_count": 4,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:32c5e7b3a1f66bce",
+      "company:GOOGL",
+      "company:META",
+      "risk:8230040cccd06497"
+    ],
+    "relationships": [
+      "AFFECTED_BY",
+      "HAS_RISK"
+    ],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['risk:8230040cccd06497']",
+    "prov_statuses": [
+      "doc:sec:6572663282945293:chunk:43:verified_issuer",
+      "doc:sec:5d1c9c78801bcdf2:chunk:87:verified_issuer",
+      "doc:sec:9360ae13391cbe52:chunk:45:verified_issuer",
+      "doc:sec:01d6c0ca5ed3b2ec:chunk:65:verified_issuer",
+      "doc:sec:01d6c0ca5ed3b2ec:chunk:65:verified_issuer"
+    ]
+  },
+  {
+    "qid": "CDC-04",
+    "question": "How do NVIDIA and Microsoft disclose their respective relationships with AI cloud computing infrastructure?",
+    "category": "cross_document_comparative",
+    "hops": 2,
+    "gt_answer": "NVIDIA supplies GPU architectures and enters AI cloud agreements, while Microsoft deploys AI cloud infrastructure partnering with OpenAI and hosting enterprise models on Azure.",
+    "rel_chunks_count": 3,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:MSFT",
+      "company:NVDA",
+      "company:f23c8159e82f0861",
+      "product:d98c07b2c5273f82",
+      "risk:45db9eda2a86cf68"
+    ],
+    "relationships": [],
+    "sufficient": false,
+    "reason": "Insufficient multi-hop reasoning depth: observed 1 hops, required 2.",
+    "prov_statuses": [
+      "doc:sec:1ad2e96011122307:chunk:26:verified_issuer",
+      "doc:sec:6a50d47d6a8dc43d:chunk:10:verified_issuer",
+      "doc:sec:878a73f0f4488fc2:chunk:60:verified_issuer",
+      "doc:sec:98d8cee8a8ae0f7d:chunk:11:verified_issuer",
+      "doc:sec:1ad2e96011122307:chunk:43:verified_issuer"
+    ]
+  },
+  {
+    "qid": "CDC-05",
+    "question": "Compare the supply chain dependency disclosures of Apple and NVIDIA regarding contract manufacturing.",
+    "category": "cross_document_comparative",
+    "hops": 2,
+    "gt_answer": "Apple discloses multi-billion dollar manufacturing purchase obligations with contract assemblers, while NVIDIA highlights single-source dependencies on semiconductor foundry partners like TSMC.",
+    "rel_chunks_count": 4,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:AAPL",
+      "company:NVDA",
+      "risk:19a78390126e24f4"
+    ],
+    "relationships": [
+      "DEPENDS_ON",
+      "SUPPLIES"
+    ],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['company:NVDA']",
+    "prov_statuses": [
+      "doc:sec:38008a9845a2c105:chunk:38:verified_issuer",
+      "doc:sec:38008a9845a2c105:chunk:38:verified_issuer",
+      "doc:sec:38008a9845a2c105:chunk:38:verified_issuer",
+      "doc:sec:f4a1c47f51758a65:chunk:167:verified_issuer",
+      "doc:sec:38008a9845a2c105:chunk:9:verified_issuer"
+    ]
+  },
+  {
+    "qid": "CDC-08",
+    "question": "How do ExxonMobil and Tesla disclose energy transition and regulatory credit impacts in their filings?",
+    "category": "cross_document_comparative",
+    "hops": 2,
+    "gt_answer": "Tesla discloses automotive regulatory credits as a revenue and margin factor, whereas ExxonMobil discloses environmental compliance and commodity market volatility.",
+    "rel_chunks_count": 4,
+    "retrieved_chunks_count": 10,
+    "hit_count": 0,
+    "hits": [],
+    "entities": [
+      "company:TSLA",
+      "company:XOM",
+      "financialmetric:b23c604d2a3850f0",
+      "risk:fef0e823b8c8ed12"
+    ],
+    "relationships": [],
+    "sufficient": false,
+    "reason": "Missing evidence coverage for key query entities: ['financialmetric:b23c604d2a3850f0', 'risk:fef0e823b8c8ed12']",
+    "prov_statuses": [
+      "doc:sec:3cbe837756668d55:chunk:44:verified_issuer",
+      "doc:sec:f8c698d70c0fa5be:chunk:15:verified_issuer",
+      "doc:sec:3cbe837756668d55:chunk:13:verified_issuer",
+      "doc:sec:d1e5c742a602f75d:chunk:3:verified_issuer",
+      "doc:sec:41306444341a762f:chunk:158:verified_issuer"
+    ]
+  }
+]

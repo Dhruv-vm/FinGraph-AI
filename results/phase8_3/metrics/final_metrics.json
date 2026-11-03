@@ -1,0 +1,755 @@
+{
+ "benchmark_facts": 142,
+ "closed_book": {
+  "request_errors": 0,
+  "A1_unconstrained": {
+   "valid_facts_tested": 142,
+   "recalled_all": {
+    "k": 0,
+    "n": 142,
+    "pct": 0.0,
+    "wilson95_pct": [
+     0.0,
+     2.63
+    ]
+   },
+   "recalled_pre_release_window": {
+    "k": 0,
+    "n": 84,
+    "pct": 0.0,
+    "wilson95_pct": [
+     0.0,
+     4.37
+    ]
+   },
+   "recalled_post_release_control": {
+    "k": 0,
+    "n": 58,
+    "pct": 0.0,
+    "wilson95_pct": [
+     0.0,
+     6.21
+    ]
+   },
+   "not_recalled_all": 142,
+   "abstained_all": {
+    "k": 142,
+    "n": 142,
+    "pct": 100.0,
+    "wilson95_pct": [
+     97.37,
+     100.0
+    ]
+   },
+   "tolerance_sensitivity_pre_release": {
+    "within_0_5pct": {
+     "k": 0,
+     "n": 84,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      4.37
+     ]
+    },
+    "within_1pct": {
+     "k": 0,
+     "n": 84,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      4.37
+     ]
+    },
+    "within_2pct": {
+     "k": 0,
+     "n": 84,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      4.37
+     ]
+    }
+   },
+   "json_parse_failures": 0,
+   "by_company_pre_release": {
+    "AAPL": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "AMZN": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "GOOGL": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "JNJ": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "JPM": {
+     "k": 0,
+     "n": 6,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      39.03
+     ]
+    },
+    "META": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "MSFT": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "NVDA": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "TSLA": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "XOM": {
+     "k": 0,
+     "n": 6,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      39.03
+     ]
+    }
+   },
+   "by_category_pre_release": {
+    "diluted_eps": {
+     "k": 0,
+     "n": 26,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      12.87
+     ]
+    },
+    "net_income": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    },
+    "revenue": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    }
+   },
+   "by_filing_quarter": {
+    "2025-Q2": {
+     "k": 0,
+     "n": 3,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      56.15
+     ]
+    },
+    "2025-Q3": {
+     "k": 0,
+     "n": 23,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      14.31
+     ]
+    },
+    "2025-Q4": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    },
+    "2026-Q1": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    },
+    "2026-Q2": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    },
+    "2026-Q3": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    }
+   },
+   "median_relative_error_answered": null
+  },
+  "A2_as_of": {
+   "valid_facts_tested": 142,
+   "recalled_all": {
+    "k": 0,
+    "n": 142,
+    "pct": 0.0,
+    "wilson95_pct": [
+     0.0,
+     2.63
+    ]
+   },
+   "recalled_pre_release_window": {
+    "k": 0,
+    "n": 84,
+    "pct": 0.0,
+    "wilson95_pct": [
+     0.0,
+     4.37
+    ]
+   },
+   "recalled_post_release_control": {
+    "k": 0,
+    "n": 58,
+    "pct": 0.0,
+    "wilson95_pct": [
+     0.0,
+     6.21
+    ]
+   },
+   "not_recalled_all": 142,
+   "abstained_all": {
+    "k": 142,
+    "n": 142,
+    "pct": 100.0,
+    "wilson95_pct": [
+     97.37,
+     100.0
+    ]
+   },
+   "tolerance_sensitivity_pre_release": {
+    "within_0_5pct": {
+     "k": 0,
+     "n": 84,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      4.37
+     ]
+    },
+    "within_1pct": {
+     "k": 0,
+     "n": 84,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      4.37
+     ]
+    },
+    "within_2pct": {
+     "k": 0,
+     "n": 84,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      4.37
+     ]
+    }
+   },
+   "json_parse_failures": 0,
+   "by_company_pre_release": {
+    "AAPL": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "AMZN": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "GOOGL": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "JNJ": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "JPM": {
+     "k": 0,
+     "n": 6,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      39.03
+     ]
+    },
+    "META": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "MSFT": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "NVDA": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "TSLA": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "XOM": {
+     "k": 0,
+     "n": 6,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      39.03
+     ]
+    }
+   },
+   "by_category_pre_release": {
+    "diluted_eps": {
+     "k": 0,
+     "n": 26,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      12.87
+     ]
+    },
+    "net_income": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    },
+    "revenue": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    }
+   },
+   "by_filing_quarter": {
+    "2025-Q2": {
+     "k": 0,
+     "n": 3,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      56.15
+     ]
+    },
+    "2025-Q3": {
+     "k": 0,
+     "n": 23,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      14.31
+     ]
+    },
+    "2025-Q4": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    },
+    "2026-Q1": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    },
+    "2026-Q2": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    },
+    "2026-Q3": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    }
+   },
+   "median_relative_error_answered": null
+  },
+  "A3_forced_estimate": {
+   "valid_facts_tested": 142,
+   "recalled_all": {
+    "k": 1,
+    "n": 142,
+    "pct": 0.7,
+    "wilson95_pct": [
+     0.12,
+     3.88
+    ]
+   },
+   "recalled_pre_release_window": {
+    "k": 0,
+    "n": 84,
+    "pct": 0.0,
+    "wilson95_pct": [
+     0.0,
+     4.37
+    ]
+   },
+   "recalled_post_release_control": {
+    "k": 1,
+    "n": 58,
+    "pct": 1.72,
+    "wilson95_pct": [
+     0.3,
+     9.14
+    ]
+   },
+   "not_recalled_all": 141,
+   "abstained_all": {
+    "k": 0,
+    "n": 142,
+    "pct": 0.0,
+    "wilson95_pct": [
+     0.0,
+     2.63
+    ]
+   },
+   "tolerance_sensitivity_pre_release": {
+    "within_0_5pct": {
+     "k": 0,
+     "n": 84,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      4.37
+     ]
+    },
+    "within_1pct": {
+     "k": 0,
+     "n": 84,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      4.37
+     ]
+    },
+    "within_2pct": {
+     "k": 3,
+     "n": 84,
+     "pct": 3.57,
+     "wilson95_pct": [
+      1.22,
+      9.98
+     ]
+    }
+   },
+   "json_parse_failures": 0,
+   "by_company_pre_release": {
+    "AAPL": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "AMZN": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "GOOGL": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "JNJ": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "JPM": {
+     "k": 0,
+     "n": 6,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      39.03
+     ]
+    },
+    "META": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "MSFT": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "NVDA": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "TSLA": {
+     "k": 0,
+     "n": 9,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      29.92
+     ]
+    },
+    "XOM": {
+     "k": 0,
+     "n": 6,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      39.03
+     ]
+    }
+   },
+   "by_category_pre_release": {
+    "diluted_eps": {
+     "k": 0,
+     "n": 26,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      12.87
+     ]
+    },
+    "net_income": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    },
+    "revenue": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    }
+   },
+   "by_filing_quarter": {
+    "2025-Q2": {
+     "k": 0,
+     "n": 3,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      56.15
+     ]
+    },
+    "2025-Q3": {
+     "k": 0,
+     "n": 23,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      14.31
+     ]
+    },
+    "2025-Q4": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    },
+    "2026-Q1": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    },
+    "2026-Q2": {
+     "k": 0,
+     "n": 29,
+     "pct": 0.0,
+     "wilson95_pct": [
+      0.0,
+      11.7
+     ]
+    },
+    "2026-Q3": {
+     "k": 1,
+     "n": 29,
+     "pct": 3.45,
+     "wilson95_pct": [
+      0.61,
+      17.18
+     ]
+    }
+   },
+   "median_relative_error_answered": 0.3235704323570433
+  },
+  "definitions": {
+   "PLR": "A2_as_of recalled / valid facts tested x 100 (leakage despite an as-of-date instruction)",
+   "future_fact_recall": "A1_unconstrained recalled / valid facts tested x 100 (knowledge without date framing)",
+   "forced_estimate_hit_rate": "A3_forced_estimate within tolerance / valid facts; compare pre-release vs post-release control to separate knowledge from guessing"
+  }
+ }
+}

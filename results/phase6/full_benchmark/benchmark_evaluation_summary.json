@@ -1,0 +1,282 @@
+{
+  "report_title": "FinGraph AI \u2014 Phase 6 Full Benchmark Verification Report",
+  "timestamp": "2026-10-29T05:36:58.602924+00:00",
+  "is_full_benchmark": true,
+  "total_questions": 64,
+  "answerable_questions": 50,
+  "unanswerable_questions": 14,
+  "systems": {
+    "B1_Vector_Only_RAG": {
+      "system_name": "B1_Vector_Only_RAG",
+      "denominators": {
+        "total_questions": 64,
+        "answerable_questions": 50,
+        "unanswerable_questions": 14,
+        "attempted_answers": 36,
+        "temporal_questions": 13
+      },
+      "confusion_matrix": {
+        "TP_correct_refusal": 9,
+        "FN_hallucination": 5,
+        "FP_false_refusal": 14,
+        "TN_correct_decision_to_answer": 36
+      },
+      "decision_accuracy": 0.7031,
+      "refusal_metrics": {
+        "refusal_recall": 0.6429,
+        "refusal_precision": 0.3913,
+        "false_refusal_rate": 0.28,
+        "hallucination_rate": 0.3571,
+        "hallucinations_count": 5
+      },
+      "answer_correctness": {
+        "answerable_mean_token_f1": 0.2059,
+        "answerable_exact_match": 0.0,
+        "attempted_only_token_f1": 0.279,
+        "attempted_only_exact_match": 0.0,
+        "overall_benchmark_token_f1": 0.3045,
+        "overall_benchmark_exact_match": 0.1406
+      },
+      "retrieval_metrics": {
+        "hit_at_1": 0.06,
+        "hit_at_5": 0.14,
+        "hit_at_10": 0.14,
+        "mrr": 0.0847,
+        "ndcg_at_5": 0.0375,
+        "doc_recall_at_5": 0.3501,
+        "cross_doc_coverage": 0.3301,
+        "multi_hop_path_accuracy": 0.0
+      },
+      "temporal_metrics": {
+        "temporal_compliance_rate": 1.0,
+        "mean_post_filter_feir": 0.0,
+        "evaluated_temporal_queries": 13
+      },
+      "latency_metrics": {
+        "mean_seconds": 18.723,
+        "median_seconds": 16.547,
+        "min_seconds": 12.675,
+        "max_seconds": 38.387
+      }
+    },
+    "FinGraph_AI_K5": {
+      "system_name": "FinGraph_AI_K5",
+      "denominators": {
+        "total_questions": 64,
+        "answerable_questions": 50,
+        "unanswerable_questions": 14,
+        "attempted_answers": 31,
+        "temporal_questions": 13
+      },
+      "confusion_matrix": {
+        "TP_correct_refusal": 13,
+        "FN_hallucination": 1,
+        "FP_false_refusal": 19,
+        "TN_correct_decision_to_answer": 31
+      },
+      "decision_accuracy": 0.6875,
+      "refusal_metrics": {
+        "refusal_recall": 0.9286,
+        "refusal_precision": 0.4062,
+        "false_refusal_rate": 0.38,
+        "hallucination_rate": 0.0714,
+        "hallucinations_count": 1
+      },
+      "answer_correctness": {
+        "answerable_mean_token_f1": 0.2192,
+        "answerable_exact_match": 0.02,
+        "attempted_only_token_f1": 0.344,
+        "attempted_only_exact_match": 0.0323,
+        "overall_benchmark_token_f1": 0.3751,
+        "overall_benchmark_exact_match": 0.2188
+      },
+      "retrieval_metrics": {
+        "hit_at_1": 0.08,
+        "hit_at_5": 0.2,
+        "hit_at_10": 0.24,
+        "mrr": 0.1322,
+        "ndcg_at_5": 0.0541,
+        "doc_recall_at_5": 0.4202,
+        "cross_doc_coverage": 0.4499,
+        "multi_hop_path_accuracy": 0.04
+      },
+      "temporal_metrics": {
+        "temporal_compliance_rate": 1.0,
+        "mean_post_filter_feir": 0.0,
+        "evaluated_temporal_queries": 13
+      },
+      "latency_metrics": {
+        "mean_seconds": 15.081,
+        "median_seconds": 16.275,
+        "min_seconds": 0.908,
+        "max_seconds": 37.47
+      }
+    },
+    "FinGraph_AI_K8": {
+      "system_name": "FinGraph_AI_K8",
+      "denominators": {
+        "total_questions": 64,
+        "answerable_questions": 50,
+        "unanswerable_questions": 14,
+        "attempted_answers": 33,
+        "temporal_questions": 13
+      },
+      "confusion_matrix": {
+        "TP_correct_refusal": 13,
+        "FN_hallucination": 1,
+        "FP_false_refusal": 17,
+        "TN_correct_decision_to_answer": 33
+      },
+      "decision_accuracy": 0.7188,
+      "refusal_metrics": {
+        "refusal_recall": 0.9286,
+        "refusal_precision": 0.4333,
+        "false_refusal_rate": 0.34,
+        "hallucination_rate": 0.0714,
+        "hallucinations_count": 1
+      },
+      "answer_correctness": {
+        "answerable_mean_token_f1": 0.2429,
+        "answerable_exact_match": 0.02,
+        "attempted_only_token_f1": 0.359,
+        "attempted_only_exact_match": 0.0303,
+        "overall_benchmark_token_f1": 0.3935,
+        "overall_benchmark_exact_match": 0.2188
+      },
+      "retrieval_metrics": {
+        "hit_at_1": 0.08,
+        "hit_at_5": 0.2,
+        "hit_at_10": 0.24,
+        "mrr": 0.1322,
+        "ndcg_at_5": 0.0541,
+        "doc_recall_at_5": 0.4202,
+        "cross_doc_coverage": 0.4499,
+        "multi_hop_path_accuracy": 0.04
+      },
+      "temporal_metrics": {
+        "temporal_compliance_rate": 1.0,
+        "mean_post_filter_feir": 0.0,
+        "evaluated_temporal_queries": 13
+      },
+      "latency_metrics": {
+        "mean_seconds": 15.924,
+        "median_seconds": 16.563,
+        "min_seconds": 0.889,
+        "max_seconds": 44.99
+      }
+    }
+  },
+  "temporal_ablation": {
+    "temporal_queries_evaluated": 13,
+    "with_filtering_feir": 0.0,
+    "without_filtering_feir": 0.7846,
+    "absolute_reduction": 0.7846,
+    "relative_reduction_pct": 100.0,
+    "future_items_blocked": 102
+  },
+  "parametric_leakage_probes": {
+    "retriever_feir": 0.0,
+    "parametric_plr": 0.8,
+    "feir_stage_metrics": {
+      "feir_pre_filter": null,
+      "feir_post_filter": 0.0,
+      "feir_context": 0.0,
+      "feir_cited": 0.0,
+      "gate_rejections": 0,
+      "total_pre_filter_items": 0,
+      "total_post_filter_items": 130,
+      "total_context_items": 65,
+      "total_cited_items": 26
+    },
+    "plr_candidate_positives": 0,
+    "plr_manually_verified": 4,
+    "plr_confirmed_non_leakage": 1,
+    "plr_uncertain": 0,
+    "plr_total_probes": 5,
+    "details": {
+      "plr_results": [
+        {
+          "question_id": "PLR-01",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": true,
+          "evidence_of_future_information": "Manually verified future fact presence: Blackwell B200",
+          "verification_method": "manual",
+          "future_event_date": "2024-03-18",
+          "parametric_leakage_detected": true,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "hardware_roadmap",
+            "company": "NVDA"
+          }
+        },
+        {
+          "question_id": "PLR-02",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": true,
+          "evidence_of_future_information": "Manually verified future fact presence: Rubin architecture",
+          "verification_method": "manual",
+          "future_event_date": "2024-06-02",
+          "parametric_leakage_detected": true,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "hardware_roadmap",
+            "company": "NVDA"
+          }
+        },
+        {
+          "question_id": "PLR-03",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": false,
+          "evidence_of_future_information": "Manually verified future fact presence: Run:ai acquisition completed",
+          "verification_method": "manual",
+          "future_event_date": "2024-04-24",
+          "parametric_leakage_detected": false,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "ma_acquisitions",
+            "company": "NVDA",
+            "note": "False positive in heuristic detector"
+          }
+        },
+        {
+          "question_id": "PLR-04",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": true,
+          "evidence_of_future_information": "Manually verified future fact presence: Gemini 1.5 Pro",
+          "verification_method": "manual",
+          "future_event_date": "2024-02-15",
+          "parametric_leakage_detected": true,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "model_release",
+            "company": "GOOGL"
+          }
+        },
+        {
+          "question_id": "PLR-05",
+          "reference_time": "2024-01-01T00:00:00+00:00",
+          "answer": null,
+          "future_information_present": true,
+          "evidence_of_future_information": "Manually verified future fact presence: Cybercab Robotaxi",
+          "verification_method": "manual",
+          "future_event_date": "2024-10-10",
+          "parametric_leakage_detected": true,
+          "reason": "Ground truth label provided (manual).",
+          "retrieval_used": false,
+          "metadata": {
+            "domain": "vehicle_launch",
+            "company": "TSLA"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -73,3 +73,4 @@ chroma/
 # Vector database artifacts
 data/vector_store/
 archive/*.tar.gz
+paper/

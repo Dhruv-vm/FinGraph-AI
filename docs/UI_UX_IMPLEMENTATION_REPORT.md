@@ -26,7 +26,7 @@ The full audit is in `PRODUCT_AUDIT_AND_IMPLEMENTATION_PLAN.md`. In short:
 | 4 | The Overview had a decorative sparkline, invented sector labels and filing ranges, dead buttons, a fake notification bell, and hard-coded fallback counts. | Integrity / UX | Replaced with live data, or removed. |
 | 5 | The corpus was described as "10-K and 10-Q". It actually holds 50 8-K, 39 10-Q and 10 10-K. | Accuracy | Corrected from the ingestion manifest. |
 | 6 | Architecture cited three non-existent files (`src/data/sec/*.py`). | Accuracy | Every path was re-verified against the repo. |
-| 7 | The Phase 6 parametric-leakage result (PLR 0.80, 4 of 5 probes leaked) appeared nowhere in the UI. | Integrity | Shown in the Evaluation lab, the Overview limitations and the Architecture page. |
+| 7 | The Phase 6 parametric-leakage result (PLR 0.80, 4 of 5 probes leaked) appeared nowhere in the UI. | Integrity | Shown in the Evaluation lab, the Overview limitations and the Architecture page. **Corrected in §18:** these probes are manual labels reported as measured with Llama 3.1 8B, not the production model. |
 | 8 | **Ollama outages appeared as refusals.** With Ollama down, the backend returns HTTP 200 with `decision: "refuse"` and "Generation failed due to LLM backend error…" while the sufficiency gate passed. | UX / integrity | New **Generation failed** outcome, kept distinct from "Insufficient evidence" (found during live testing). |
 | 9 | The graph default rendered 60 boxed, labelled nodes in overlapping rings. Its counts mixed up total direct edges (2,338), company edges (250) and unique companies (118). | UX | Aggregated readable neighbourhood plus an explicit count ledger. |
 | 10 | Edge attribution (`unsupported_cross_company`) was never shown. | Integrity | Shown in the edge inspector with an explanation. |
@@ -242,3 +242,19 @@ Flows: `v2-ask-tpt02-refusal-dark.png`, `v2-ask-fsh07-dark.png` (Ollama offline)
 | Two files had not reached the Mac. | Some file transfers reported success but delivered a stale copy: `api/routes/benchmark.py` (missing the parametric-leakage route) and `lib/navigation.ts`. | Both written directly on the device. All changed frontend, API and doc files checked by MD5 against the source copies. | Checksums match. TypeScript and ESLint re-run on the device copy: 0 errors, 0 warnings. |
 
 The parametric-leakage endpoint now exists in `api/routes/benchmark.py`. It needs one more FastAPI restart to load.
+
+## 18. Phase 8.3 correction and wiring (2026-11-04)
+
+The Phase 6 parametric-leakage figure (PLR 0.80, 4 of 5) was previously presented as the production model's result.
+It is not: the five probes are manual labels with no stored model output, and were reported as measured with Llama 3.1 8B.
+Phase 8.3 measured the production model, Qwen3.5:4B, directly (`docs/PHASE_8_3_PARAMETRIC_LEAKAGE_EVALUATION.md`).
+
+| Change | File |
+|---|---|
+| `GET /api/v1/benchmark/parametric-leakage` also returns `phase6_provenance` and `phase8_3` (from `results/phase8_3/metrics/final_metrics.json`, when present). Phase 6 files unchanged. | `api/routes/benchmark.py` |
+| Types for the Phase 8.3 metrics. | `frontend/src/lib/types.ts` |
+| Parametric glance card shows the Phase 8.3 A2 PLR; the section leads with Phase 8.3 (PLR, recall, pre-release vs control, grounded refusals, FEIR). Phase 6 probes moved into a collapsed, labelled "Earlier labelled probes" block with a provenance note. | `frontend/src/components/views/EvaluationLabView.tsx` |
+| Overview limitation and Architecture stage 14 text refer to Phase 8.3. | `OverviewView.tsx`, `ArchitectureView.tsx` |
+
+TypeScript and ESLint: 0 errors, 0 warnings. The backend has since been restarted, so the endpoint now returns 200; the
+open items in §14 and §16 about the 404 are resolved.

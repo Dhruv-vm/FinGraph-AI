@@ -21,6 +21,8 @@ const config: Config = {
       colors: {
         canvas: token("bg"),
         sidebar: token("sidebar"),
+        frame: token("frame"),
+        pill: { DEFAULT: token("pill"), fg: token("pill-fg") },
         surface: {
           DEFAULT: token("surface"),
           2: token("surface-2"),
@@ -71,13 +73,17 @@ const config: Config = {
         "3xl": ["1.875rem", { lineHeight: "2.375rem" }],
       },
       borderRadius: {
-        sm: "4px",
-        DEFAULT: "6px",
-        md: "8px",
-        lg: "10px",
+        sm: "6px",
+        DEFAULT: "10px",
+        md: "12px",
+        lg: "16px",
+        xl: "22px",
+        "2xl": "26px",
+        "3xl": "32px",
       },
       boxShadow: {
-        overlay: "0 12px 32px -8px rgb(0 0 0 / 0.35), 0 2px 6px rgb(0 0 0 / 0.12)",
+        overlay: "0 24px 60px -16px rgb(0 0 0 / 0.6), 0 2px 8px rgb(0 0 0 / 0.25)",
+        glow: "0 10px 30px -10px rgb(var(--accent-strong) / 0.75)",
       },
       transitionTimingFunction: {
         out: "cubic-bezier(0.2, 0.8, 0.2, 1)",

@@ -4,7 +4,7 @@ Pydantic schemas for Query endpoints.
 
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any, Literal, Optional
 from pydantic import BaseModel, Field
 
 
@@ -32,6 +32,14 @@ class QueryRequest(BaseModel):
         ge=5,
         le=100,
         description="Candidate pool size entering deterministic reranker.",
+    )
+    mode: Literal["benchmark", "assist"] = Field(
+        default="benchmark",
+        description=(
+            "'benchmark' runs the evaluated Phase 7 configuration. 'assist' (live use) reads longer passages, "
+            "accepts relationships evidenced in filing text, and may give a partial, cited answer instead of refusing. "
+            "Both modes answer only from retrieved SEC evidence."
+        ),
     )
 
 
@@ -85,6 +93,7 @@ class TemporalValidationDetail(BaseModel):
 
 class QueryResponse(BaseModel):
     query: str
+    mode: str = Field(default="benchmark", description="Pipeline mode used for this answer.")
     decision: str = Field(description="'answer' or 'refuse'")
     answer: str
     insufficient_evidence: bool

@@ -574,7 +574,7 @@ export function EvidenceInspectorView({ active }: { active: boolean }) {
               </button>
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <h2 className="text-md font-semibold">
+                  <h2 className="text-xl font-medium tracking-tight">
                     {filing ? `${issuerName(filing.company)}, Form ${filing.document_type}` : selectedDoc}
                   </h2>
                   {filing && (

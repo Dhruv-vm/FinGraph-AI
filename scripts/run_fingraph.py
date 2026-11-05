@@ -110,21 +110,50 @@ class FinGraphPipeline:
         top_k: int = 10,
         max_evidence_items: int | None = None,
         candidate_pool_size: int | None = None,
+        mode: str = "benchmark",
     ) -> tuple[QAEvidencePackage, QAAnswer]:
         """
         Execute full FinGraph AI pipeline: query analysis, hybrid retrieval, agentic loop,
         evidence packaging, and structured answer generation.
         """
         ref_str = reference_time.isoformat() if isinstance(reference_time, datetime) else reference_time
-        package = self.agent.run(
-            query=query,
-            reference_time=ref_str,
-            top_k=top_k,
-            candidate_pool_size=candidate_pool_size,
-            balanced_fusion=self.balanced_fusion,
-            min_per_entity=self.min_per_entity,
-        )
-        answer = self.generator.generate(package, max_evidence_items=max_evidence_items)
+        assist = mode == "assist"
+        # Assist mode (live app only): a relationship may be evidenced by filing text, not only by a
+        # typed graph edge. Benchmark mode keeps the evaluated Phase 7 configuration unchanged.
+        # Callers must serialise calls (the API holds a lock) because the checker is shared.
+        previous_rel_mode = self.sufficiency_checker.relationship_mode
+        if assist:
+            self.sufficiency_checker.relationship_mode = "textual"
+            self.hybrid_retriever.issuer_scoped = True
+            self.query_analyzer.period_dates_are_cutoffs = False
+            # Include filings fetched on demand, and scope retrieval to the company the question
+            # names even when it is outside the research corpus (no network call here).
+            if self.vector_store is not None:
+                self.vector_store.include_live = True
+            try:
+                from src.data.ingestion.live_sec import resolve_company
+
+                company = resolve_company(query, allow_network=False)
+            except Exception:
+                company = None
+            self.hybrid_retriever.extra_scoped_tickers = [company["ticker"]] if company else []
+        try:
+            package = self.agent.run(
+                query=query,
+                reference_time=ref_str,
+                top_k=max(top_k, 12) if assist else top_k,
+                candidate_pool_size=max(candidate_pool_size or 20, 40) if assist else candidate_pool_size,
+                balanced_fusion=self.balanced_fusion,
+                min_per_entity=self.min_per_entity,
+            )
+        finally:
+            self.sufficiency_checker.relationship_mode = previous_rel_mode
+            self.hybrid_retriever.issuer_scoped = False
+            self.query_analyzer.period_dates_are_cutoffs = True
+            self.hybrid_retriever.extra_scoped_tickers = []
+            if self.vector_store is not None:
+                self.vector_store.include_live = False
+        answer = self.generator.generate(package, max_evidence_items=max_evidence_items, assist=assist)
         return package, answer
 
 

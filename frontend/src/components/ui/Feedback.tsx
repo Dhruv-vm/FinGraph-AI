@@ -24,7 +24,7 @@ export function ProgressBar({ active, className }: { active: boolean; className?
 }
 
 export function Skeleton({ className }: { className?: string }) {
-  return <div aria-hidden className={cx("rounded-sm bg-surface-3/70 animate-pulse", className)} />;
+  return <div aria-hidden className={cx("rounded-lg bg-surface-3/70 animate-pulse", className)} />;
 }
 
 export type Status = "healthy" | "degraded" | "unavailable" | "unknown";
@@ -80,7 +80,7 @@ export function Badge({
     <span
       title={title}
       className={cx(
-        "inline-flex items-center gap-1 h-5 px-1.5 rounded-sm border text-2xs font-medium whitespace-nowrap",
+        "inline-flex items-center gap-1 h-6 px-2.5 rounded-full border text-2xs font-medium whitespace-nowrap",
         mono && "font-mono-num",
         BADGE[tone],
         className
@@ -132,7 +132,7 @@ export function ErrorState({
     <div
       role="alert"
       className={cx(
-        "flex gap-3 rounded border border-neg/30 bg-neg/[0.06] text-sm",
+        "flex gap-3 rounded-2xl border border-neg/30 bg-neg/[0.06] text-sm",
         compact ? "px-3 py-2.5" : "px-4 py-3.5",
         className
       )}
@@ -167,7 +167,7 @@ export function Note({
   return (
     <div
       className={cx(
-        "flex gap-2.5 text-xs leading-relaxed rounded px-3 py-2.5 border",
+        "flex gap-2.5 text-xs leading-relaxed rounded-xl px-3.5 py-3 border",
         tone === "warn"
           ? "border-warn/30 bg-warn/[0.06] text-fg-2"
           : tone === "info"

@@ -24,7 +24,11 @@ export interface QueryRequest {
   reference_time?: string | null;
   top_k?: number;
   candidate_pool_size?: number;
+  /** "assist" (live default) or "benchmark" (the evaluated Phase 7 configuration). */
+  mode?: QueryMode;
 }
+
+export type QueryMode = "assist" | "benchmark";
 
 export interface CitationItem {
   evidence_id: string;
@@ -76,6 +80,7 @@ export interface TemporalValidationDetail {
 
 export interface QueryResponse {
   query: string;
+  mode?: QueryMode;
   decision: "answer" | "refuse";
   answer: string;
   insufficient_evidence: boolean;
@@ -353,4 +358,33 @@ export interface ParametricLeakageResponse {
     feir_stage_metrics?: Record<string, number | null>;
     details?: { plr_results?: ParametricProbe[] };
   } | null;
+}
+
+/* Live SEC filings (fetched on demand, outside the research corpus) */
+export interface LiveCompany {
+  ticker: string;
+  cik: string;
+  name: string;
+  exchange?: string | null;
+  in_research_corpus: boolean;
+  live_filings: number;
+}
+
+export interface LiveFiling {
+  ticker: string;
+  company_name?: string | null;
+  form: string;
+  filing_date?: string | null;
+  fiscal_period?: string | null;
+  accession_number: string;
+  document_id: string;
+  source_url?: string | null;
+  chunks: number;
+}
+
+export interface LiveFetchResponse {
+  company: LiveCompany | null;
+  added: LiveFiling[];
+  already_indexed: number;
+  errors: string[];
 }

@@ -29,9 +29,9 @@ export function PanelHeader({
   id?: string;
 }) {
   return (
-    <header className={cx("flex flex-wrap items-start justify-between gap-x-4 gap-y-2 px-4 pt-3.5 pb-3", className)}>
+    <header className={cx("flex flex-wrap items-start justify-between gap-x-4 gap-y-2 px-5 pt-4 pb-3", className)}>
       <div className="min-w-0">
-        <h2 id={id} className="text-sm font-semibold text-fg">
+        <h2 id={id} className="text-md font-medium tracking-tight text-fg">
           {title}
         </h2>
         {description && <p className="text-xs text-fg-3 mt-0.5">{description}</p>}
@@ -58,7 +58,7 @@ export function SectionHeading({
   return (
     <div className={cx("flex flex-wrap items-end justify-between gap-3 mb-3", className)}>
       <div className="min-w-0">
-        <h2 id={id} className="text-md font-semibold text-fg">
+        <h2 id={id} className="text-xl font-medium tracking-tight text-fg">
           {title}
         </h2>
         {description && <p className="text-sm text-fg-2 mt-0.5 max-w-[72ch]">{description}</p>}
@@ -112,7 +112,7 @@ export function Metric({
       <div className="text-xs text-fg-3">{label}</div>
       <div
         className={cx(
-          "num text-2xl font-semibold tracking-tight mt-1",
+          "text-display text-[2rem] mt-2",
           tone === "pos" ? "text-pos" : tone === "neg" ? "text-neg" : tone === "warn" ? "text-warn" : "text-fg"
         )}
       >
@@ -138,9 +138,9 @@ export function ChartFrame({
   className?: string;
 }) {
   return (
-    <figure className={cx("card p-5 flex flex-col", className)}>
+    <figure className={cx("card p-6 flex flex-col", className)}>
       <figcaption className="mb-3">
-        <div className="text-sm font-semibold text-fg">{title}</div>
+        <div className="text-md font-medium tracking-tight text-fg">{title}</div>
         {caption && <div className="text-xs text-fg-3 mt-1 leading-relaxed">{caption}</div>}
       </figcaption>
       <div className="flex-1 min-h-0">{children}</div>

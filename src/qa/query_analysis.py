@@ -135,6 +135,30 @@ class QueryAnalyzer:
         """
         q_lower = query.lower()
 
+        if not getattr(self, "period_dates_are_cutoffs", True):
+            # Live assist mode: a date that describes a reporting period ("quarter ended
+            # September 30, 2025", "revenue in 2025") is not a point-in-time cutoff, because
+            # filings about a period are published after it ends. Only explicit cutoff phrasing
+            # ("as of", "by", "before", "prior to") restricts evidence availability here; the
+            # UI date picker still sets the reference time explicitly.
+            m = re.search(r"\b(?:as of|as at|by|before|prior to)\s+([a-z]+)\s+(\d{1,2}),?\s+(\d{4})\b", q_lower)
+            if m and m.group(1) in _MONTH_NAME_TO_INT:
+                dt = datetime(int(m.group(3)), _MONTH_NAME_TO_INT[m.group(1)], int(m.group(2)), tzinfo=timezone.utc)
+                return dt.isoformat(), {"start": f"{dt.year}-01-01T00:00:00+00:00", "end": dt.isoformat()}
+            m = re.search(r"\b(?:as of|as at|by|before|prior to)\s+(\d{4})-(\d{2})-(\d{2})\b", q_lower)
+            if m:
+                dt = datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)), tzinfo=timezone.utc)
+                return dt.isoformat(), {"start": f"{dt.year}-01-01T00:00:00+00:00", "end": dt.isoformat()}
+            m = re.search(r"\bas\s+of\s+(\d{4})\b", q_lower)
+            if m:
+                dt = datetime(int(m.group(1)), 12, 31, 23, 59, 59, tzinfo=timezone.utc)
+                return dt.isoformat(), {"start": f"{dt.year}-01-01T00:00:00+00:00", "end": dt.isoformat()}
+            m = re.search(r"\bbefore\s+(\d{4})\b", q_lower)
+            if m:
+                dt = datetime(int(m.group(1)) - 1, 12, 31, 23, 59, 59, tzinfo=timezone.utc)
+                return dt.isoformat(), {"start": "2000-01-01T00:00:00+00:00", "end": dt.isoformat()}
+            return None, None
+
         # 1. Month DD, YYYY (e.g., "June 1, 2025", "as of March 31, 2024")
         month_day_year_match = re.search(
             r"(?:as of|by|before|on|at)?\s*([a-z]+)\s+(\d{1,2}),?\s+(\d{4})\b",

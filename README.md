@@ -249,6 +249,23 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to access the live terminal.
+From the repository root, `npm run dev` (frontend) and `npm run api` (backend, with the virtual environment active) do the same.
+
+### Answer modes
+
+The Ask page offers two modes (`"mode"` in `POST /api/v1/query`):
+
+- **Assist** (default in the UI): for live use. It still answers only from retrieved SEC evidence, but:
+  - the model reads the most query-relevant ~700 characters of up to 6 passages (instead of the first 220 of 5),
+    each labelled with the company whose filing it is;
+  - a relationship may be evidenced by filing text, not only by a typed graph edge;
+  - retrieval also searches the named company's own filings, the fiscal period a question states, or its latest
+    10-Q/10-K period for "latest / most recent" questions;
+  - a date that describes a reporting period ("quarter ended September 30, 2025") is not treated as an as-of
+    cutoff; only explicit phrasing ("as of", "before") or the date picker restricts evidence by time;
+  - the model reports coverage (full, partial, none): partial answers are flagged, and "none" or uncited replies
+    are returned as refusals with the model's explanation.
+- **Benchmark** (API default): the exact Phase 7 configuration that produced the reported results. Use it to reproduce them.
 
 ### Running via CLI
 

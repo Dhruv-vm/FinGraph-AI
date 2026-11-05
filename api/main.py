@@ -25,6 +25,7 @@ from api.routes import (
     graph_router,
     health_router,
     query_router,
+    live_router,
 )
 from scripts.run_fingraph import FinGraphPipeline
 
@@ -166,6 +167,7 @@ def create_app() -> FastAPI:
     app.include_router(graph_router, prefix=api_prefix)
     app.include_router(evidence_router, prefix=api_prefix)
     app.include_router(corpus_router, prefix=api_prefix)
+    app.include_router(live_router, prefix=api_prefix)
 
     # Root diagnostic endpoint
     @app.get("/", tags=["Diagnostic"], summary="API Root metadata")

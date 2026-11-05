@@ -27,7 +27,7 @@ export function Segmented<T extends string>({
     <div
       role="radiogroup"
       aria-label={label}
-      className={cx("inline-flex p-0.5 rounded bg-surface-2 border border-line-soft", className)}
+      className={cx("inline-flex p-1 rounded-full bg-surface-2 border border-line-soft", className)}
     >
       {options.map((o) => {
         const on = o.value === value;
@@ -38,13 +38,13 @@ export function Segmented<T extends string>({
             aria-checked={on}
             onClick={() => onChange(o.value)}
             className={cx(
-              "inline-flex items-center gap-1.5 rounded-sm font-medium transition-colors duration-150 whitespace-nowrap",
-              size === "sm" ? "h-6 px-2 text-xs" : "h-7 px-3 text-sm",
-              on ? "bg-surface text-fg shadow-[0_1px_2px_rgb(0_0_0/0.15)]" : "text-fg-2 hover:text-fg"
+              "inline-flex items-center gap-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap",
+              size === "sm" ? "h-7 px-3 text-xs" : "h-8 px-4 text-sm",
+              on ? "bg-accent-strong text-accent-fg shadow-glow" : "text-fg-2 hover:text-fg"
             )}
           >
             {o.label}
-            {o.count != null && <span className="num text-fg-3">{o.count}</span>}
+            {o.count != null && <span className={cx("num", on ? "text-accent-fg/70" : "text-fg-3")}>{o.count}</span>}
           </button>
         );
       })}
@@ -67,7 +67,7 @@ export function Tabs<T extends string>({
   className?: string;
 }) {
   return (
-    <div role="tablist" aria-label={label} className={cx("flex gap-4 border-b border-line-soft", className)}>
+    <div role="tablist" aria-label={label} className={cx("flex flex-wrap gap-1.5", className)}>
       {options.map((o) => {
         const on = o.value === value;
         return (
@@ -77,12 +77,12 @@ export function Tabs<T extends string>({
             aria-selected={on}
             onClick={() => onChange(o.value)}
             className={cx(
-              "relative -mb-px h-9 inline-flex items-center gap-1.5 text-sm transition-colors border-b-2",
-              on ? "text-fg border-accent font-medium" : "text-fg-2 border-transparent hover:text-fg"
+              "h-9 px-4 rounded-full inline-flex items-center gap-1.5 text-sm transition-all duration-200 border",
+              on ? "pill-on border-transparent font-medium" : "text-fg-2 border-line hover:text-fg hover:border-fg-3/50"
             )}
           >
             {o.label}
-            {o.count != null && <span className="num text-xs text-fg-3">{o.count}</span>}
+            {o.count != null && <span className={cx("num text-xs", on ? "opacity-60" : "text-fg-3")}>{o.count}</span>}
           </button>
         );
       })}

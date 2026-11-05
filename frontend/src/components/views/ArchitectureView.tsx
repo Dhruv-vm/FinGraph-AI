@@ -256,7 +256,7 @@ export function ArchitectureView() {
   return (
     <div id="arch-root" className="max-w-[1180px] mx-auto px-4 sm:px-8 py-8">
       <div className="mb-8 max-w-[78ch]">
-        <h2 className="text-2xl font-semibold tracking-tight leading-snug">From filing to cited answer, in {STAGES.length} stages.</h2>
+        <h2 className="text-[2rem] font-medium tracking-[-0.035em] leading-[1.1]">From filing to cited answer, in {STAGES.length} stages.</h2>
         <p className="text-sm text-fg-2 mt-2">
           Six stages build the corpus, graph and index ahead of time; eight run for every question. Select a stage to see what it takes
           in, what it produces and where it lives in the code. Arrow keys step through stages.

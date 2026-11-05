@@ -7,16 +7,16 @@ type Size = "sm" | "md";
 
 const VARIANTS: Record<Variant, string> = {
   primary:
-    "bg-accent-strong text-accent-fg hover:bg-accent-strong/90 disabled:bg-surface-3 disabled:text-fg-3",
+    "bg-accent-strong text-accent-fg shadow-glow hover:brightness-110 hover:-translate-y-px disabled:bg-surface-3 disabled:text-fg-3 disabled:shadow-none disabled:translate-y-0",
   secondary:
-    "bg-surface border border-line text-fg hover:bg-surface-2 hover:border-fg-3/40 disabled:text-fg-3",
+    "bg-surface-2 border border-line text-fg hover:bg-surface-3 hover:border-fg-3/40 disabled:text-fg-3",
   ghost: "text-fg-2 hover:text-fg hover:bg-surface-2 disabled:text-fg-3",
   danger: "text-neg hover:bg-neg/10",
 };
 
 const SIZES: Record<Size, string> = {
-  sm: "h-7 px-2.5 text-xs gap-1.5",
-  md: "h-9 px-3.5 text-sm gap-2",
+  sm: "h-8 px-3.5 text-xs gap-1.5",
+  md: "h-10 px-5 text-sm gap-2",
 };
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -35,8 +35,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
       ref={ref}
       disabled={disabled || loading}
       className={cx(
-        "inline-flex items-center justify-center rounded font-medium whitespace-nowrap select-none",
-        "transition-colors duration-150 disabled:cursor-not-allowed",
+        "inline-flex items-center justify-center rounded-full font-medium whitespace-nowrap select-none",
+        "transition-[color,background-color,border-color,transform,filter] duration-200 disabled:cursor-not-allowed",
         VARIANTS[variant],
         SIZES[size],
         className
@@ -66,9 +66,9 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(f
       aria-label={label}
       title={label}
       className={cx(
-        "inline-flex items-center justify-center rounded transition-colors duration-150 shrink-0",
-        size === "sm" ? "w-7 h-7" : "w-8 h-8",
-        active ? "bg-surface-3 text-fg" : "text-fg-2 hover:text-fg hover:bg-surface-2",
+        "inline-flex items-center justify-center rounded-full transition-colors duration-150 shrink-0",
+        size === "sm" ? "w-8 h-8" : "w-9 h-9",
+        active ? "pill-on" : "text-fg-2 hover:text-fg hover:bg-surface-2",
         "disabled:opacity-40 disabled:cursor-not-allowed",
         className
       )}

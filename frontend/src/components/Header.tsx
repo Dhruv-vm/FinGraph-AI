@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { Crosshair, Menu, Moon, RefreshCw, Sun, X } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft, Crosshair, Home, Menu, Moon, RefreshCw, Sun, X } from "lucide-react";
 import { HealthResponse, ComponentHealth } from "@/lib/types";
 import { useTheme } from "@/lib/theme";
-import { NavTab, PAGE_META } from "@/lib/navigation";
+import { NavTab, NAV_TABS, PAGE_META } from "@/lib/navigation";
+import { BrandLogo, ICONS } from "./Navigation";
 import { useResearchContext, issuerEntity } from "@/lib/research-context";
 import { CORPUS_ISSUERS, fmtDateTime, fmtInt } from "@/lib/format";
 import { ApiError } from "@/lib/api";
@@ -62,7 +64,7 @@ function StatusControl({ health }: { health: HealthState }) {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-haspopup="dialog"
-        className="flex items-center gap-2 h-8 px-2.5 rounded text-xs text-fg-2 hover:text-fg hover:bg-surface-2 transition-colors"
+        className="flex items-center gap-2 h-9 px-3.5 rounded-full border border-line-soft bg-surface-2/70 text-xs text-fg-2 hover:text-fg hover:border-line transition-colors"
       >
         <StatusDot status={status} />
         <span className="hidden sm:inline">{label}</span>
@@ -116,15 +118,15 @@ function ContextControl({ onNavigate }: { onNavigate: (t: NavTab) => void }) {
     <div className="relative min-w-0">
       <div
         className={cx(
-          "flex items-center h-8 rounded border text-xs min-w-0",
-          entity ? "border-accent/35 bg-accent/[0.07]" : "border-line border-dashed"
+          "flex items-center h-9 rounded-full border text-xs min-w-0",
+          entity ? "border-accent/40 bg-accent/[0.1]" : "border-line border-dashed"
         )}
       >
         <button
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
           aria-haspopup="dialog"
-          className="flex items-center gap-1.5 h-full pl-2.5 pr-2 min-w-0 text-fg-2 hover:text-fg"
+          className="flex items-center gap-1.5 h-full pl-3.5 pr-3 min-w-0 text-fg-2 hover:text-fg"
           title="Research context: the entity you are currently studying"
         >
           <Crosshair className={cx("w-3.5 h-3.5 shrink-0", entity ? "text-accent" : "text-fg-3")} />
@@ -142,7 +144,7 @@ function ContextControl({ onNavigate }: { onNavigate: (t: NavTab) => void }) {
             onClick={clear}
             aria-label="Clear research context"
             title="Clear research context"
-            className="h-full px-1.5 text-fg-3 hover:text-fg border-l border-accent/25"
+            className="h-full pl-2 pr-3 text-fg-3 hover:text-fg border-l border-accent/25"
           >
             <X className="w-3.5 h-3.5" />
           </button>
@@ -166,7 +168,7 @@ function ContextControl({ onNavigate }: { onNavigate: (t: NavTab) => void }) {
                     setOpen(false);
                   }}
                   className={cx(
-                    "w-full text-left px-2 py-1.5 rounded text-sm flex items-baseline justify-between gap-2",
+                    "w-full text-left px-3 py-2 rounded-xl text-sm flex items-baseline justify-between gap-2",
                     on ? "bg-accent/10 text-fg" : "hover:bg-surface-2 text-fg-2 hover:text-fg"
                   )}
                 >
@@ -198,6 +200,35 @@ function ContextControl({ onNavigate }: { onNavigate: (t: NavTab) => void }) {
   );
 }
 
+/** Pill navigation across the six workspace sections (the reference's top tab bar). */
+function PillNav({ activeTab, onNavigate }: { activeTab: NavTab; onNavigate: (t: NavTab) => void }) {
+  return (
+    <nav aria-label="Primary" className="hidden md:block">
+      <div className="pill-track">
+      {NAV_TABS.map((id) => {
+        const Icon = ICONS[id];
+        const on = id === activeTab;
+        return (
+          <button
+            key={id}
+            onClick={() => onNavigate(id)}
+            aria-current={on ? "page" : undefined}
+            title={PAGE_META[id].label}
+            className={cx(
+              "group inline-flex items-center gap-2 h-9 rounded-full text-[13px] font-medium transition-all duration-200 whitespace-nowrap",
+              on ? "pill-on px-4" : "px-3 text-fg-2 hover:text-fg hover:bg-surface-3/60"
+            )}
+          >
+            <Icon className={cx("w-4 h-4 shrink-0", on ? "" : "text-fg-3 group-hover:text-fg-2")} />
+            <span className={on ? "" : "hidden xl:inline"}>{PAGE_META[id].label}</span>
+          </button>
+        );
+      })}
+      </div>
+    </nav>
+  );
+}
+
 export function Header({
   activeTab,
   health,
@@ -211,22 +242,54 @@ export function Header({
 }) {
   const { theme, toggleTheme } = useTheme();
   const meta = PAGE_META[activeTab];
+  const compactTitle = activeTab === "graph";
   return (
-    <header className="h-14 shrink-0 flex items-center gap-3 px-3 sm:px-5 border-b border-line-soft bg-canvas/95 backdrop-blur-sm">
-      <IconButton label="Open navigation" className="lg:hidden" onClick={onOpenMobileNav}>
-        <Menu className="w-4 h-4" />
-      </IconButton>
-      <div className="min-w-0 flex-1">
-        <h1 className="text-md font-semibold leading-tight truncate">{meta.title}</h1>
-        <p className="text-xs text-fg-3 truncate hidden sm:block">{meta.description}</p>
-      </div>
-      <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-        <ContextControl onNavigate={onNavigate} />
-        <span aria-hidden className="w-px h-5 bg-line-soft mx-1 hidden sm:block" />
-        <StatusControl health={health} />
-        <IconButton label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"} onClick={toggleTheme}>
-          {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+    <header className="shrink-0">
+      <div className="h-16 flex items-center gap-2 sm:gap-3 px-3 sm:px-5">
+        <IconButton label="Open navigation" className="md:hidden" onClick={onOpenMobileNav}>
+          <Menu className="w-4 h-4" />
         </IconButton>
+        <Link href="/" aria-label="FinGraph AI home" title="FinGraph AI home" className="shrink-0 rounded-md">
+          <BrandLogo />
+        </Link>
+        <div className="flex-1 min-w-0 flex justify-center">
+          <PillNav activeTab={activeTab} onNavigate={onNavigate} />
+        </div>
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <ContextControl onNavigate={onNavigate} />
+          <StatusControl health={health} />
+          <IconButton
+            label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+            onClick={toggleTheme}
+            className="border border-line-soft"
+          >
+            {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </IconButton>
+          <Link
+            href="/"
+            aria-label="Back to the FinGraph homepage"
+            title="Homepage"
+            className="hidden lg:inline-flex w-9 h-9 items-center justify-center rounded-full border border-line-soft text-fg-2 hover:text-fg hover:bg-surface-2 transition-colors"
+          >
+            <Home className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+      <div className={cx("flex items-center gap-3 sm:gap-4 px-4 sm:px-8", compactTitle ? "pb-3" : "pt-2 pb-4 sm:pt-3 sm:pb-5")}>
+        <Link
+          href="/"
+          aria-label="Back to the FinGraph homepage"
+          title="Homepage"
+          className="hidden sm:inline-flex w-10 h-10 shrink-0 items-center justify-center rounded-full border border-line text-fg-2 hover:text-fg hover:bg-surface-2 hover:-translate-x-0.5 transition-all"
+        >
+          <ArrowLeft className="w-4 h-4" />
+        </Link>
+        <div className="min-w-0">
+          <h1 className={cx("font-medium tracking-[-0.035em] leading-none truncate", compactTitle ? "text-[26px]" : "text-[30px] sm:text-[40px]")}>
+            {meta.title}
+          </h1>
+          <p className="text-sm text-fg-3 truncate mt-2 hidden sm:block">{meta.description}</p>
+        </div>
       </div>
     </header>
   );

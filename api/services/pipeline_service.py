@@ -44,6 +44,7 @@ class PipelineService:
                 reference_time=request.reference_time,
                 top_k=request.top_k or 10,
                 candidate_pool_size=request.candidate_pool_size or 20,
+                mode=request.mode,
             )
 
         elapsed_ms = round((time.perf_counter() - start_time) * 1000.0, 2)
@@ -118,6 +119,7 @@ class PipelineService:
 
         return QueryResponse(
             query=request.query,
+            mode=request.mode,
             decision=decision,
             answer=answer.answer,
             insufficient_evidence=answer.insufficient_evidence,

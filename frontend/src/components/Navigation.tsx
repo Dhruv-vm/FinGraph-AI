@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   FileText,
   FlaskConical,
@@ -18,7 +19,7 @@ import { cx } from "./ui";
 
 export type { NavTab } from "@/lib/navigation";
 
-const ICONS: Record<NavTab, React.ComponentType<{ className?: string }>> = {
+export const ICONS: Record<NavTab, React.ComponentType<{ className?: string }>> = {
   overview: Gauge,
   ask: MessageSquareText,
   graph: Waypoints,
@@ -63,13 +64,12 @@ export function NavList({
             aria-current={active ? "page" : undefined}
             title={collapsed ? PAGE_META[id].label : undefined}
             className={cx(
-              "group relative w-full flex items-center gap-2.5 h-8 rounded text-sm transition-colors duration-150",
-              collapsed ? "justify-center px-0" : "px-2.5",
-              active ? "bg-surface-2 text-fg font-medium" : "text-fg-2 hover:text-fg hover:bg-surface-2/60"
+              "group relative w-full flex items-center gap-2.5 h-10 rounded-full text-sm transition-colors duration-150",
+              collapsed ? "justify-center px-0" : "px-3.5",
+              active ? "pill-on font-medium" : "text-fg-2 hover:text-fg hover:bg-surface-2/60"
             )}
           >
-            {active && <span aria-hidden className="absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-full bg-accent" />}
-            <Icon className={cx("w-4 h-4 shrink-0", active ? "text-accent" : "text-fg-3 group-hover:text-fg-2")} />
+                        <Icon className={cx("w-4 h-4 shrink-0", active ? "" : "text-fg-3 group-hover:text-fg-2")} />
             {!collapsed && <span className="truncate">{PAGE_META[id].label}</span>}
           </button>
         );
@@ -97,7 +97,9 @@ export function Navigation({
       )}
     >
       <div className={cx("h-14 flex items-center shrink-0", collapsed ? "justify-center" : "px-4")}>
-        <BrandLogo collapsed={collapsed} />
+        <Link href="/" aria-label="FinGraph AI home" title="FinGraph AI home" className="rounded">
+          <BrandLogo collapsed={collapsed} />
+        </Link>
       </div>
       <div className="pt-2 flex-1 overflow-y-auto scrollbar-thin">
         <NavList activeTab={activeTab} onTabChange={onTabChange} collapsed={collapsed} />

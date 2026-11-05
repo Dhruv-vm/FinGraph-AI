@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+
 from datetime import datetime, timezone
 from typing import Any
 
@@ -89,6 +91,20 @@ def apply_entity_balanced_allocation(
     return balanced_selection[:top_k]
 
 
+_MONTHS = {m: i for i, m in enumerate(
+    ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"], 1
+)}
+
+
+def _query_periods(query: str) -> list[str]:
+    """Extract ISO period-end dates ("September 30, 2025", "2025-09-30") mentioned in a query."""
+    out: list[str] = []
+    for m in re.finditer(r"\b(" + "|".join(_MONTHS) + r")\s+(\d{1,2}),?\s+(\d{4})\b", query.lower()):
+        out.append(f"{m.group(3)}-{_MONTHS[m.group(1)]:02d}-{int(m.group(2)):02d}")
+    out.extend(re.findall(r"\b\d{4}-\d{2}-\d{2}\b", query))
+    return list(dict.fromkeys(out))
+
+
 class HybridRetriever:
     """
     Hybrid Retrieval engine combining semantic vector search and
@@ -157,6 +173,39 @@ class HybridRetriever:
                 top_k=fetch_k,
                 reference_time=ref_dt,
             )
+
+        # 1b. Issuer-scoped search (live assist mode only; off for benchmark runs).
+        # Searches inside each named company's own filings, and its matching fiscal period
+        # when the question states a period-end date, then puts those hits first.
+        if self.vector_store is not None and getattr(self, "issuer_scoped", False):
+            tickers = [e.split(":", 1)[1].upper() for e in (target_entities or []) if e.startswith("company:") and e.split(":", 1)[1].isalpha()]
+            for t in getattr(self, "extra_scoped_tickers", []) or []:
+                if t not in tickers:
+                    tickers.append(t)
+            tickers = tickers[:2]
+            periods = _query_periods(query)
+            wants_latest = bool(re.search(r"\b(latest|most recent|current|recent quarter|last quarter|newest)\b", query.lower()))
+            scoped: list[RetrievedChunk] = []
+            for t in tickers:
+                t_periods = list(periods)
+                if wants_latest and not t_periods and hasattr(self.vector_store, "fiscal_periods"):
+                    try:
+                        # Newest periodic report (10-Q/10-K) first, then the newest filing of any kind.
+                        t_periods = self.vector_store.fiscal_periods(t, ref_dt, ("10-Q", "10-K"))[:1]
+                        t_periods += [p for p in self.vector_store.fiscal_periods(t, ref_dt)[:1] if p not in t_periods]
+                    except Exception:
+                        t_periods = []
+                for fp in t_periods[:2]:
+                    scoped.extend(self.vector_store.search(query=query, top_k=6, reference_time=ref_dt, company=t, fiscal_period=fp))
+                scoped.extend(self.vector_store.search(query=query, top_k=8, reference_time=ref_dt, company=t))
+            seen_ids: set[str] = set()
+            merged: list[RetrievedChunk] = []
+            for c in scoped + vector_chunks:
+                if c.chunk_id in seen_ids:
+                    continue
+                seen_ids.add(c.chunk_id)
+                merged.append(c)
+            vector_chunks = merged[: max(fetch_k, len(scoped))]
 
         # 2. Strict Point-in-Time Temporal Filtering on Vector Chunks
         if ref_dt is not None:

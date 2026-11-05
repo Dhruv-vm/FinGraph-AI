@@ -58,25 +58,64 @@ function KpiCard({
   value,
   detail,
   loading,
+  visual,
 }: {
   icon: React.ReactNode;
   label: string;
   value: string;
   detail?: React.ReactNode;
   loading?: boolean;
+  /** Optional small visual built from the same real data as the value. */
+  visual?: React.ReactNode;
 }) {
   return (
-    <div className="card p-5 flex flex-col">
-      <div className="flex items-center justify-between">
+    <div className="card card-interactive p-5 sm:p-6 flex flex-col relative overflow-hidden group">
+      <span aria-hidden className="absolute -right-10 -top-10 w-32 h-32 rounded-full bg-accent-strong/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="flex items-center justify-between relative">
         <span className="text-sm text-fg-2">{label}</span>
-        <span className="w-8 h-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center">{icon}</span>
+        <span className="w-9 h-9 rounded-full border border-line text-fg-2 flex items-center justify-center group-hover:pill-on transition-colors">{icon}</span>
       </div>
       {loading ? (
-        <Skeleton className="h-9 w-24 mt-3" />
+        <Skeleton className="h-12 w-28 mt-6" />
       ) : (
-        <div className="num text-[2rem] leading-none font-semibold tracking-tight mt-3">{value}</div>
+        <div className="text-display text-[2.6rem] sm:text-[3.1rem] mt-6 relative">{value}</div>
       )}
-      {detail && <div className="text-xs text-fg-3 mt-2.5 num">{detail}</div>}
+      {visual && <div className="mt-4 relative">{visual}</div>}
+      {detail && <div className="text-xs text-fg-3 mt-3 num relative">{detail}</div>}
+    </div>
+  );
+}
+
+const TYPE_TONE: Record<string, string> = { "8-K": "rgb(var(--accent-strong))", "10-Q": "rgb(var(--cyan))", "10-K": "rgb(var(--fg))" };
+
+/** Segmented bar of filings by form type (real counts from the corpus endpoint). */
+function FormMix({ byType }: { byType: Record<string, number> }) {
+  const rows = Object.entries(byType).sort((a, b) => b[1] - a[1]);
+  const total = rows.reduce((n, [, v]) => n + v, 0) || 1;
+  return (
+    <div>
+      <div className="flex h-2 rounded-full overflow-hidden gap-[3px]" role="img" aria-label={rows.map(([t, n]) => `${n} ${t}`).join(", ")}>
+        {rows.map(([t, n]) => (
+          <span key={t} title={`${n} ${t}`} className="h-full rounded-full" style={{ width: `${(n / total) * 100}%`, background: TYPE_TONE[t] ?? "rgb(var(--fg-3))" }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** One dot per answer-or-refuse decision; filled = correct. */
+function DecisionDots({ total, filled, tone }: { total: number; filled: number; tone: "accent" | "pos" | "neg" }) {
+  return (
+    <div className="flex flex-wrap gap-[5px] mt-4" aria-hidden>
+      {Array.from({ length: total }, (_, i) => (
+        <span
+          key={i}
+          className={cx(
+            "w-2 h-2 rounded-full",
+            i < filled ? (tone === "pos" ? "bg-pos" : tone === "neg" ? "bg-neg" : "bg-accent-strong") : "border border-line"
+          )}
+        />
+      ))}
     </div>
   );
 }
@@ -89,14 +128,27 @@ const PIPELINE: { name: string; plain: string; icon: React.ReactNode; when: "off
   { name: "Evidence-grounded QA", plain: "Answer only if evidence suffices, with citations", icon: <ShieldCheck className="w-4 h-4" />, when: "query" },
 ];
 
-function PerfTile({ value, label, detail, tone }: { value: string; label: string; detail: string; tone?: "pos" | "accent" }) {
+function PerfTile({
+  value,
+  label,
+  detail,
+  tone,
+  dots,
+}: {
+  value: string;
+  label: string;
+  detail: string;
+  tone?: "pos" | "accent";
+  dots?: { total: number; filled: number; tone: "accent" | "pos" | "neg" };
+}) {
   return (
-    <div className="rounded-lg bg-surface-2 border border-line-soft p-4">
-      <div className={cx("num text-2xl font-semibold tracking-tight", tone === "pos" ? "text-pos" : tone === "accent" ? "text-accent" : "text-fg")}>
+    <div className={cx("rounded-2xl border p-5", tone === "accent" ? "border-accent/30 bg-accent-strong/[0.08]" : "border-line-soft bg-surface-2")}>
+      <div className={cx("text-display text-[2.2rem]", tone === "pos" ? "text-pos" : tone === "accent" ? "text-accent" : "text-fg")}>
         {value}
       </div>
-      <div className="text-sm text-fg mt-1.5">{label}</div>
+      <div className="text-sm text-fg mt-3">{label}</div>
       <div className="text-xs text-fg-3 mt-0.5">{detail}</div>
+      {dots && dots.total > 0 && <DecisionDots {...dots} />}
     </div>
   );
 }
@@ -171,13 +223,14 @@ export function OverviewView({ health, onNavigate }: { health: HealthState; onNa
   const llmDown = h?.llm.status === "unavailable";
 
   return (
-    <div className="max-w-[1240px] mx-auto px-4 sm:px-8 py-6 sm:py-8 space-y-6">
+    <div className="max-w-[1320px] mx-auto px-4 sm:px-8 py-6 sm:py-8 space-y-5">
       {/* Hero */}
-      <section className="card overflow-hidden bg-accent-wash" aria-labelledby="hero-title">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
-          <div className="p-6 sm:p-9">
+      <section className="card overflow-hidden bg-accent-wash relative" aria-labelledby="hero-title">
+        <div aria-hidden className="absolute inset-0 dot-grid [mask-image:radial-gradient(60%_80%_at_90%_10%,#000,transparent)] pointer-events-none" />
+        <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+          <div className="p-6 sm:p-10">
             <div className="flex flex-wrap items-center gap-2 mb-6">
-              <span className="inline-flex items-center gap-2 h-6 px-2.5 rounded-full border border-line bg-surface text-xs text-fg-2">
+              <span className="inline-flex items-center gap-2 h-7 px-3 rounded-full border border-line bg-surface-2/80 text-xs text-fg-2">
                 <StatusDot status={status} />
                 {status === "healthy"
                   ? "All services operational"
@@ -189,8 +242,8 @@ export function OverviewView({ health, onNavigate }: { health: HealthState; onNa
               </span>
               <span className="text-xs text-fg-3">Temporal GraphRAG research system</span>
             </div>
-            <h1 id="hero-title" className="text-[2rem] sm:text-[2.5rem] leading-[1.1] font-semibold tracking-[-0.02em] max-w-[15em]">
-              Financial intelligence, grounded in evidence.
+            <h1 id="hero-title" className="text-[2.2rem] sm:text-[3.4rem] leading-[1.02] font-medium tracking-[-0.045em] max-w-[13em]">
+              Financial intelligence, <span className="font-serif italic font-normal text-accent">grounded in evidence.</span>
             </h1>
             <p className="text-md text-fg-2 mt-4 max-w-[56ch] leading-relaxed">
               FinGraph answers questions about public companies using only their SEC filings. A temporal knowledge graph and hybrid
@@ -198,24 +251,24 @@ export function OverviewView({ health, onNavigate }: { health: HealthState; onNa
               later filings cannot leak in.
             </p>
             <div className="flex flex-wrap gap-2.5 mt-7">
-              <Button variant="primary" className="h-10 px-5" onClick={() => onNavigate("ask")} icon={<MessageSquareText className="w-4 h-4" />}>
+              <Button variant="primary" className="h-11 px-6" onClick={() => onNavigate("ask")} icon={<MessageSquareText className="w-4 h-4" />}>
                 Ask FinGraph
               </Button>
-              <Button className="h-10 px-5" onClick={() => onNavigate("graph")} icon={<Waypoints className="w-4 h-4" />}>
+              <Button className="h-11 px-6" onClick={() => onNavigate("graph")} icon={<Waypoints className="w-4 h-4" />}>
                 Explore knowledge graph
               </Button>
             </div>
           </div>
 
           {/* What happens when you ask — a real recorded example */}
-          <div className="border-t lg:border-t-0 lg:border-l border-line-soft bg-surface/60 p-6 sm:p-8 flex flex-col">
+          <div className="border-t lg:border-t-0 lg:border-l border-line-soft bg-frame/40 backdrop-blur-sm p-6 sm:p-8 flex flex-col">
             <div className="flex items-center justify-between gap-2">
               <span className="text-xs font-medium text-fg-2">What happens when you ask</span>
               <Badge mono>Recorded {example?.question_id ?? ""}</Badge>
             </div>
             {example ? (
               <>
-                <div className="mt-4 rounded-lg border border-line-soft bg-surface-2 px-4 py-3">
+                <div className="mt-4 rounded-2xl border border-line-soft bg-surface-2 px-4 py-3.5">
                   <div className="text-2xs text-fg-3 mb-1">Question</div>
                   <div className="text-sm text-fg leading-snug">{example.question}</div>
                 </div>
@@ -230,7 +283,7 @@ export function OverviewView({ health, onNavigate }: { health: HealthState; onNa
                     <span className="font-mono-num text-accent w-4">3</span>Answers from the evidence and cites it
                   </li>
                 </ol>
-                <div className="mt-4 rounded-lg border border-pos/30 bg-pos/[0.06] px-4 py-3">
+                <div className="mt-4 rounded-2xl border border-pos/30 bg-pos/[0.06] px-4 py-3.5">
                   <div className="flex items-center gap-1.5 text-2xs text-pos mb-1">
                     <ShieldCheck className="w-3.5 h-3.5" /> Answered with {example.cached_phase7_result.citations.length} citations
                   </div>
@@ -282,6 +335,7 @@ export function OverviewView({ health, onNavigate }: { health: HealthState; onNa
           label="SEC filings"
           value={fmtInt(corpusData?.total_filings)}
           loading={corpus.loading}
+          visual={corpusData ? <FormMix byType={corpusData.by_type} /> : undefined}
           detail={
             corpusData
               ? Object.entries(corpusData.by_type)
@@ -298,6 +352,17 @@ export function OverviewView({ health, onNavigate }: { health: HealthState; onNa
           label="Companies"
           value={fmtInt(corpusData?.companies.length)}
           loading={corpus.loading}
+          visual={
+            corpusData ? (
+              <div className="flex flex-wrap gap-1">
+                {corpusData.companies.map((c) => (
+                  <span key={c.company} className="font-mono-num text-[10px] h-5 px-1.5 rounded-full border border-line-soft text-fg-3 inline-flex items-center">
+                    {c.company}
+                  </span>
+                ))}
+              </div>
+            ) : undefined
+          }
           detail={filingDates ? `Filed ${fmtDate(filingDates.first)} to ${fmtDate(filingDates.last)}` : undefined}
         />
         <KpiCard
@@ -320,7 +385,7 @@ export function OverviewView({ health, onNavigate }: { health: HealthState; onNa
       <section className="card p-5 sm:p-6" aria-labelledby="pipe-title">
         <div className="flex flex-wrap items-end justify-between gap-3 mb-5">
           <div>
-            <h2 id="pipe-title" className="text-md font-semibold">
+            <h2 id="pipe-title" className="text-xl font-medium tracking-tight">
               How it works
             </h2>
             <p className="text-sm text-fg-2 mt-0.5">
@@ -336,12 +401,12 @@ export function OverviewView({ health, onNavigate }: { health: HealthState; onNa
             <li key={s.name} className="relative md:pr-6 last:md:pr-0">
               <button
                 onClick={() => onNavigate("architecture")}
-                className="card-interactive w-full h-full text-left rounded-lg border border-line-soft bg-surface-2 p-4 hover:bg-surface-3/60"
+                className="card-interactive w-full h-full text-left rounded-2xl border border-line-soft bg-surface-2 p-5 hover:bg-surface-3/60"
               >
                 <div className="flex items-center gap-2.5">
                   <span
                     className={cx(
-                      "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
+                      "w-9 h-9 rounded-full flex items-center justify-center shrink-0",
                       s.when === "query" ? "bg-accent/15 text-accent" : "bg-cyan-soft text-cyan"
                     )}
                   >
@@ -371,7 +436,7 @@ export function OverviewView({ health, onNavigate }: { health: HealthState; onNa
         <section className="card p-5 sm:p-6" aria-labelledby="perf-title">
           <div className="flex flex-wrap items-start justify-between gap-3 mb-5">
             <div>
-              <h2 id="perf-title" className="text-md font-semibold">
+              <h2 id="perf-title" className="text-xl font-medium tracking-tight">
                 How it performed
               </h2>
               <p className="text-sm text-fg-2 mt-0.5">
@@ -405,18 +470,21 @@ export function OverviewView({ health, onNavigate }: { health: HealthState; onNa
                 value={`${combined.correct_answers_attempted ?? "—"} / ${p7.answerable_questions}`}
                 label="Answerable questions answered"
                 detail={`${combined.false_refusals} declined (false refusals)`}
+                dots={{ total: p7.answerable_questions ?? 0, filled: combined.correct_answers_attempted ?? 0, tone: "accent" }}
               />
               <PerfTile
                 tone="pos"
                 value={`${combined.correct_refusals ?? "—"} / ${p7.unanswerable_questions}`}
                 label="Correct refusals"
                 detail="Unanswerable questions declined"
+                dots={{ total: p7.unanswerable_questions ?? 0, filled: combined.correct_refusals ?? 0, tone: "pos" }}
               />
               <PerfTile
                 tone="pos"
                 value={`${combined.hallucinations_total ?? "—"} / ${p7.unanswerable_questions}`}
                 label="Hallucinations"
                 detail="Unanswerable questions answered anyway"
+                dots={{ total: p7.unanswerable_questions ?? 0, filled: combined.hallucinations_total ?? 0, tone: "neg" }}
               />
             </div>
           )}
@@ -431,7 +499,7 @@ export function OverviewView({ health, onNavigate }: { health: HealthState; onNa
         </section>
 
         <section className="card p-5 sm:p-6" aria-labelledby="lim-title">
-          <h2 id="lim-title" className="text-md font-semibold flex items-center gap-2">
+          <h2 id="lim-title" className="text-xl font-medium tracking-tight flex items-center gap-2">
             <TriangleAlert className="w-4 h-4 text-warn" /> Known limitations
           </h2>
           <ul className="mt-4 space-y-4 text-sm">

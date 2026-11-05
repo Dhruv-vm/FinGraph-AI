@@ -315,7 +315,7 @@ export function EvaluationLabView({ active = true }: { active?: boolean }) {
           <Badge mono>Phase 7</Badge>
           {summary.data.timestamp && <Badge mono>Run {fmtDate(summary.data.timestamp)}</Badge>}
         </div>
-        <h2 className="text-2xl font-semibold tracking-tight leading-snug max-w-[40ch]">
+        <h2 className="text-[2rem] font-medium tracking-[-0.035em] leading-[1.1] max-w-[40ch]">
           A {n.total}-question SEC benchmark, {n.ans} answerable and {n.unans} designed to be refused.
         </h2>
         <p className="text-sm text-fg-2 mt-2 max-w-[78ch]">
@@ -337,7 +337,7 @@ export function EvaluationLabView({ active = true }: { active?: boolean }) {
       <section aria-labelledby="cfg">
         <div className="flex flex-wrap items-end justify-between gap-3 mb-4">
           <div>
-            <h2 id="cfg" className="text-md font-semibold">
+            <h2 id="cfg" className="text-xl font-medium tracking-tight">
               {sel.name}
             </h2>
             {sel.description && <p className="text-sm text-fg-2 mt-0.5 max-w-[78ch]">{sel.description}</p>}
@@ -473,7 +473,7 @@ export function EvaluationLabView({ active = true }: { active?: boolean }) {
 
       {/* Comparison table */}
       <section aria-labelledby="cmp">
-        <h2 id="cmp" className="text-md font-semibold">
+        <h2 id="cmp" className="text-xl font-medium tracking-tight">
           Configuration comparison
         </h2>
         <p className="text-sm text-fg-2 mt-0.5 mb-3">All five ablation configurations on the same {n.total} questions.</p>
@@ -536,7 +536,7 @@ export function EvaluationLabView({ active = true }: { active?: boolean }) {
       <section aria-labelledby="pq">
         <div className="flex flex-wrap items-end justify-between gap-3 mb-3">
           <div>
-            <h2 id="pq" className="text-md font-semibold">
+            <h2 id="pq" className="text-xl font-medium tracking-tight">
               Question-level outcomes
             </h2>
             <p className="text-sm text-fg-2 mt-0.5">Frozen baseline against the combined configuration, question by question.</p>
@@ -642,7 +642,7 @@ function ParametricLeakageSection({
   const ci = (r?: { wilson95_pct: [number, number] | null }) => (r?.wilson95_pct ? `${r.wilson95_pct[0]}–${r.wilson95_pct[1]}%` : "—");
   return (
     <section aria-labelledby="plr">
-      <h2 id="plr" className="text-md font-semibold">
+      <h2 id="plr" className="text-xl font-medium tracking-tight">
         Parametric knowledge leakage
       </h2>
       <p className="text-sm text-fg-2 mt-0.5 max-w-[80ch]">
@@ -802,7 +802,7 @@ function AtAGlance({
   const p83 = plr?.phase8_3?.closed_book?.A2_as_of ?? null;
   return (
     <section aria-labelledby="glance">
-      <h2 id="glance" className="text-md font-semibold">
+      <h2 id="glance" className="text-xl font-medium tracking-tight">
         Results at a glance
       </h2>
       <p className="text-sm text-fg-2 mt-0.5 mb-4 max-w-[80ch]">

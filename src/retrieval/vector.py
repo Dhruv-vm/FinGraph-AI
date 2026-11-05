@@ -105,6 +105,9 @@ class VectorStore:
                     "source_url": chunk.get("source_url"),
                     "source_reference": chunk.get("source_reference"),
                 }
+                if chunk.get("corpus"):
+                    # e.g. "live": filings fetched on demand, outside the controlled research corpus.
+                    payload["corpus"] = chunk["corpus"]
 
                 points.append(
                     models.PointStruct(
@@ -128,8 +131,10 @@ class VectorStore:
         query: str,
         top_k: int = 5,
         reference_time: datetime | None = None,
+        company: str | None = None,
+        fiscal_period: str | None = None,
     ) -> list[RetrievedChunk]:
-        """Retrieve semantically similar chunks with optional temporal filtering."""
+        """Retrieve semantically similar chunks with optional temporal, issuer and period filtering."""
         if not self.client.collection_exists(self.collection_name):
             return []
 
@@ -138,21 +143,29 @@ class VectorStore:
             normalize_embeddings=True,
         ).tolist()
 
-        query_filter = None
+        must: list[Any] = []
 
         if reference_time is not None:
             reference_iso = reference_time.isoformat()
-
-            query_filter = models.Filter(
-                must=[
-                    models.FieldCondition(
-                        key="available_time",
-                        range=models.DatetimeRange(
-                            lte=reference_iso,
-                        ),
-                    )
-                ]
+            must.append(
+                models.FieldCondition(
+                    key="available_time",
+                    range=models.DatetimeRange(
+                        lte=reference_iso,
+                    ),
+                )
             )
+        if company:
+            must.append(models.FieldCondition(key="company", match=models.MatchValue(value=company)))
+        if fiscal_period:
+            must.append(models.FieldCondition(key="fiscal_period", match=models.MatchValue(value=fiscal_period)))
+
+        # Filings fetched on demand ("live") are only searched when explicitly enabled
+        # (assist mode), so benchmark runs see exactly the controlled corpus.
+        must_not: list[Any] = []
+        if not getattr(self, "include_live", False):
+            must_not.append(models.FieldCondition(key="corpus", match=models.MatchValue(value="live")))
+        query_filter = models.Filter(must=must or None, must_not=must_not or None) if (must or must_not) else None
 
         results = self.client.query_points(
             collection_name=self.collection_name,
@@ -171,6 +184,49 @@ class VectorStore:
             )
             for result in results
         ]
+
+    def fiscal_periods(
+        self, company: str, reference_time: datetime | None = None, document_types: tuple[str, ...] | None = None
+    ) -> list[str]:
+        """Distinct fiscal periods of a company's indexed chunks (newest first), optionally as of a time."""
+        key = (company, reference_time.isoformat() if reference_time else None, document_types, getattr(self, "include_live", False))
+        cache = self.__dict__.setdefault("_period_cache", {})
+        if key in cache:
+            return cache[key]
+        if not self.client.collection_exists(self.collection_name):
+            return []
+        must: list[Any] = [models.FieldCondition(key="company", match=models.MatchValue(value=company))]
+        if reference_time is not None:
+            must.append(models.FieldCondition(key="available_time", range=models.DatetimeRange(lte=reference_time.isoformat())))
+        if document_types:
+            must.append(models.FieldCondition(key="document_type", match=models.MatchAny(any=list(document_types))))
+        periods: set[str] = set()
+        offset = None
+        while True:
+            points, offset = self.client.scroll(
+                collection_name=self.collection_name,
+                scroll_filter=models.Filter(
+                    must=must,
+                    must_not=None
+                    if getattr(self, "include_live", False)
+                    else [models.FieldCondition(key="corpus", match=models.MatchValue(value="live"))],
+                ),
+                limit=512,
+                offset=offset,
+                with_payload=["fiscal_period"],
+                with_vectors=False,
+            )
+            for p in points:
+                fp = (p.payload or {}).get("fiscal_period")
+                if fp:
+                    periods.add(str(fp))
+            if offset is None:
+                break
+        cache[key] = sorted(periods, reverse=True)
+        return cache[key]
+
+    def clear_period_cache(self) -> None:
+        self.__dict__.pop("_period_cache", None)
 
     def count(self) -> int:
         """Return the number of indexed chunks."""

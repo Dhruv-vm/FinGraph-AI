@@ -107,7 +107,7 @@ export function Dialog({
         aria-modal="true"
         aria-labelledby={titleId}
         tabIndex={-1}
-        className="relative w-full max-w-lg bg-surface border border-line rounded-md shadow-overlay animate-rise-in focus:outline-none"
+        className="relative w-full max-w-lg bg-surface border border-line rounded-2xl shadow-overlay animate-rise-in focus:outline-none"
       >
         <div className="flex items-center justify-between px-4 h-12 border-b border-line-soft">
           <div id={titleId} className="text-sm font-semibold">
@@ -176,7 +176,7 @@ export function Popover({
     <div
       ref={ref}
       className={cx(
-        "absolute z-40 bg-surface border border-line rounded-md shadow-overlay animate-rise-in",
+        "absolute z-40 bg-surface border border-line rounded-2xl shadow-overlay animate-rise-in",
         anchorClassName ?? "right-0 top-full mt-2",
         className
       )}

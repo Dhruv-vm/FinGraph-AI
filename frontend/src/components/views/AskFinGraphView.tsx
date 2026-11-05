@@ -33,7 +33,7 @@ import {
   periodPhrase,
   toReferenceTime,
 } from "@/lib/format";
-import { DemoQuestionItem, EvidenceItem, FilingItem, QueryResponse } from "@/lib/types";
+import { DemoQuestionItem, EvidenceItem, FilingItem, QueryMode, QueryResponse } from "@/lib/types";
 import {
   Badge,
   Button,
@@ -45,6 +45,7 @@ import {
   KeyValue,
   Note,
   ProgressBar,
+  Segmented,
   Skeleton,
   Spinner,
   Tabs,
@@ -88,8 +89,11 @@ function classify(r: QueryResponse): Outcome {
       label: "Insufficient evidence",
       tone: "warn",
       explanation:
-        r.sufficiency.reason ||
-        "The evidence gate found the retrieved filings do not support an answer, so the system declined rather than guess.",
+        r.sufficiency.sufficient
+          ? // Gate passed, but the model found the retrieved passages do not answer the question.
+            "The retrieved filings were read, but they do not answer this question, so FinGraph declined rather than guess."
+          : r.sufficiency.reason ||
+            "The evidence gate found the retrieved filings do not support an answer, so the system declined rather than guess.",
     };
   }
   if (v?.is_valid === false || (v?.errors && v.errors.length > 0)) {
@@ -637,7 +641,8 @@ function Result({
               </ul>
             )}
             <p className="text-xs text-fg-3 mt-2">
-              Answered {fmtDateTime(r.timestamp)}. Filing metadata joined from the corpus manifest by document id.
+              Answered {fmtDateTime(r.timestamp)} in {r.mode === "benchmark" ? "Benchmark (Phase 7 configuration)" : r.mode === "assist" ? "Assist" : "Benchmark"} mode. Filing
+              metadata joined from the corpus manifest by document id.
             </p>
           </div>
         )}
@@ -686,6 +691,23 @@ export function AskFinGraphView({ onNavigate }: { onNavigate: (t: NavTab) => voi
   const [runs, setRuns] = useState<Run[]>([]);
   const [activeRunId, setActiveRunId] = useState<number | null>(null);
   const [running, setRunning] = useState(false);
+  const [mode, setModeState] = useState<QueryMode>("assist");
+  useEffect(() => {
+    try {
+      const m = localStorage.getItem("fingraph-ask-mode");
+      if (m === "assist" || m === "benchmark") setModeState(m);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+  const setMode = (m: QueryMode) => {
+    setModeState(m);
+    try {
+      localStorage.setItem("fingraph-ask-mode", m);
+    } catch {
+      /* ignore */
+    }
+  };
   const ctrlRef = useRef<AbortController | null>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const elapsed = useElapsed(running);
@@ -740,9 +762,9 @@ export function AskFinGraphView({ onNavigate }: { onNavigate: (t: NavTab) => voi
     setActiveRunId(id);
     setRunning(true);
     try {
-      // Payload is identical to the original client: the query is sent verbatim.
+      // The query is sent verbatim; mode selects the live assist settings or the benchmarked config.
       const result = await api.submitQuery(
-        { query: trimmed, reference_time: refTime, top_k: 10, candidate_pool_size: 20 },
+        { query: trimmed, reference_time: refTime, top_k: 10, candidate_pool_size: 20, mode },
         ctrl.signal
       );
       setRuns((rs) => rs.map((r) => (r.id === id ? { ...r, result } : r)));
@@ -833,10 +855,25 @@ export function AskFinGraphView({ onNavigate }: { onNavigate: (t: NavTab) => voi
                 )}
               </div>
             </div>
+            <div>
+              <FieldLabel>Answer mode</FieldLabel>
+              <Segmented
+                label="Answer mode"
+                value={mode}
+                onChange={setMode}
+                options={[
+                  { value: "assist", label: "Assist" },
+                  { value: "benchmark", label: "Benchmark" },
+                ]}
+              />
+            </div>
             <p id="ask-ref-help" className="text-xs text-fg-3 flex-1 min-w-[180px] pb-1.5">
               {refTime
                 ? `Only evidence available by ${referenceDate} 00:00 UTC is used.`
-                : "No date: the whole corpus is searchable."}
+                : "No date: the whole corpus is searchable."}{" "}
+              {mode === "assist"
+                ? "Assist reads full passages and gives partial, cited answers where it can."
+                : "Benchmark runs the evaluated Phase 7 configuration exactly."}
             </p>
             <div className="flex items-center gap-2 ml-auto">
               {running ? (
@@ -918,7 +955,7 @@ export function AskFinGraphView({ onNavigate }: { onNavigate: (t: NavTab) => voi
             <div>
               <div className="flex items-end justify-between gap-3 mb-3">
                 <div>
-                  <h2 className="text-md font-semibold">Try an audited example</h2>
+                  <h2 className="text-xl font-medium tracking-tight">Try an audited example</h2>
                   <p className="text-sm text-fg-2 mt-0.5">
                     Benchmark questions with recorded Phase 7 results. Choosing one fills the form; run it to see the live answer.
                   </p>

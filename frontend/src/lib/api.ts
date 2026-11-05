@@ -17,6 +17,8 @@ import {
   ParametricLeakageResponse,
   PerQuestionResponse,
   QueryRequest,
+  LiveCompany,
+  LiveFetchResponse,
   QueryResponse,
   SubgraphResponse,
 } from "./types";
@@ -110,6 +112,12 @@ export const api = {
 
   submitQuery: (req: QueryRequest, signal?: AbortSignal) =>
     fetchJson<QueryResponse>("/api/v1/query", { method: "POST", body: JSON.stringify(req), signal }),
+
+  resolveLiveCompany: (q: string, signal?: AbortSignal) =>
+    fetchJson<{ company: LiveCompany | null }>(`/api/v1/live/resolve?${new URLSearchParams({ q })}`, { signal }),
+
+  fetchLiveFilings: (req: { query?: string; ticker?: string }, signal?: AbortSignal) =>
+    fetchJson<LiveFetchResponse>("/api/v1/live/fetch", { method: "POST", body: JSON.stringify(req), signal }),
 
   getDemoQuestions: (signal?: AbortSignal) =>
     fetchJson<DemoQuestionsResponse>("/api/v1/benchmark/demo-questions", { signal }),

@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
+import re
 from dataclasses import asdict, dataclass, field
 from datetime import datetime
 from typing import Any, Callable
@@ -63,6 +65,107 @@ Rules:
 9. Do not include markdown code blocks, reasoning chains, or commentary.
 """
 
+# Live "assist" mode: same grounding rules, but the model may give a partial answer
+# instead of a blanket refusal when the evidence covers only part of the question.
+ASSIST_SYSTEM_PROMPT = """You are a financial research assistant answering questions about SEC filings.
+
+Answer using ONLY the supplied evidence passages.
+
+Rules:
+1. Never use outside knowledge and never invent facts, figures, dates or relationships.
+2. Read every passage fully: figures often appear inside tables or later in a passage.
+3. If the evidence answers the question, answer it directly and include the specific figures, names and periods it states.
+4. If the evidence answers only part of the question, answer that part and say plainly what the filings provided do not cover.
+5. Only if nothing in the evidence is relevant, reply exactly: "Insufficient evidence in the retrieved corpus."
+6. Respect the reference time. Never mention facts that became available after it.
+7. For "latest" or "most recent" questions, use the passage with the latest "period_end" (or filing date) that contains the figure.
+8. Each passage names the company whose filing it comes from ("source_company"). Never attribute a statement, figure or plan from one company's filing to a different company.
+9. Every factual claim must cite one or more evidence IDs.
+10. Set "coverage" to "full" if the evidence answers the question, "partial" if it answers only part of it, or "none" if it does not answer it at all (then cite nothing).
+11. Return ONLY valid JSON with keys: "answer", "coverage", "confidence", "evidence_ids", "reasoning_summary".
+"""
+
+_NEGATIVE = re.compile(
+    r"\b(?:do|does|did)\s+not\s+(?:explicitly\s+)?(?:contain|provide|include|state|mention|list|identify|report|specify|disclose)"
+    r"|\bno\s+(?:information|data|figures?|mention|evidence)\b|\bnot\s+(?:available|found|present)\s+in\b",
+    re.I,
+)
+_PIVOT = re.compile(r"\b(?:however|but|only|instead|although|while)\b", re.I)
+
+
+def _assist_coverage(parsed: dict[str, Any], answer_text: str) -> str:
+    """'full', 'partial' or 'none': the model's own declaration, checked against its wording."""
+    declared = str(parsed.get("coverage", "")).strip().lower()
+    negative = bool(_NEGATIVE.search(answer_text))
+    if declared in ("full", "partial", "none"):
+        if declared == "full" and negative:
+            return "partial" if _PIVOT.search(answer_text) else "none"
+        return declared
+    if negative:
+        return "partial" if _PIVOT.search(answer_text) else "none"
+    return "full"
+
+
+def _parse_json_loose(raw: str) -> dict[str, Any] | None:
+    """Parse model output as JSON, falling back to the outermost {...} block."""
+    try:
+        v = json.loads(raw)
+        return v if isinstance(v, dict) else None
+    except Exception:
+        pass
+    a, b = raw.find("{"), raw.rfind("}")
+    if a != -1 and b > a:
+        try:
+            v = json.loads(raw[a : b + 1])
+            if isinstance(v, dict):
+                return v
+        except Exception:
+            pass
+    # Truncated output: salvage the fields that did complete.
+    ans = re.search(r'"answer"\s*:\s*"((?:[^"\\]|\\.)*)"', raw)
+    if not ans:
+        return None
+    out: dict[str, Any] = {"answer": json.loads(f'"{ans.group(1)}"')}
+    cov = re.search(r'"coverage"\s*:\s*"(full|partial|none)"', raw)
+    if cov:
+        out["coverage"] = cov.group(1)
+    conf = re.search(r'"confidence"\s*:\s*([0-9.]+)', raw)
+    if conf:
+        out["confidence"] = float(conf.group(1))
+    ids = re.search(r'"evidence_ids"\s*:\s*\[(.*?)\]', raw, re.S)
+    out["evidence_ids"] = re.findall(r'"([^"]+)"', ids.group(1)) if ids else []
+    out["reasoning_summary"] = ""
+    return out
+
+
+_WINDOW_STOP = {
+    "what", "which", "when", "where", "does", "did", "the", "and", "for", "with", "from", "that", "this",
+    "their", "they", "have", "has", "was", "were", "are", "its", "about", "into", "most", "recent", "company",
+    "filings", "filing", "report", "reported", "say", "said", "how", "who", "whom", "much", "many",
+}
+
+
+def _relevant_window(text: str, query: str, width: int) -> str:
+    """Return the `width`-character window of `text` that mentions the most query terms.
+
+    Used only in assist mode so a figure deep inside a long passage (e.g. a table row)
+    reaches the model without sending the whole passage.
+    """
+    if len(text) <= width:
+        return text
+    terms = {w for w in re.findall(r"[a-z0-9]+", query.lower()) if len(w) >= 3 and w not in _WINDOW_STOP}
+    if not terms:
+        return text[:width].strip() + "..."
+    low = text.lower()
+    best_start, best_score = 0, -1
+    for start in range(0, max(1, len(text) - width) + 1, 80):
+        window = low[start : start + width]
+        score = sum(window.count(t) for t in terms)
+        if score > best_score:
+            best_start, best_score = start, score
+    snippet = text[best_start : best_start + width].strip()
+    return ("..." if best_start > 0 else "") + snippet + ("..." if best_start + width < len(text) else "")
+
 
 class AnswerGenerator:
     """
@@ -91,15 +194,21 @@ class AnswerGenerator:
         self.llm_client = llm_client
         self.max_evidence_items = max_evidence_items
 
-    def _serialize_evidence(self, evidence: list[RetrievalEvidence]) -> list[dict[str, Any]]:
+    def _serialize_evidence(
+        self, evidence: list[RetrievalEvidence], snippet_chars: int = 220, query: str | None = None
+    ) -> list[dict[str, Any]]:
         """Deterministically serialize evidence items for prompt injection."""
         serialized = []
         for ev in evidence:
             raw_text = ev.text.strip() if ev.text else ""
-            # Truncate text snippet to avoid blowing context window and triggering unterminated JSON
-            snippet = raw_text[:220].strip()
-            if len(raw_text) > 220:
-                snippet += "..."
+            if query is not None:
+                # Assist mode: the most query-relevant window of the passage.
+                snippet = _relevant_window(raw_text, query, snippet_chars)
+            else:
+                # Truncate text snippet to avoid blowing context window and triggering unterminated JSON
+                snippet = raw_text[:snippet_chars].strip()
+                if len(raw_text) > snippet_chars:
+                    snippet += "..."
             item = {
                 "evidence_id": ev.evidence_id,
                 "source_type": ev.source_type,
@@ -113,6 +222,26 @@ class AnswerGenerator:
             }
             if "path" in ev.metadata and isinstance(ev.metadata["path"], list):
                 item["graph_path"] = ev.metadata["path"]
+            if query is not None:
+                # Assist mode: a compact record (fits Ollama's default context, leaving room for the
+                # answer) that also tells the model whose filing each passage is from.
+                compact = {
+                    "evidence_id": ev.evidence_id,
+                    "source_company": getattr(ev, "source_company", None)
+                    or ev.metadata.get("source_company")
+                    or ev.metadata.get("company")
+                    or "unknown",
+                    "text": snippet,
+                }
+                if ev.metadata.get("document_type"):
+                    compact["filing"] = f'{ev.metadata.get("document_type")} {ev.metadata.get("publication_date") or ""}'.strip()
+                if ev.metadata.get("fiscal_period"):
+                    compact["period_end"] = ev.metadata["fiscal_period"]
+                if ev.metadata.get("relationship"):
+                    compact["relationship"] = ev.metadata["relationship"]
+                if ev.available_time:
+                    compact["available_time"] = ev.available_time
+                item = compact
             serialized.append(item)
         return serialized
 
@@ -120,6 +249,7 @@ class AnswerGenerator:
         self,
         package: QAEvidencePackage,
         max_evidence_items: int | None = None,
+        assist: bool = False,
     ) -> QAAnswer:
         """
         Generate evidence-grounded structured QAAnswer from QAEvidencePackage.
@@ -164,20 +294,29 @@ class AnswerGenerator:
             )
 
         # 3. Deterministically serialize candidate evidence
-        evidence_limit = max_evidence_items or self.max_evidence_items
-        serialized_evidence = self._serialize_evidence(package.all_evidence[:evidence_limit])
+        # Benchmark mode keeps the Phase 7 settings (5 items x 220 chars). Assist mode lets the
+        # model read most of each passage, since figures usually sit beyond the first 220 chars.
+        # (Sizes are chosen to stay within Ollama's default context so the model stays on the GPU.)
+        evidence_limit = max_evidence_items or (6 if assist else self.max_evidence_items)
+        snippet_chars = 700 if assist else 220
+        system_prompt = ASSIST_SYSTEM_PROMPT if assist else SYSTEM_PROMPT
+        serialized_evidence = self._serialize_evidence(
+            package.all_evidence[:evidence_limit], snippet_chars, query=package.query if assist else None
+        )
 
         user_prompt = (
             f"Question:\n{package.query}\n\n"
             f"Reference time:\n{package.reference_time or 'No temporal restriction'}\n\n"
-            f"Evidence:\n{json.dumps(serialized_evidence, indent=2)}\n\n"
+            f"Evidence:\n{json.dumps(serialized_evidence, indent=None if assist else 2)}\n\n"
             "Instructions:\n"
-            "- Be concise (2-3 sentences max).\n"
+            + ("- Be concise but complete (up to 4 sentences); include the figures and periods stated.\n" if assist else "- Be concise (2-3 sentences max).\n")
+            + 
             "- Answer directly using the evidence items.\n"
             "- Output valid JSON strictly adhering to schema:\n"
             "{\n"
             '  "answer": "...",\n'
-            '  "confidence": 0.0,\n'
+            + ('  "coverage": "full | partial | none",\n' if assist else "")
+            + '  "confidence": 0.0,\n'
             '  "evidence_ids": ["..."],\n'
             '  "reasoning_summary": "..."\n'
             "}"
@@ -188,13 +327,13 @@ class AnswerGenerator:
         try:
             if self.llm_client is not None:
                 # Custom/mock callable for unit testing
-                raw_response = self.llm_client(user_prompt, SYSTEM_PROMPT)
+                raw_response = self.llm_client(user_prompt, system_prompt)
             else:
                 client = ollama.Client(host=self.host)
                 chat_res = client.chat(
                     model=self.model,
                     messages=[
-                        {"role": "system", "content": SYSTEM_PROMPT},
+                        {"role": "system", "content": system_prompt},
                         {"role": "user", "content": user_prompt},
                     ],
                     format="json",
@@ -222,6 +361,30 @@ class AnswerGenerator:
             )
 
         # 5. Parse and validate LLM output
+        if assist and _parse_json_loose(raw_response) is None and self.llm_client is None:
+            # One retry for malformed JSON (longer assist answers occasionally break the format).
+            try:
+                retry = ollama.Client(host=self.host).chat(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_prompt + "\n\nReturn one compact, valid JSON object only."},
+                    ],
+                    format="json",
+                    options={"temperature": self.temperature, "num_predict": 2048},
+                    think=False,
+                )
+                raw_response = retry.message.content
+            except Exception:
+                pass
+        if assist:
+            loose = _parse_json_loose(raw_response)
+            if loose is not None:
+                raw_response = json.dumps(loose)
+            else:
+                logging.getLogger("fingraph.generator").warning(
+                    "Assist generation returned non-JSON output (%d chars): %r", len(raw_response or ""), (raw_response or "")[:600]
+                )
         val_result = self.validator.validate(raw_response, package)
 
         parsed_json: dict[str, Any]
@@ -256,16 +419,35 @@ class AnswerGenerator:
                     "text_snippet": ev_obj.text[:150] if ev_obj.text else "",
                 })
 
+        insufficient = not val_result.is_valid and len(evidence_ids_cited) == 0
+        validation_dict = val_result.to_dict()
+        if assist:
+            coverage = "none" if not citations else _assist_coverage(parsed_json, answer_text)
+            validation_dict["coverage"] = coverage
+            if coverage == "none":
+                # The model is saying the filings do not answer the question: report a refusal
+                # (keeping its explanation), never a supported answer.
+                insufficient = True
+                citations = []
+                evidence_ids_cited = []
+                if not answer_text.strip():
+                    answer_text = "Insufficient evidence in the retrieved corpus."
+            elif coverage == "partial":
+                validation_dict.setdefault("warnings", [])
+                validation_dict["warnings"] = list(validation_dict["warnings"]) + [
+                    "Partial answer: the retrieved filings cover only part of the question."
+                ]
+
         return QAAnswer(
             answer=answer_text,
-            confidence=confidence_val,
+            confidence=0.0 if (assist and not citations) else confidence_val,
             evidence_ids=evidence_ids_cited,
             citations=citations,
             temporal_reference=package.reference_time,
-            insufficient_evidence=not val_result.is_valid and len(evidence_ids_cited) == 0,
+            insufficient_evidence=insufficient,
             reasoning_summary=reasoning_sum,
             evidence=[ev.to_dict() for ev in package.all_evidence],
             sources=package.sources,
-            validation_status=val_result.to_dict(),
+            validation_status=validation_dict,
             evidence_package=package.to_dict(),
         )

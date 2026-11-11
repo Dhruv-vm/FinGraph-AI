@@ -795,14 +795,14 @@ function LiveFetchPanel({
           </div>
           <p className="text-sm text-fg-2 mt-1 leading-relaxed">
             {phase === "fetching"
-              ? "Downloading the latest 10-K, two 10-Qs and two 8-Ks, then splitting and indexing them. This usually takes 15–40 seconds."
+              ? "Downloading the latest 10-K, two 10-Qs, two 8-Ks and the proxy statement, then splitting and indexing them. This usually takes 15–60 seconds."
               : phase === "added"
               ? (result?.added ?? []).map((f) => `${f.form} ${f.filing_date ?? ""}`.trim()).join(" · ")
               : phase === "nothing-new"
               ? "There was nothing newer to add, so this answer reflects everything FinGraph has for this company."
               : phase === "error"
               ? error
-              : "FinGraph can download the company's latest 10-K, 10-Q and 8-K filings from SEC EDGAR and answer again from them. Fetched filings are kept separate from the research corpus and are not used in Benchmark mode."}
+              : "FinGraph can download the company's latest 10-K, 10-Q, 8-K and proxy-statement filings from SEC EDGAR and answer again from them. Fetched filings are kept separate from the research corpus and are not used in Benchmark mode."}
           </p>
           <label className="mt-3 inline-flex items-center gap-2 text-xs text-fg-3 cursor-pointer select-none">
             <input

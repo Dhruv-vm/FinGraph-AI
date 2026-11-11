@@ -82,8 +82,12 @@ Rules:
 8. Each passage names the company whose filing it comes from ("source_company"). Never attribute a statement, figure or plan from one company's filing to a different company.
 9. Every factual claim must cite one or more evidence IDs.
 10. Set "coverage" to "full" if the evidence answers the question, "partial" if it answers only part of it, or "none" if it does not answer it at all (then cite nothing).
-11. Keep "reasoning_summary" to one short sentence.
-12. Return ONLY valid JSON with keys: "answer", "coverage", "confidence", "evidence_ids", "reasoning_summary".
+11. Check the question's premise against the evidence. If the evidence shows it is false (for example, nobody owns a
+    majority, i.e. more than 50%), say so plainly, then give what the evidence does show.
+12. In 10-Q tables, rows usually list the three-month (quarter) figures first: current year, prior year, then the
+    six- or nine-month year-to-date figures. Answer a "quarter" question with the three-month figure, and say which period it is.
+13. Keep "reasoning_summary" to one short sentence.
+14. Return ONLY valid JSON with keys: "answer", "coverage", "confidence", "evidence_ids", "reasoning_summary".
 """
 
 _NEGATIVE = re.compile(
@@ -218,8 +222,14 @@ class AnswerGenerator:
         for ev in evidence:
             raw_text = ev.text.strip() if ev.text else ""
             if query is not None:
-                # Assist mode: the most query-relevant window of the passage.
-                snippet = _relevant_window(raw_text, query, snippet_chars)
+                # Assist mode: the most query-relevant window of the passage. Passages matched to a
+                # filing section (e.g. the ownership table) get a longer window centred on that
+                # section's own wording, so tables keep their percentages and totals.
+                topical = ev.metadata.get("topical_match")
+                if isinstance(topical, str) and topical:
+                    snippet = _relevant_window(raw_text, f"{query} {topical} %", max(snippet_chars, 1300))
+                else:
+                    snippet = _relevant_window(raw_text, query, snippet_chars)
             else:
                 # Truncate text snippet to avoid blowing context window and triggering unterminated JSON
                 snippet = raw_text[:snippet_chars].strip()

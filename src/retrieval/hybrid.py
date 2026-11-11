@@ -96,6 +96,33 @@ _MONTHS = {m: i for i, m in enumerate(
 )}
 
 
+# Topics whose answers sit in a specific, consistently-titled filing section. A question that
+# matches a topic also searches with that section's wording (assist mode only), because users'
+# phrasing ("who owns most of NVIDIA") rarely resembles the filing's ("Security Ownership of
+# Certain Beneficial Owners").
+_TOPIC_EXPANSIONS: list[tuple[re.Pattern[str], str, str | None]] = [
+    (
+        re.compile(r"\b(own|owns|owned|owner\w*|ownership|stake\w*|shareholder\w*|stockholder\w*|majority|largest holder\w*|major holder\w*|institutional|holds? (?:the )?most|share\w* in)\b", re.I),
+        "Security Ownership of Certain Beneficial Owners and Management 5% stockholders beneficially owned percent of class shares outstanding",
+        "DEF 14A",
+    ),
+    (
+        re.compile(r"\b(ceo pay|compensation|salary|salaries|paid|pay package|bonus\w*|stock awards?|executive pay)\b", re.I),
+        "Summary Compensation Table named executive officers salary bonus stock awards total compensation",
+        "DEF 14A",
+    ),
+    (
+        re.compile(r"\b(board of directors|directors?|board members?|independent director\w*|chair\w*)\b", re.I),
+        "Board of Directors nominees director independence committees",
+        "DEF 14A",
+    ),
+]
+
+
+def _topic_queries(query: str) -> list[tuple[str, str | None]]:
+    return [(q, dt) for pat, q, dt in _TOPIC_EXPANSIONS if pat.search(query)]
+
+
 def _query_periods(query: str) -> list[str]:
     """Extract ISO period-end dates ("September 30, 2025", "2025-09-30") mentioned in a query."""
     out: list[str] = []
@@ -198,6 +225,18 @@ class HybridRetriever:
                 for fp in t_periods[:2]:
                     scoped.extend(self.vector_store.search(query=query, top_k=6, reference_time=ref_dt, company=t, fiscal_period=fp))
                 scoped.extend(self.vector_store.search(query=query, top_k=8, reference_time=ref_dt, company=t))
+            # Section-targeted searches for topic questions go first.
+            topical: list[RetrievedChunk] = []
+            for t in tickers:
+                for tq, dt in _topic_queries(query):
+                    hits = self.vector_store.search(query=tq, top_k=4, reference_time=ref_dt, company=t, document_type=dt)
+                    if not hits and dt:
+                        hits = self.vector_store.search(query=tq, top_k=4, reference_time=ref_dt, company=t)
+                    for h in hits:
+                        # Marked so the pipeline can keep these in front of the generator.
+                        h.payload["topical_match"] = tq
+                    topical.extend(hits)
+            scoped = topical + scoped
             seen_ids: set[str] = set()
             merged: list[RetrievedChunk] = []
             for c in scoped + vector_chunks:

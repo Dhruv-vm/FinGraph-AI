@@ -33,7 +33,9 @@ LIVE_MANIFEST = LIVE_DIR / "live_manifest.json"
 CORPUS_DOCS_DIR = PROJECT_ROOT / "data" / "processed" / "documents"
 
 # Latest filings fetched per request (kept small so a fetch takes well under a minute).
-DEFAULT_FORMS: dict[str, int] = {"10-K": 1, "10-Q": 2, "8-K": 2}
+# DEF 14A (proxy statement) carries ownership tables ("Security Ownership of Certain Beneficial
+# Owners and Management"), executive pay and board details, which 10-K/10-Q/8-K do not.
+DEFAULT_FORMS: dict[str, int] = {"10-K": 1, "10-Q": 2, "8-K": 2, "DEF 14A": 1}
 
 _NAME_SUFFIX = re.compile(
     r"[,.]?\s*\b(inc|incorporated|corp|corporation|co|company|ltd|limited|plc|holdings?|group|n\.?v|s\.?a|ag|llc|lp|the)\b\.?",

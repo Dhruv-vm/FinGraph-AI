@@ -7,6 +7,10 @@ const nextConfig = {
   compress: true,
   experimental: {
     optimizePackageImports: ["lucide-react", "recharts", "reactflow"],
+    // The /api rewrite proxies to FastAPI. Next's default proxy timeout is 30 s, but a local
+    // model can take longer (filing search + general-knowledge fallback), which surfaced as a
+    // spurious "HTTP 500". Allow up to 5 minutes.
+    proxyTimeout: 300_000,
   },
   images: {
     // Serve AVIF/WebP when the browser supports them; cache optimized images for a week.

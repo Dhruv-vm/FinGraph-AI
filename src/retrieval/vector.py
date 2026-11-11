@@ -135,6 +135,7 @@ class VectorStore:
         reference_time: datetime | None = None,
         company: str | None = None,
         fiscal_period: str | None = None,
+        document_type: str | None = None,
     ) -> list[RetrievedChunk]:
         """Retrieve semantically similar chunks with optional temporal, issuer and period filtering."""
         if not self.client.collection_exists(self.collection_name):
@@ -161,6 +162,8 @@ class VectorStore:
             must.append(models.FieldCondition(key="company", match=models.MatchValue(value=company)))
         if fiscal_period:
             must.append(models.FieldCondition(key="fiscal_period", match=models.MatchValue(value=fiscal_period)))
+        if document_type:
+            must.append(models.FieldCondition(key="document_type", match=models.MatchValue(value=document_type)))
 
         # Filings fetched on demand ("live") are only searched when explicitly enabled
         # (assist mode), so benchmark runs see exactly the controlled corpus.

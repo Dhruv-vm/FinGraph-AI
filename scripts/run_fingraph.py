@@ -155,6 +155,13 @@ class FinGraphPipeline:
             self.hybrid_retriever.extra_scoped_tickers = []
             if self.vector_store is not None:
                 self.vector_store.include_live = False
+        if assist and package.evidence:
+            # Topic-matched filing sections (e.g. the ownership table for "who owns X") go first,
+            # ahead of graph edges that the reranker scores higher but that cannot answer the question.
+            topical = [e for e in package.evidence if (e.metadata or {}).get("topical_match")][:3]
+            if topical:
+                ids = {e.evidence_id for e in topical}
+                package.evidence = topical + [e for e in package.evidence if e.evidence_id not in ids]
         t_gen = time.perf_counter()
         answer = self.generator.generate(package, max_evidence_items=max_evidence_items, assist=assist)
         t_done = time.perf_counter()

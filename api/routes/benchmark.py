@@ -4,6 +4,7 @@ Benchmark demonstration endpoints for FinGraph AI API.
 
 from __future__ import annotations
 
+from functools import lru_cache
 from fastapi import APIRouter
 
 from api.schemas.benchmark import (
@@ -165,6 +166,7 @@ async def get_demo_questions() -> DemoQuestionsResponse:
     "/summary",
     summary="Get benchmark ablation evaluation summaries across all experimental configurations",
 )
+@lru_cache(maxsize=1)
 def get_benchmark_summary():
     import json
     from pathlib import Path
@@ -185,6 +187,7 @@ def get_benchmark_summary():
         "These are historical benchmark records, not live pipeline runs."
     ),
 )
+@lru_cache(maxsize=1)
 def get_per_question_results():
     import csv
     from pathlib import Path
@@ -242,6 +245,7 @@ def get_per_question_results():
         "from its pre-trained knowledge; retrieval filtering does not address this."
     ),
 )
+@lru_cache(maxsize=1)
 def get_parametric_leakage():
     import json
     from pathlib import Path

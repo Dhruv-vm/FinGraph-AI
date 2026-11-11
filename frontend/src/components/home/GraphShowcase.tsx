@@ -2,7 +2,8 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
-import { HOME_SHOWCASE, HOME_TICKERS, HomeEdge, HomeNode } from "./homeData";
+import { HOME_TICKERS } from "./homeData";
+import { HOME_SHOWCASE, HomeEdge, HomeNode } from "./showcaseData";
 import { Reveal, SplitText, useInView } from "./motion";
 
 /**

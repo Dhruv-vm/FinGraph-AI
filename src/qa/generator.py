@@ -82,7 +82,8 @@ Rules:
 8. Each passage names the company whose filing it comes from ("source_company"). Never attribute a statement, figure or plan from one company's filing to a different company.
 9. Every factual claim must cite one or more evidence IDs.
 10. Set "coverage" to "full" if the evidence answers the question, "partial" if it answers only part of it, or "none" if it does not answer it at all (then cite nothing).
-11. Return ONLY valid JSON with keys: "answer", "coverage", "confidence", "evidence_ids", "reasoning_summary".
+11. Keep "reasoning_summary" to one short sentence.
+12. Return ONLY valid JSON with keys: "answer", "coverage", "confidence", "evidence_ids", "reasoning_summary".
 """
 
 _NEGATIVE = re.compile(
@@ -339,9 +340,13 @@ class AnswerGenerator:
                     format="json",
                     options={
                         "temperature": self.temperature,
-                        "num_predict": 2048,
+                        # Assist answers are a few sentences; a tighter cap bounds worst-case latency
+                        # (truncated JSON is salvaged). Benchmark mode keeps its original limit.
+                        "num_predict": 600 if assist else 2048,
                     },
                     think=False,
+                    # Keep the model in memory between questions (latency only; answers are unchanged).
+                    keep_alive="30m",
                 )
                 raw_response = chat_res.message.content
         except Exception as exc:
@@ -373,6 +378,7 @@ class AnswerGenerator:
                     format="json",
                     options={"temperature": self.temperature, "num_predict": 2048},
                     think=False,
+                    keep_alive="30m",
                 )
                 raw_response = retry.message.content
             except Exception:

@@ -34,13 +34,17 @@ export function prefersReducedMotion(): boolean {
 /* ---------------------------------------------------------------- scroll bus */
 
 type Sub = () => void;
-const subs = new Set<Sub>();
+const readSubs = new Set<Sub>();
+const writeSubs = new Set<Sub>();
+const legacySubs = new Set<Sub>();
 let ticking = false;
 let bound = false;
 
 function flush() {
   ticking = false;
-  subs.forEach((fn) => fn());
+  readSubs.forEach((fn) => fn());
+  writeSubs.forEach((fn) => fn());
+  legacySubs.forEach((fn) => fn());
 }
 function schedule() {
   if (!ticking) {
@@ -49,17 +53,40 @@ function schedule() {
   }
 }
 
-/** Run `fn` once per animation frame in which the page scrolled or resized. */
-export function subscribeScroll(fn: Sub): () => void {
-  subs.add(fn);
+function bindWindow() {
   if (!bound && typeof window !== "undefined") {
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule, { passive: true });
     bound = true;
   }
+}
+
+/** Run `fn` once per animation frame in which the page scrolled or resized. */
+export function subscribeScroll(fn: Sub): () => void {
+  legacySubs.add(fn);
+  bindWindow();
   requestAnimationFrame(fn);
   return () => {
-    subs.delete(fn);
+    legacySubs.delete(fn);
+  };
+}
+
+/**
+ * Two-phase Read -> Write scroll subscription.
+ * All DOM measurements run first across all subscribers before any DOM styles
+ * are written, preventing forced synchronous layout (thrashing).
+ */
+export function subscribeScrollPhased(read: Sub, write: Sub): () => void {
+  readSubs.add(read);
+  writeSubs.add(write);
+  bindWindow();
+  requestAnimationFrame(() => {
+    read();
+    write();
+  });
+  return () => {
+    readSubs.delete(read);
+    writeSubs.delete(write);
   };
 }
 
@@ -70,7 +97,7 @@ export const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 export const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 /**
- * Scroll progress of an element.
+ * Scroll progress of an element with smooth frame-rate-independent damping.
  *  - "sticky": 0 when the element's top reaches the viewport top, 1 when its bottom reaches the viewport bottom
  *    (use on a tall wrapper around a position:sticky stage).
  *  - "through": 0 when the top enters the viewport bottom, 1 when the bottom leaves the top.
@@ -92,20 +119,62 @@ export function useScrollProgress<T extends HTMLElement>(
       cb.current(1);
       return;
     }
-    let last = -1;
-    return subscribeScroll(() => {
-      const r = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      if (r.bottom < -vh || r.top > vh * 2) return; // far away — skip work
-      const p =
-        mode === "sticky"
-          ? clamp(-r.top / Math.max(1, r.height - vh))
-          : clamp((vh - r.top) / Math.max(1, vh + r.height));
-      if (Math.abs(p - last) < 0.0005) return;
-      last = p;
+
+    let target = -1;
+    let current = -1;
+    let animRaf = 0;
+    let lastTime = 0;
+
+    const applyValue = (p: number) => {
       el.style.setProperty("--p", p.toFixed(4));
       cb.current(p);
-    });
+    };
+
+    const step = (now: number) => {
+      animRaf = 0;
+      const dt = Math.min(0.05, Math.max(0.001, (now - lastTime) / 1000));
+      lastTime = now;
+      const diff = target - current;
+      if (Math.abs(diff) < 0.00025) {
+        current = target;
+        applyValue(current);
+        return;
+      }
+      // Exponential critically damped smoothing (~160ms settle, zero overshoot)
+      current += diff * (1 - Math.exp(-18 * dt));
+      applyValue(current);
+      animRaf = requestAnimationFrame(step);
+    };
+
+    const unsub = subscribeScrollPhased(
+      () => {
+        const r = el.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (r.bottom < -vh || r.top > vh * 2) return;
+        const p =
+          mode === "sticky"
+            ? clamp(-r.top / Math.max(1, r.height - vh))
+            : clamp((vh - r.top) / Math.max(1, vh + r.height));
+        target = p;
+      },
+      () => {
+        if (target < 0) return;
+        if (current < 0) {
+          current = target;
+          applyValue(current);
+          return;
+        }
+        if (Math.abs(target - current) >= 0.00025 && !animRaf) {
+          lastTime = performance.now();
+          animRaf = requestAnimationFrame(step);
+        }
+      }
+    );
+
+    return () => {
+      unsub();
+      if (animRaf) cancelAnimationFrame(animRaf);
+    };
   }, [mode, disabled]);
   return ref;
 }
@@ -120,21 +189,59 @@ export function useParallax(rootRef: React.RefObject<HTMLElement>) {
     if (!root) return;
     const mqSmall = window.matchMedia("(max-width: 767px)");
     const els = Array.from(root.querySelectorAll<HTMLElement>("[data-speed]"));
-    const items = els.map((el) => ({ el, speed: parseFloat(el.dataset.speed || "0"), host: el.closest("section") || root }));
-    const off = () => items.forEach(({ el }) => (el.style.transform = ""));
-    const unsub = subscribeScroll(() => {
-      if (mqSmall.matches || prefersReducedMotion()) return off();
-      const vh = window.innerHeight;
+    const items = els.map((el) => ({
+      el,
+      speed: parseFloat(el.dataset.speed || "0"),
+      host: el.closest("section") || root,
+      nextY: 0,
+      visible: false,
+      lastStr: "",
+    }));
+    let isOff = false;
+    const clearAll = () => {
       for (const it of items) {
-        const r = it.host.getBoundingClientRect();
-        if (r.bottom < -200 || r.top > vh + 200) continue;
-        const d = r.top + r.height / 2 - vh / 2;
-        it.el.style.transform = `translate3d(0, ${(-d * it.speed).toFixed(1)}px, 0)`;
+        if (it.lastStr !== "") {
+          it.el.style.transform = "";
+          it.lastStr = "";
+        }
       }
-    });
+    };
+    const unsub = subscribeScrollPhased(
+      () => {
+        isOff = mqSmall.matches || prefersReducedMotion();
+        if (isOff) return;
+        const vh = window.innerHeight;
+        for (const it of items) {
+          if (it.speed === 0) {
+            it.visible = false;
+            continue;
+          }
+          const r = it.host.getBoundingClientRect();
+          it.visible = !(r.bottom < -200 || r.top > vh + 200);
+          if (it.visible) {
+            const d = r.top + r.height / 2 - vh / 2;
+            it.nextY = -d * it.speed;
+          }
+        }
+      },
+      () => {
+        if (isOff) {
+          clearAll();
+          return;
+        }
+        for (const it of items) {
+          if (!it.visible) continue;
+          const str = `translate3d(0, ${it.nextY.toFixed(1)}px, 0)`;
+          if (str !== it.lastStr) {
+            it.el.style.transform = str;
+            it.lastStr = str;
+          }
+        }
+      }
+    );
     return () => {
       unsub();
-      off();
+      clearAll();
     };
   }, [rootRef]);
 }
@@ -259,42 +366,48 @@ export function CountUp({
   className?: string;
 }) {
   const [ref, inView] = useInView<HTMLSpanElement>();
-  const [shown, setShown] = useState<number | null>(null); // null → render final value (SSR / reduced motion)
+  const numRef = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
 
+  const fmt = (v: number) =>
+    v.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + suffix;
+
   useEffect(() => {
-    if (prefersReducedMotion()) return;
-    if (!started.current) setShown(0);
+    if (prefersReducedMotion() || started.current) return;
+    if (numRef.current) numRef.current.textContent = fmt(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (!inView || started.current || prefersReducedMotion()) return;
     started.current = true;
+    const node = numRef.current;
+    if (!node) return;
     const t0 = performance.now();
     let raf = 0;
+    let lastTxt = "";
     const tick = (now: number) => {
       const t = clamp((now - t0) / duration);
       const e = t === 1 ? 1 : 1 - Math.pow(2, -10 * t); // ease-out expo
-      setShown(value * e);
+      const txt = fmt(t === 1 ? value : value * e);
+      if (txt !== lastTxt) {
+        node.textContent = txt;
+        lastTxt = txt;
+      }
       if (t < 1) raf = requestAnimationFrame(tick);
-      else setShown(null);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [inView, value, duration]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView, value, duration, decimals, suffix]);
 
-  const v = shown ?? value;
-  const text = v.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  const finalText = fmt(value);
   return (
     <span ref={ref} className={className}>
-      <span aria-hidden="true">
-        {text}
-        {suffix}
+      <span ref={numRef} aria-hidden="true">
+        {finalText}
       </span>
-      <span className="sr-only">
-        {value.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}
-        {suffix}
-      </span>
+      <span className="sr-only">{finalText}</span>
     </span>
   );
 }

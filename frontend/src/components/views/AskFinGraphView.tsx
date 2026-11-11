@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   ChevronDown,
   CircleSlash,
+  CloudDownload,
   Crosshair,
   ExternalLink,
   History,
@@ -33,7 +34,7 @@ import {
   periodPhrase,
   toReferenceTime,
 } from "@/lib/format";
-import { DemoQuestionItem, EvidenceItem, FilingItem, QueryMode, QueryResponse } from "@/lib/types";
+import { DemoQuestionItem, EvidenceItem, FilingItem, LiveCompany, LiveFetchResponse, QueryMode, QueryResponse } from "@/lib/types";
 import {
   Badge,
   Button,
@@ -683,6 +684,135 @@ function contextSuggestions(name: string): string[] {
   ];
 }
 
+
+/* ------------------------------------------------------------------ */
+/* Live SEC fetch: when the indexed filings fall short, pull the company's latest filings from EDGAR. */
+
+const attemptedFetches = new Set<string>();
+
+function needsMoreEvidence(r: QueryResponse): boolean {
+  if (r.mode !== "assist") return false;
+  const coverage = (r.validation_status as Record<string, unknown> | undefined)?.coverage;
+  return r.decision === "refuse" || r.insufficient_evidence || coverage === "partial";
+}
+
+function LiveFetchPanel({
+  run,
+  autoFetch,
+  onAutoFetchChange,
+  onRerun,
+}: {
+  run: Run & { result: QueryResponse };
+  autoFetch: boolean;
+  onAutoFetchChange: (v: boolean) => void;
+  onRerun: () => void;
+}) {
+  type Phase = "resolving" | "none" | "offer" | "fetching" | "added" | "nothing-new" | "error";
+  const [phase, setPhase] = useState<Phase>("resolving");
+  const [company, setCompany] = useState<LiveCompany | null>(null);
+  const [result, setResult] = useState<LiveFetchResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const ctrl = useRef<AbortController | null>(null);
+
+  const doFetch = async (c: LiveCompany) => {
+    attemptedFetches.add(`${c.ticker}|${run.query}`);
+    ctrl.current?.abort();
+    const ac = new AbortController();
+    ctrl.current = ac;
+    setPhase("fetching");
+    try {
+      const res = await api.fetchLiveFilings({ ticker: c.ticker }, ac.signal);
+      setResult(res);
+      if (res.added.length > 0) {
+        setPhase("added");
+        onRerun();
+      } else {
+        setPhase("nothing-new");
+      }
+    } catch (e) {
+      if (isAbortError(e)) return;
+      setError(e instanceof ApiError ? e.message : String(e));
+      setPhase("error");
+    }
+  };
+
+  useEffect(() => {
+    const ac = new AbortController();
+    setPhase("resolving");
+    setResult(null);
+    setError(null);
+    api
+      .resolveLiveCompany(run.query, ac.signal)
+      .then(({ company: c }) => {
+        if (!c) return setPhase("none");
+        setCompany(c);
+        const key = `${c.ticker}|${run.query}`;
+        if (autoFetch && !attemptedFetches.has(key)) doFetch(c);
+        else setPhase(attemptedFetches.has(key) ? "nothing-new" : "offer");
+      })
+      .catch((e) => !isAbortError(e) && setPhase("none"));
+    return () => {
+      ac.abort();
+      ctrl.current?.abort();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [run.id]);
+
+  if (phase === "resolving" || phase === "none" || !company) return null;
+  const name = company.name.replace(/\b(INC|CORP|CORPORATION|CO|LTD|PLC)\b\.?/gi, (m) => m.charAt(0) + m.slice(1).toLowerCase());
+
+  return (
+    <div className="card p-5 mb-4 border-accent/30 relative overflow-hidden" role="status" aria-live="polite">
+      <span aria-hidden className="absolute -right-16 -top-16 w-48 h-48 rounded-full bg-accent-strong/15 blur-3xl" />
+      <div className="relative flex flex-wrap items-start gap-4">
+        <span className="w-10 h-10 rounded-full bg-accent-strong/15 text-accent flex items-center justify-center shrink-0">
+          {phase === "fetching" ? <Spinner className="w-4 h-4" /> : <CloudDownload className="w-4 h-4" />}
+        </span>
+        <div className="flex-1 min-w-[220px]">
+          <div className="text-md font-medium text-fg">
+            {phase === "fetching"
+              ? `Fetching ${name}'s latest filings from SEC EDGAR…`
+              : phase === "added"
+              ? `Added ${result?.added.length} filing${result?.added.length === 1 ? "" : "s"} for ${name}. Asking again…`
+              : phase === "nothing-new"
+              ? `${name}'s latest filings are already indexed`
+              : phase === "error"
+              ? "Could not fetch filings from SEC EDGAR"
+              : company.in_research_corpus
+              ? `Check SEC EDGAR for newer ${name} filings?`
+              : `${name} (${company.ticker}) isn't in the indexed filings`}
+          </div>
+          <p className="text-sm text-fg-2 mt-1 leading-relaxed">
+            {phase === "fetching"
+              ? "Downloading the latest 10-K, two 10-Qs and two 8-Ks, then splitting and indexing them. This usually takes 15–40 seconds."
+              : phase === "added"
+              ? (result?.added ?? []).map((f) => `${f.form} ${f.filing_date ?? ""}`.trim()).join(" · ")
+              : phase === "nothing-new"
+              ? "There was nothing newer to add, so this answer reflects everything FinGraph has for this company."
+              : phase === "error"
+              ? error
+              : "FinGraph can download the company's latest 10-K, 10-Q and 8-K filings from SEC EDGAR and answer again from them. Fetched filings are kept separate from the research corpus and are not used in Benchmark mode."}
+          </p>
+          <label className="mt-3 inline-flex items-center gap-2 text-xs text-fg-3 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              className="accent-[rgb(var(--accent-strong))]"
+              checked={autoFetch}
+              onChange={(e) => onAutoFetchChange(e.target.checked)}
+            />
+            Fetch automatically when the indexed filings fall short
+          </label>
+        </div>
+        {(phase === "offer" || phase === "error") && (
+          <Button variant="primary" icon={<CloudDownload className="w-4 h-4" />} onClick={() => doFetch(company)}>
+            {phase === "error" ? "Try again" : "Fetch from SEC"}
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function AskFinGraphView({ onNavigate }: { onNavigate: (t: NavTab) => void }) {
   const demos = useApi((s) => api.getDemoQuestions(s), []);
   const { entity } = useResearchContext();
@@ -692,6 +822,22 @@ export function AskFinGraphView({ onNavigate }: { onNavigate: (t: NavTab) => voi
   const [activeRunId, setActiveRunId] = useState<number | null>(null);
   const [running, setRunning] = useState(false);
   const [mode, setModeState] = useState<QueryMode>("assist");
+  const [autoFetch, setAutoFetchState] = useState(true);
+  useEffect(() => {
+    try {
+      if (localStorage.getItem("fingraph-auto-fetch") === "0") setAutoFetchState(false);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+  const setAutoFetch = (v: boolean) => {
+    setAutoFetchState(v);
+    try {
+      localStorage.setItem("fingraph-auto-fetch", v ? "1" : "0");
+    } catch {
+      /* ignore */
+    }
+  };
   useEffect(() => {
     try {
       const m = localStorage.getItem("fingraph-ask-mode");
@@ -752,21 +898,17 @@ export function AskFinGraphView({ onNavigate }: { onNavigate: (t: NavTab) => voi
   const activeRun = runs.find((r) => r.id === activeRunId) ?? null;
   const matchingDemo = (q: string) => demos.data?.questions.find((d) => d.question.trim() === q.trim()) ?? null;
 
-  const execute = async () => {
-    if (!canRun) return; // duplicate-submit guard
+  const runQuery = async (q: string, refDate: string, rt: string | null) => {
     const ctrl = new AbortController();
     ctrlRef.current = ctrl;
     const id = Date.now();
-    const run: Run = { id, query: trimmed, referenceDate, startedAt: id, result: null, error: null };
+    const run: Run = { id, query: q, referenceDate: refDate, startedAt: id, result: null, error: null };
     setRuns((rs) => [run, ...rs].slice(0, 12));
     setActiveRunId(id);
     setRunning(true);
     try {
       // The query is sent verbatim; mode selects the live assist settings or the benchmarked config.
-      const result = await api.submitQuery(
-        { query: trimmed, reference_time: refTime, top_k: 10, candidate_pool_size: 20, mode },
-        ctrl.signal
-      );
+      const result = await api.submitQuery({ query: q, reference_time: rt, top_k: 10, candidate_pool_size: 20, mode }, ctrl.signal);
       setRuns((rs) => rs.map((r) => (r.id === id ? { ...r, result } : r)));
     } catch (e) {
       if (isAbortError(e)) {
@@ -780,6 +922,17 @@ export function AskFinGraphView({ onNavigate }: { onNavigate: (t: NavTab) => voi
       setRunning(false);
       ctrlRef.current = null;
     }
+  };
+
+  const execute = async () => {
+    if (!canRun) return; // duplicate-submit guard
+    await runQuery(trimmed, referenceDate, refTime);
+  };
+
+  /** Re-ask a previous question (after new filings were fetched). */
+  const rerun = (r: Run) => {
+    if (running) return;
+    runQuery(r.query, r.referenceDate, r.referenceDate ? toReferenceTime(r.referenceDate) : null);
   };
 
   const cancel = () => ctrlRef.current?.abort();
@@ -916,7 +1069,18 @@ export function AskFinGraphView({ onNavigate }: { onNavigate: (t: NavTab) => voi
         {/* Body */}
         <div className="mt-6">
           {activeRun?.result ? (
-            <Result run={activeRun as Run & { result: QueryResponse }} demo={matchingDemo(activeRun.query)} onOpenFiling={openFiling} />
+            <>
+              {needsMoreEvidence(activeRun.result) && (
+                <LiveFetchPanel
+                  key={activeRun.id}
+                  run={activeRun as Run & { result: QueryResponse }}
+                  autoFetch={autoFetch}
+                  onAutoFetchChange={setAutoFetch}
+                  onRerun={() => rerun(activeRun)}
+                />
+              )}
+              <Result run={activeRun as Run & { result: QueryResponse }} demo={matchingDemo(activeRun.query)} onOpenFiling={openFiling} />
+            </>
           ) : activeRun?.error ? (
             <ErrorState
               title={activeRun.error.isNetwork ? "Backend unreachable" : `Query failed (HTTP ${activeRun.error.status})`}

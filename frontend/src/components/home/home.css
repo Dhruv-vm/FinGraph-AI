@@ -36,12 +36,12 @@ html:has(.fgh) {
   font-size: 15px;
   line-height: 1.5;
   overflow-x: clip;
-  transition: opacity 360ms ease, transform 360ms var(--ease), filter 360ms ease;
+  transition: opacity 150ms ease, transform 150ms var(--ease);
 }
 .fgh[data-leaving] {
   opacity: 0;
-  transform: scale(0.985);
-  filter: blur(4px);
+  transform: scale3d(0.992, 0.992, 1);
+  pointer-events: none;
 }
 .fgh ::selection {
   background: rgba(61, 123, 255, 0.35);
@@ -290,7 +290,8 @@ html:has(.fgh) {
   z-index: 50;
   top: 12px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate3d(-50%, 0, 0);
+  will-change: transform;
   width: calc(100% - 24px);
   max-width: 1000px;
   border-radius: 28px;
@@ -342,6 +343,7 @@ html:has(.fgh) {
   height: 100%;
   transform-origin: left;
   transform: scaleX(0);
+  will-change: transform;
   background: linear-gradient(90deg, transparent, var(--h-blue), var(--h-cyan));
 }
 
@@ -731,6 +733,7 @@ html:has(.fgh) {
 .fgh-marquee-track {
   display: flex;
   width: max-content;
+  will-change: transform;
   animation: fgh-marquee 60s linear infinite;
 }
 .fgh-marquee:hover .fgh-marquee-track {
@@ -965,7 +968,7 @@ html:has(.fgh) {
   to { opacity: 1; transform: scale(1); }
 }
 @keyframes fgh-marquee {
-  to { transform: translateX(-50%); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
 @keyframes fgh-pulse {
   0%, 100% { box-shadow: 0 0 0 3px rgba(94, 200, 222, 0.15); }

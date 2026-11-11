@@ -9,9 +9,16 @@ import { NAV_TABS, PAGE_META } from "@/lib/navigation";
 import { HeroGraph } from "./HeroGraph";
 import { ProblemSection } from "./ProblemSection";
 import { MethodSection, PipelineSection } from "./StorySections";
-import { GraphShowcase } from "./GraphShowcase";
-import { HOME_FILINGS, HOME_SHOWCASE, HOME_TICKERS } from "./homeData";
-import { CountUp, Reveal, SplitText, prefersReducedMotion, subscribeScroll, useParallax, useReducedMotion } from "./motion";
+import dynamic from "next/dynamic";
+import { HOME_FILINGS, HOME_NAMES, HOME_TICKERS } from "./homeData";
+
+// The interactive graph (and its ~80 KB of real edge data) loads in its own chunk, after the hero.
+const GraphShowcase = dynamic(() => import("./GraphShowcase").then((m) => m.GraphShowcase), {
+  loading: () => <section id="graph" aria-label="Knowledge graph" className="min-h-[900px]" />,
+});
+import { CountUp, Reveal, SplitText, prefersReducedMotion, subscribeScrollPhased, useParallax, useReducedMotion } from "./motion";
+import { api } from "@/lib/api";
+import { loadCorpus } from "@/lib/corpus";
 
 const WORKSPACE = "/workspace";
 
@@ -29,54 +36,136 @@ const FILING_RANGE = `${fmtMonth(HOME_FILINGS[0].d)} – ${fmtMonth(HOME_FILINGS
 
 /* ---------------------------------------------------------------- navigation into the workspace */
 
+let _workspaceWarmed = false;
+let _workspaceDataWarmed = false;
+
+function warmWorkspaceRoute(router: ReturnType<typeof useRouter>) {
+  if (_workspaceWarmed) return;
+  _workspaceWarmed = true;
+  router.prefetch(WORKSPACE);
+  // In next dev, router.prefetch does not compile the target route; a low-priority
+  // document fetch forces compilation in the background while the user reads "/".
+  fetch(WORKSPACE, { credentials: "same-origin", priority: "low" } as RequestInit).catch(() => {});
+}
+
+function warmWorkspaceData() {
+  if (_workspaceDataWarmed) return;
+  _workspaceDataWarmed = true;
+  loadCorpus().catch(() => {});
+  api.getBenchmarkSummary().catch(() => {});
+  api.getDemoQuestions().catch(() => {});
+  api.getCompanies().catch(() => {});
+  api.getParametricLeakage().catch(() => {});
+}
+
 function useEnterWorkspace(rootRef: React.RefObject<HTMLElement>) {
   const router = useRouter();
   useEffect(() => {
-    router.prefetch(WORKSPACE);
+    const run = () => warmWorkspaceRoute(router);
+    const hasIdle = typeof window.requestIdleCallback === "function";
+    const id = hasIdle ? window.requestIdleCallback(run, { timeout: 1200 }) : window.setTimeout(run, 650);
+    return () => {
+      if (hasIdle && typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(id);
+      else window.clearTimeout(id);
+    };
   }, [router]);
-  return useCallback(
+
+  const warm = useCallback(() => {
+    warmWorkspaceRoute(router);
+    warmWorkspaceData();
+  }, [router]);
+
+  const enter = useCallback(
     (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
+      warm();
       if (prefersReducedMotion()) {
         router.push(href);
         return;
       }
       rootRef.current?.setAttribute("data-leaving", "");
-      window.setTimeout(() => router.push(href), 360);
+      window.setTimeout(() => router.push(href), 140);
     },
-    [router, rootRef]
+    [router, rootRef, warm]
   );
+
+  return { enter, warm };
 }
 
 function Logo({ className }: { className?: string }) {
-  return <Image src="/brand/fingraph-logo-dark.png" alt="FinGraph AI" width={108} height={36} priority className={className ?? "h-8 w-auto"} />;
+  return <Image src="/brand/web/fingraph-logo-dark.png" alt="FinGraph AI" width={674} height={216} priority sizes="120px" className={className ?? "h-8 w-auto"} />;
 }
 
 /* ---------------------------------------------------------------- nav */
 
-function SiteNav({ enter }: { enter: (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => void }) {
+function SiteNav({
+  enter,
+  warm,
+}: {
+  enter: (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => void;
+  warm: () => void;
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
+  const lastScrolled = useRef(false);
+  const lastActive = useRef<string | null>(null);
 
-  useEffect(
-    () =>
-      subscribeScroll(() => {
-        const y = window.scrollY;
-        setScrolled(y > 24);
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        if (barRef.current) barRef.current.style.transform = `scaleX(${max > 0 ? (y / max).toFixed(4) : 0})`;
+  useEffect(() => {
+    let maxScroll = 1;
+    let vh = window.innerHeight;
+    let sectionTops: { id: string; top: number }[] = [];
+
+    const measure = () => {
+      vh = window.innerHeight;
+      maxScroll = Math.max(1, document.documentElement.scrollHeight - vh);
+      sectionTops = SECTIONS.map((s) => {
+        const el = document.getElementById(s.id);
+        return { id: s.id, top: el ? el.getBoundingClientRect().top + window.scrollY : Infinity };
+      });
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.documentElement);
+
+    let scrollY = 0;
+    let nextScale = 0;
+    let nextScrolled = false;
+    let nextActive: string | null = null;
+
+    const unsub = subscribeScrollPhased(
+      () => {
+        scrollY = window.scrollY;
+        nextScrolled = scrollY > 24;
+        nextScale = Math.min(1, Math.max(0, scrollY / maxScroll));
+        const threshold = scrollY + vh * 0.45;
         let current: string | null = null;
-        for (const s of SECTIONS) {
-          const el = document.getElementById(s.id);
-          if (el && el.getBoundingClientRect().top < window.innerHeight * 0.45) current = s.id;
+        for (const s of sectionTops) {
+          if (s.top < threshold) current = s.id;
         }
-        setActive(current);
-      }),
-    []
-  );
+        nextActive = current;
+      },
+      () => {
+        if (barRef.current) barRef.current.style.transform = `scaleX(${nextScale.toFixed(4)})`;
+        if (nextScrolled !== lastScrolled.current) {
+          lastScrolled.current = nextScrolled;
+          setScrolled(nextScrolled);
+        }
+        if (nextActive !== lastActive.current) {
+          lastActive.current = nextActive;
+          setActive(nextActive);
+        }
+      }
+    );
+
+    return () => {
+      ro.disconnect();
+      unsub();
+    };
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -89,7 +178,7 @@ function SiteNav({ enter }: { enter: (href: string) => (e: React.MouseEvent<HTML
     <header className="fgh-nav" data-scrolled={scrolled || open ? "" : undefined} data-open={open ? "" : undefined}>
       <div className="flex items-center h-14 pl-4 pr-2 gap-2">
         <a href="#top" className="shrink-0 rounded-md" aria-label="FinGraph AI — back to top">
-          <Logo className="h-[30px] w-auto" />
+          <Logo className="h-[26px] w-auto" />
         </a>
         <nav aria-label="Homepage sections" className="hidden lg:flex items-center gap-0.5 mx-auto">
           {SECTIONS.map((s) => (
@@ -99,7 +188,7 @@ function SiteNav({ enter }: { enter: (href: string) => (e: React.MouseEvent<HTML
           ))}
         </nav>
         <div className="ml-auto lg:ml-0 flex items-center gap-1.5">
-          <a href={`${WORKSPACE}#/overview`} onClick={enter(`${WORKSPACE}#/overview`)} className="fgh-btn fgh-btn--sm">
+          <a href={`${WORKSPACE}#/overview`} onClick={enter(`${WORKSPACE}#/overview`)} onMouseEnter={warm} onFocus={warm} className="fgh-btn fgh-btn--sm">
             <span className="hidden sm:inline">Enter Workspace</span>
             <span className="sm:hidden">Workspace</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -134,19 +223,34 @@ function SiteNav({ enter }: { enter: (href: string) => (e: React.MouseEvent<HTML
 
 /* ---------------------------------------------------------------- hero */
 
-function Hero({ reduced, enter }: { reduced: boolean; enter: (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => void }) {
+function Hero({
+  reduced,
+  enter,
+  warm,
+}: {
+  reduced: boolean;
+  enter: (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => void;
+  warm: () => void;
+}) {
   const contentRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (reduced) return;
-    return subscribeScroll(() => {
-      const el = contentRef.current;
-      if (!el) return;
-      const y = window.scrollY;
-      const vh = window.innerHeight;
-      if (y > vh * 1.2) return;
-      el.style.transform = `translate3d(0, ${(-y * 0.18).toFixed(1)}px, 0)`;
-      el.style.opacity = Math.max(0, 1 - y / (vh * 0.75)).toFixed(3);
-    });
+    let y = 0;
+    let vh = window.innerHeight;
+    let visible = true;
+    return subscribeScrollPhased(
+      () => {
+        y = window.scrollY;
+        vh = window.innerHeight;
+        visible = y <= vh * 1.2;
+      },
+      () => {
+        const el = contentRef.current;
+        if (!el || !visible) return;
+        el.style.transform = `translate3d(0, ${(-y * 0.18).toFixed(1)}px, 0)`;
+        el.style.opacity = Math.max(0, 1 - y / (vh * 0.75)).toFixed(3);
+      }
+    );
   }, [reduced]);
 
   return (
@@ -172,7 +276,7 @@ function Hero({ reduced, enter }: { reduced: boolean; enter: (href: string) => (
             <span>Temporal Knowledge Graphs.</span> <span>Hybrid GraphRAG.</span> <span>Evidence-Grounded Intelligence.</span>
           </Reveal>
           <Reveal delay={600} className="flex flex-wrap gap-3 mt-10">
-            <a href={`${WORKSPACE}#/overview`} onClick={enter(`${WORKSPACE}#/overview`)} className="fgh-btn">
+            <a href={`${WORKSPACE}#/overview`} onClick={enter(`${WORKSPACE}#/overview`)} onMouseEnter={warm} onFocus={warm} className="fgh-btn">
               Explore FinGraph <ArrowRight className="w-4 h-4" />
             </a>
             <a href="#pipeline" className="fgh-btn fgh-btn--ghost">
@@ -209,7 +313,7 @@ const STATS = [
 ];
 
 function DataSection() {
-  const names = HOME_TICKERS.map((t) => ({ t, n: HOME_SHOWCASE[t]?.name ?? t }));
+  const names = HOME_TICKERS.map((t) => ({ t, n: HOME_NAMES[t] ?? t }));
   return (
     <section id="data" aria-labelledby="data-title" className="relative py-28 lg:py-40 border-y border-[color:var(--h-line)] fgh-data-bg">
       <div className="fgh-container">
@@ -402,7 +506,13 @@ function ResultsSection({ enter }: { enter: (href: string) => (e: React.MouseEve
 
 /* ---------------------------------------------------------------- final CTA + footer */
 
-function FinalCTA({ enter }: { enter: (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => void }) {
+function FinalCTA({
+  enter,
+  warm,
+}: {
+  enter: (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => void;
+  warm: () => void;
+}) {
   return (
     <section aria-labelledby="cta-title" className="relative py-32 lg:py-48 overflow-hidden">
       <div className="fgh-cta-rings" data-speed="0.08" aria-hidden="true">
@@ -434,7 +544,7 @@ function FinalCTA({ enter }: { enter: (href: string) => (e: React.MouseEvent<HTM
           Ask point-in-time questions, walk the knowledge graph, inspect the evidence and review the benchmarks — in the FinGraph workspace.
         </Reveal>
         <Reveal delay={320} className="mt-10 flex justify-center">
-          <a href={`${WORKSPACE}#/overview`} onClick={enter(`${WORKSPACE}#/overview`)} className="fgh-btn fgh-btn--lg">
+          <a href={`${WORKSPACE}#/overview`} onClick={enter(`${WORKSPACE}#/overview`)} onMouseEnter={warm} onFocus={warm} className="fgh-btn fgh-btn--lg">
             Enter FinGraph Workspace <ArrowRight className="w-4 h-4" />
           </a>
         </Reveal>
@@ -448,7 +558,7 @@ function Footer({ enter }: { enter: (href: string) => (e: React.MouseEvent<HTMLA
     <footer className="border-t border-[color:var(--h-line)]">
       <div className="fgh-container py-14 grid md:grid-cols-12 gap-10">
         <div className="md:col-span-5">
-          <Logo className="h-9 w-auto" />
+          <Logo className="h-8 w-auto" />
           <p className="text-[13px] leading-relaxed text-[color:var(--h-fg-3)] mt-4 max-w-[44ch]">
             A research prototype for temporal knowledge graphs and hybrid GraphRAG over SEC filings. Benchmark figures on this page are historical Phase 7 results.
           </p>
@@ -475,7 +585,7 @@ function Footer({ enter }: { enter: (href: string) => (e: React.MouseEvent<HTMLA
 export function HomePage() {
   const rootRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
-  const enter = useEnterWorkspace(rootRef);
+  const { enter, warm } = useEnterWorkspace(rootRef);
   useParallax(rootRef);
 
   // Old links pointed at the dashboard on "/" (e.g. /#/graph). Send them to the workspace.
@@ -496,16 +606,16 @@ export function HomePage() {
       <a href="#problem" className="fgh-skip">
         Skip to content
       </a>
-      <SiteNav enter={enter} />
+      <SiteNav enter={enter} warm={warm} />
       <main>
-        <Hero reduced={reduced} enter={enter} />
+        <Hero reduced={reduced} enter={enter} warm={warm} />
         <ProblemSection reduced={reduced} />
         <MethodSection />
         <PipelineSection reduced={reduced} />
         <DataSection />
         <GraphShowcase />
         <ResultsSection enter={enter} />
-        <FinalCTA enter={enter} />
+        <FinalCTA enter={enter} warm={warm} />
       </main>
       <Footer enter={enter} />
     </div>

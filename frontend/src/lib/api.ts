@@ -25,6 +25,42 @@ import {
 
 const BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000").replace(/\/$/, "");
 
+// Short-lived in-memory cache for read-only reference endpoints so hovering or
+// entering the workspace opens Overview without waiting on duplicate fetches.
+// Failures are never cached.
+const _refCache = new Map<string, { at: number; promise: Promise<unknown> }>();
+const REF_TTL_MS = 60_000;
+
+function fetchCachedRef<T>(key: string, fetcher: () => Promise<T>, signal?: AbortSignal): Promise<T> {
+  const now = Date.now();
+  let entry = _refCache.get(key);
+  if (!entry || now - entry.at > REF_TTL_MS) {
+    const promise = fetcher().catch((err) => {
+      if (_refCache.get(key)?.promise === promise) _refCache.delete(key);
+      throw err;
+    });
+    entry = { at: now, promise };
+    _refCache.set(key, entry);
+  }
+  const p = entry.promise as Promise<T>;
+  if (!signal) return p;
+  if (signal.aborted) return Promise.reject(new DOMException("Aborted", "AbortError"));
+  return new Promise<T>((resolve, reject) => {
+    const onAbort = () => reject(new DOMException("Aborted", "AbortError"));
+    signal.addEventListener("abort", onAbort, { once: true });
+    p.then(
+      (v) => {
+        signal.removeEventListener("abort", onAbort);
+        resolve(v);
+      },
+      (e) => {
+        signal.removeEventListener("abort", onAbort);
+        reject(e);
+      }
+    );
+  });
+}
+
 export class ApiError extends Error {
   status: number;
   data: unknown;
@@ -120,22 +156,22 @@ export const api = {
     fetchJson<LiveFetchResponse>("/api/v1/live/fetch", { method: "POST", body: JSON.stringify(req), signal }),
 
   getDemoQuestions: (signal?: AbortSignal) =>
-    fetchJson<DemoQuestionsResponse>("/api/v1/benchmark/demo-questions", { signal }),
+    fetchCachedRef("demo-questions", () => fetchJson<DemoQuestionsResponse>("/api/v1/benchmark/demo-questions"), signal),
 
   getBenchmarkSummary: (signal?: AbortSignal) =>
-    fetchJson<BenchmarkSummaryResponse>("/api/v1/benchmark/summary", { signal }),
+    fetchCachedRef("benchmark-summary", () => fetchJson<BenchmarkSummaryResponse>("/api/v1/benchmark/summary"), signal),
 
   getPerQuestion: (signal?: AbortSignal) =>
-    fetchJson<PerQuestionResponse>("/api/v1/benchmark/per-question", { signal }),
+    fetchCachedRef("per-question", () => fetchJson<PerQuestionResponse>("/api/v1/benchmark/per-question"), signal),
 
   getParametricLeakage: (signal?: AbortSignal) =>
-    fetchJson<ParametricLeakageResponse>("/api/v1/benchmark/parametric-leakage", { signal }),
+    fetchCachedRef("parametric-leakage", () => fetchJson<ParametricLeakageResponse>("/api/v1/benchmark/parametric-leakage"), signal),
 
   getCorpusFilings: (signal?: AbortSignal) =>
     fetchJson<CorpusFilingsResponse>("/api/v1/corpus/filings", { signal }),
 
   getCompanies: (signal?: AbortSignal) =>
-    fetchJson<CompanyListResponse>("/api/v1/graph/companies", { signal }),
+    fetchCachedRef("graph-companies", () => fetchJson<CompanyListResponse>("/api/v1/graph/companies"), signal),
 
   getSubgraph: (
     nodeId: string,

@@ -107,10 +107,21 @@ export function HeroGraph({ reduced }: { reduced: boolean }) {
     const { nodes, edges } = layout();
     const rand = rng(11);
     let W = 0, H = 0, dpr = 1, mode: "desktop" | "tablet" | "mobile" = "desktop";
+    let rectLeft = 0, rectTop = 0, winW = window.innerWidth, winH = window.innerHeight;
+    let cachedScrollY = window.scrollY;
     let dust: V3[] = [];
 
-    const resize = () => {
+    const updateRect = () => {
       const r = canvas.getBoundingClientRect();
+      rectLeft = r.left;
+      rectTop = r.top;
+      return r;
+    };
+
+    const resize = () => {
+      const r = updateRect();
+      winW = window.innerWidth;
+      winH = window.innerHeight;
       W = r.width;
       H = r.height;
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -130,11 +141,10 @@ export function HeroGraph({ reduced }: { reduced: boolean }) {
     let hoverX = -1e4, hoverY = -1e4;
     const onPointer = (e: PointerEvent) => {
       if (e.pointerType !== "mouse") return;
-      tx = (e.clientX / window.innerWidth - 0.5) * 2;
-      ty = (e.clientY / window.innerHeight - 0.5) * 2;
-      const r = canvas.getBoundingClientRect();
-      hoverX = e.clientX - r.left;
-      hoverY = e.clientY - r.top;
+      tx = (e.clientX / winW - 0.5) * 2;
+      ty = (e.clientY / winH - 0.5) * 2;
+      hoverX = e.clientX - rectLeft;
+      hoverY = e.clientY - rectTop;
     };
     window.addEventListener("pointermove", onPointer, { passive: true });
 
@@ -145,6 +155,8 @@ export function HeroGraph({ reduced }: { reduced: boolean }) {
     let running = false;
     let last = performance.now();
     const proj = new Float32Array(nodes.length * 3);
+    const tmp = new Float32Array(3);
+    const order = nodes.map((_, i) => i);
 
     const draw = (now: number) => {
       const dt = Math.min(64, now - last);
@@ -153,9 +165,9 @@ export function HeroGraph({ reduced }: { reduced: boolean }) {
       px += (tx - px) * 0.04;
       py += (ty - py) * 0.04;
 
-      const scrollP = Math.min(1, window.scrollY / Math.max(1, H));
+      const scrollP = Math.min(1, cachedScrollY / Math.max(1, H));
       const cx = mode === "desktop" ? W * 0.67 : W * 0.5;
-      const cy = (mode === "desktop" ? H * 0.5 : H * 0.6) + window.scrollY * 0.35;
+      const cy = (mode === "desktop" ? H * 0.5 : H * 0.6) + cachedScrollY * 0.35;
       const R = (mode === "desktop" ? Math.min(W * 0.33, H * 0.46) : mode === "tablet" ? Math.min(W * 0.46, H * 0.36) : W * 0.6) * (1 + scrollP * 0.18);
       const baseAlpha = (mode === "desktop" ? 1 : mode === "tablet" ? 0.7 : 0.55) * (1 - scrollP * 0.75);
 
@@ -179,7 +191,6 @@ export function HeroGraph({ reduced }: { reduced: boolean }) {
       };
 
       // dust (depth layer, no edges)
-      const tmp = new Float32Array(3);
       for (const d of dust) {
         project(d, tmp, 0);
         const depth = (tmp[2] + 2.3) / 4.6;
@@ -229,8 +240,8 @@ export function HeroGraph({ reduced }: { reduced: boolean }) {
         }
       }
 
-      // nodes (painter's order)
-      const order = nodes.map((_, i) => i).sort((a, b) => proj[a * 3 + 2] - proj[b * 3 + 2]);
+      // nodes (painter's order, reuse pre-allocated index array)
+      order.sort((a, b) => proj[a * 3 + 2] - proj[b * 3 + 2]);
       let hovered = -1;
       let best = 26 * 26;
       for (const i of order) {
@@ -301,8 +312,11 @@ export function HeroGraph({ reduced }: { reduced: boolean }) {
       if (!running) draw(performance.now());
     });
     ro.observe(canvas);
-    // Reduced motion: still redraw on scroll so the static frame stays positioned.
-    const onScroll = () => !running && draw(performance.now());
+    // Keep cachedScrollY fresh without calling getBoundingClientRect() in draw.
+    const onScroll = () => {
+      cachedScrollY = window.scrollY;
+      if (!running) draw(performance.now());
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     draw(performance.now());
 

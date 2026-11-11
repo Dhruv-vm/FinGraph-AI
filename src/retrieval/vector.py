@@ -124,6 +124,8 @@ class VectorStore:
 
             total += len(points)
 
+        self.__dict__.pop("_corpus_count", None)
+        self.__dict__.pop("_period_cache", None)
         return total
 
     def search(
@@ -227,13 +229,24 @@ class VectorStore:
 
     def clear_period_cache(self) -> None:
         self.__dict__.pop("_period_cache", None)
+        self.__dict__.pop("_corpus_count", None)
 
     def count(self) -> int:
         """Return the number of indexed chunks."""
         if not self.client.collection_exists(self.collection_name):
             return 0
 
-        return self.client.count(
+        # Count the controlled research corpus only; filings fetched on demand ("live")
+        # are excluded so reported corpus statistics stay accurate. Cached: the health
+        # check polls this, and the corpus only changes through upserts.
+        cached = self.__dict__.get("_corpus_count")
+        if cached is not None:
+            return cached
+        self._corpus_count = self.client.count(
             collection_name=self.collection_name,
+            count_filter=models.Filter(
+                must_not=[models.FieldCondition(key="corpus", match=models.MatchValue(value="live"))]
+            ),
             exact=True,
         ).count
+        return self._corpus_count

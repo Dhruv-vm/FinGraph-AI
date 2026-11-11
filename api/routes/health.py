@@ -86,12 +86,21 @@ async def get_health(
             col_info = pipeline.vector_store.client.get_collection(
                 pipeline.vector_store.collection_name
             )
+            total_points = getattr(col_info, "points_count", 0)
+            try:
+                corpus_points = pipeline.vector_store.count()
+            except Exception:
+                corpus_points = None
+            if not isinstance(corpus_points, int):
+                corpus_points = total_points
             qdrant_health = ComponentHealth(
                 status="healthy",
                 message="Qdrant vector collection accessible",
                 details={
                     "collection": pipeline.vector_store.collection_name,
-                    "points_count": getattr(col_info, "points_count", 0),
+                    # Research-corpus passages only (filings fetched on demand are excluded).
+                    "points_count": corpus_points,
+                    "total_points_including_live": total_points,
                     "vector_size": pipeline.vector_store.vector_size,
                     "storage_path": str(pipeline.vector_path),
                 },

@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 import sys
+import logging
 import time
 from datetime import datetime
 from pathlib import Path
@@ -116,6 +117,7 @@ class FinGraphPipeline:
         Execute full FinGraph AI pipeline: query analysis, hybrid retrieval, agentic loop,
         evidence packaging, and structured answer generation.
         """
+        t_start = time.perf_counter()
         ref_str = reference_time.isoformat() if isinstance(reference_time, datetime) else reference_time
         assist = mode == "assist"
         # Assist mode (live app only): a relationship may be evidenced by filing text, not only by a
@@ -153,7 +155,13 @@ class FinGraphPipeline:
             self.hybrid_retriever.extra_scoped_tickers = []
             if self.vector_store is not None:
                 self.vector_store.include_live = False
+        t_gen = time.perf_counter()
         answer = self.generator.generate(package, max_evidence_items=max_evidence_items, assist=assist)
+        t_done = time.perf_counter()
+        logging.getLogger("fingraph.pipeline").info(
+            "Timing (%s): retrieval %.1fs over %d round(s), generation %.1fs",
+            mode, t_gen - t_start, package.retrieval_rounds, t_done - t_gen,
+        )
         return package, answer
 
 

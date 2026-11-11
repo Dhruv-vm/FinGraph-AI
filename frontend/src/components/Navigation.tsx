@@ -31,16 +31,17 @@ export const ICONS: Record<NavTab, React.ComponentType<{ className?: string }>> 
 /** Official logo, rendered at fixed height with intrinsic 3:1 aspect ratio. */
 export function BrandLogo({ collapsed }: { collapsed?: boolean }) {
   const { theme } = useTheme();
-  const src = theme === "dark" ? "/brand/fingraph-logo-dark.png" : "/brand/fingraph-logo-light.png";
+  // Web-sized, trimmed copies of the official artwork (originals stay in /brand).
+  const src = theme === "dark" ? "/brand/web/fingraph-logo-dark.png" : "/brand/web/fingraph-logo-light.png";
   if (collapsed) {
     // Show only the mark by windowing the unmodified artwork (no redraw, no distortion).
     return (
-      <span className="block w-[26px] h-[33px] overflow-hidden relative" aria-label="FinGraph AI">
-        <Image src={src} alt="FinGraph AI" width={99} height={33} priority className="absolute -left-[6px] top-0 max-w-none h-[33px] w-[99px]" />
+      <span className="block w-[27px] h-[32px] overflow-hidden relative" aria-label="FinGraph AI">
+        <Image src={src} alt="FinGraph AI" width={674} height={216} priority sizes="100px" className="absolute left-0 top-0 max-w-none h-[32px] w-auto" />
       </span>
     );
   }
-  return <Image src={src} alt="FinGraph AI" width={108} height={36} priority className="h-9 w-[108px]" />;
+  return <Image src={src} alt="FinGraph AI" width={674} height={216} priority sizes="110px" className="h-[30px] w-auto" />;
 }
 
 export function NavList({

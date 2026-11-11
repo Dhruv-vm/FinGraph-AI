@@ -216,6 +216,8 @@ export function PipelineSection({ reduced }: { reduced: boolean }) {
   const fillRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [wide, setWide] = useState(false);
+  const travelRef = useRef(0);
+  const lastActive = useRef(0);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -227,15 +229,39 @@ export function PipelineSection({ reduced }: { reduced: boolean }) {
 
   const horizontal = wide && !reduced;
 
+  // Cache horizontal travel distance outside the scroll rAF loop to prevent forced reflows.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!horizontal || !track) {
+      travelRef.current = 0;
+      return;
+    }
+    const measure = () => {
+      travelRef.current = Math.max(0, track.scrollWidth - window.innerWidth + 96);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(track);
+    window.addEventListener("resize", measure, { passive: true });
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [horizontal]);
+
   const wrapRef = useScrollProgress<HTMLDivElement>(
     (p) => {
       const track = trackRef.current;
       if (horizontal && track) {
-        const travel = Math.max(0, track.scrollWidth - window.innerWidth + 96);
+        const travel = travelRef.current;
         const t = Math.min(1, Math.max(0, (p - 0.04) / 0.86));
         track.style.transform = `translate3d(${(-travel * t).toFixed(1)}px,0,0)`;
         if (fillRef.current) fillRef.current.style.transform = `scaleX(${t.toFixed(4)})`;
-        setActive(Math.min(PIPELINE.length - 1, Math.floor(t * PIPELINE.length * 0.999 + 0.15)));
+        const next = Math.min(PIPELINE.length - 1, Math.floor(t * PIPELINE.length * 0.999 + 0.15));
+        if (next !== lastActive.current) {
+          lastActive.current = next;
+          setActive(next);
+        }
       } else if (track) {
         track.style.transform = "";
       }

@@ -5,12 +5,46 @@ import { Header, HealthState } from "@/components/Header";
 import { BrandLogo, NavList } from "@/components/Navigation";
 import { ViewErrorBoundary } from "@/components/ErrorBoundary";
 import { Drawer, cx } from "@/components/ui";
+import dynamic from "next/dynamic";
 import { OverviewView } from "@/components/views/OverviewView";
-import { AskFinGraphView } from "@/components/views/AskFinGraphView";
-import { GraphExplorerView } from "@/components/views/GraphExplorerView";
-import { EvidenceInspectorView } from "@/components/views/EvidenceInspectorView";
-import { EvaluationLabView } from "@/components/views/EvaluationLabView";
-import { ArchitectureView } from "@/components/views/ArchitectureView";
+
+// Every other section is split into its own chunk and downloaded the first time it is opened,
+// so the Overview does not pay for the graph (React Flow) or chart (Recharts) libraries.
+function ViewLoading() {
+  return (
+    <div className="max-w-[1320px] mx-auto px-4 sm:px-8 py-8 space-y-4" aria-busy="true" aria-label="Loading section">
+      <div className="h-40 rounded-2xl bg-surface-2/70 animate-pulse" />
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className="h-28 rounded-2xl bg-surface-2/60 animate-pulse" />
+        ))}
+      </div>
+    </div>
+  );
+}
+const AskFinGraphView = dynamic(() => import("@/components/views/AskFinGraphView").then((m) => m.AskFinGraphView), { ssr: false, loading: ViewLoading });
+const GraphExplorerView = dynamic(() => import("@/components/views/GraphExplorerView").then((m) => m.GraphExplorerView), { ssr: false, loading: ViewLoading });
+const EvidenceInspectorView = dynamic(() => import("@/components/views/EvidenceInspectorView").then((m) => m.EvidenceInspectorView), { ssr: false, loading: ViewLoading });
+const EvaluationLabView = dynamic(() => import("@/components/views/EvaluationLabView").then((m) => m.EvaluationLabView), { ssr: false, loading: ViewLoading });
+const ArchitectureView = dynamic(() => import("@/components/views/ArchitectureView").then((m) => m.ArchitectureView), { ssr: false, loading: ViewLoading });
+
+/** Warm the other sections' chunks once the browser is idle, so switching tabs is instant. */
+function usePrefetchViews() {
+  useEffect(() => {
+    const load = () => {
+      import("@/components/views/AskFinGraphView");
+      import("@/components/views/EvaluationLabView");
+      import("@/components/views/ArchitectureView");
+      import("@/components/views/EvidenceInspectorView");
+      import("@/components/views/GraphExplorerView");
+    };
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+    const id = w.requestIdleCallback ? w.requestIdleCallback(load, { timeout: 1200 }) : window.setTimeout(load, 800);
+    return () => {
+      if (!w.requestIdleCallback) window.clearTimeout(id);
+    };
+  }, []);
+}
 import { api, ApiError, isAbortError } from "@/lib/api";
 import { HealthResponse } from "@/lib/types";
 import { NavTab, PAGE_META, useHashTab } from "@/lib/navigation";
@@ -61,6 +95,7 @@ function useHealth(): HealthState {
 export default function FinGraphWorkspace() {
   const [activeTab, navigate] = useHashTab();
   const health = useHealth();
+  usePrefetchViews();
   const [mobileNav, setMobileNav] = useState(false);
   // Views stay mounted after first visit so in-progress work (a running query,
   // graph position, filters) survives navigation.

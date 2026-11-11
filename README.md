@@ -161,9 +161,9 @@ Evaluated on the audited 64-question SEC regulatory benchmark (50 answerable acr
 ```text
 FinGraph-AI/
 ├── api/                             # FastAPI Backend Service
-│   ├── main.py                     # App lifespan, CORS, and health routing
+│   ├── main.py                     # App lifespan (offline HF check + LLM warm-up), GZip, CORS
 │   ├── dependencies.py             # FinGraphPipeline singleton lifecycle
-│   ├── routes/                     # REST API controllers (/query, /graph, /evidence, /benchmark)
+│   ├── routes/                     # REST API controllers (/query, /graph, /evidence, /benchmark, /live)
 │   └── schemas/                    # Pydantic v2 request/response schemas
 ├── benchmark/                       # Evaluation Datasets
 │   └── questions.json              # Canonical 64-question audited benchmark
@@ -174,10 +174,15 @@ FinGraph-AI/
 │   │       ├── fingraph_semantic_kg.json   # Multi-company KG (10,054 nodes, 9,822 edges)
 │   │       └── aapl_temporal_graph.json    # Single-company graph (1,495 nodes, 660 edges)
 │   └── vector_store/               # Embedded Qdrant local SQLite storage (8,181 points)
-├── frontend/                        # Next.js 14 Research Terminal
-│   ├── src/app/                    # App Router (Overview, Ask, Graph, Evidence, Evaluation, Architecture)
-│   ├── src/components/             # Radial Graph Explorer, Navigation, and Stat widgets
-│   └── src/lib/                    # API client, TypeScript definitions, and formatters
+├── frontend/                        # Next.js 14 Public Showcase ("/") & Research Workspace ("/workspace")
+│   ├── next.config.mjs             # Optimized package imports, compression, and /api proxy rewrite
+│   ├── src/app/                    # Routes: "/" (showcase homepage) & "/workspace" (research terminal)
+│   ├── src/components/
+│   │   ├── home/                   # Public homepage scroll narrative, 3D HeroGraph, and GraphShowcase
+│   │   ├── views/                  # Workspace tabs: Overview, Ask, Graph, Evidence, Evaluation, Architecture
+│   │   └── ui/                     # Shared accessible UI primitives
+│   └── src/lib/                    # Typed API client with reference cache, context, formatters
+├── package.json                     # Root convenience scripts (dev, build, start, api)
 ├── research_audit/                  # 21 Academic Deliverables & Methodology Audits
 │   ├── REPOSITORY_AUDIT.md         # Component status & verified lines of code
 │   ├── METHODOLOGY_VERIFICATION.md # Step-by-step verification of all 19 pipeline stages
@@ -189,14 +194,16 @@ FinGraph-AI/
 │   ├── master_comparison/          # Consolidated baseline comparison & latency profile
 │   ├── baselines/graph_only/       # Graph-only baseline raw evaluation
 │   ├── phase7/                     # Phase 7 summary, ablation table, and per-question CSV
+│   ├── phase8_3/                   # Parametric leakage evaluation artifacts
 │   └── phase6/                     # Attribution hardening & answer recovery outputs
 ├── scripts/                         # CLI Execution & Evaluation Harnesses
 │   ├── run_fingraph.py             # Standalone CLI query pipeline
 │   ├── run_phase7_evaluation.py    # Automated Phase 7 evaluation harness
+│   ├── build_homepage_data.py      # Regenerates homepage showcase data from graph snapshot
 │   └── evaluate_graph_only_baseline.py # Baseline execution script
 ├── src/                             # Core Python Research Implementation
 │   ├── chunking/                   # Structure-aware HTML parser & chunker
-│   ├── data/                       # Ingestion, extraction, bitemporal metadata, snapshots
+│   ├── data/                       # Ingestion (including live SEC EDGAR fetch), extraction, snapshots
 │   ├── evaluation/                 # Token F1, Exact Match, FEIR, and refusal metrics
 │   ├── qa/                         # Agent, sufficiency gating, and grounded generator
 │   └── retrieval/                  # Vector search, graph traversal, EB-RRF, and reranker
@@ -239,17 +246,19 @@ uvicorn api.main:app --host 127.0.0.1 --port 8000 --reload
 
 The interactive OpenAPI documentation will be available at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
-### 3. Start Next.js Intelligence Terminal (Port 3000)
+### 3. Start Next.js Showcase & Workspace (Port 3000)
 
-In a second terminal tab:
+In a second terminal tab from the repository root:
 
 ```bash
-cd FinGraph-AI/frontend
+# Development mode (hot reload)
 npm run dev
+
+# Or production mode (fastest route transitions & instant workspace opening)
+npm run build && npm run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to access the live terminal.
-From the repository root, `npm run dev` (frontend) and `npm run api` (backend, with the virtual environment active) do the same.
+Open [http://localhost:3000](http://localhost:3000) for the public showcase homepage, or [http://localhost:3000/workspace](http://localhost:3000/workspace) to jump straight into the interactive research workspace (`npm run api` starts the FastAPI backend from the repository root when `.venv` is activated).
 
 ### Answer modes
 

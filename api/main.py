@@ -12,9 +12,20 @@ import time
 import uuid
 from typing import AsyncGenerator
 
+# The embedding model is cached locally after the first run. Skip Hugging Face's
+# per-file network checks on every start (saves ~8 s) unless the cache is missing.
+import os as _os
+from pathlib import Path as _Path
+
+if (_Path.home() / ".cache" / "huggingface" / "hub" / "models--sentence-transformers--all-MiniLM-L6-v2").exists():
+    _os.environ.setdefault("HF_HUB_OFFLINE", "1")
+    _os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+
+
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
 
 from api.config import settings
@@ -74,6 +85,19 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     if not hasattr(app.state, "pipeline_lock") or app.state.pipeline_lock is None:
         app.state.pipeline_lock = asyncio.Lock()
 
+    # Warm the language model in the background so the first question does not pay for
+    # loading it. Purely a latency optimisation: it does not change any answer.
+    def _warm_llm() -> None:
+        try:
+            import ollama
+
+            ollama.Client(host=settings.ollama_host).generate(model=settings.llm_model, prompt="", keep_alive="30m")
+            logger.info("Language model %s loaded and kept warm.", settings.llm_model)
+        except Exception as exc:  # Ollama may simply not be running yet
+            logger.info("Language model warm-up skipped: %s", exc)
+
+    asyncio.get_running_loop().run_in_executor(None, _warm_llm)
+
     logger.info("FinGraph AI backend initialized successfully and ready for queries.")
 
     yield
@@ -101,6 +125,9 @@ def create_app() -> FastAPI:
         openapi_url="/openapi.json",
         lifespan=lifespan,
     )
+
+    # Compress JSON responses (graph and corpus payloads shrink ~5-10x).
+    app.add_middleware(GZipMiddleware, minimum_size=1024)
 
     # CORS configuration for frontend
     app.add_middleware(

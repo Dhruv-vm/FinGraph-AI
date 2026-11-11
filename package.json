@@ -1,11 +1,12 @@
 {
   "name": "fingraph-ai",
   "private": true,
-  "description": "Convenience scripts so the app can be run from the repository root.",
+  "description": "Convenience scripts. `npm run prod` builds and serves the optimized app (much faster than `npm run dev`).",
   "scripts": {
     "dev": "npm --prefix frontend run dev",
-    "build": "npm --prefix frontend run build",
-    "start": "npm --prefix frontend run start",
+    "prod": "cd frontend && NEXT_DIST_DIR=.next-prod npx next build && NEXT_DIST_DIR=.next-prod npx next start -p 3000",
+    "build": "cd frontend && NEXT_DIST_DIR=.next-prod npx next build",
+    "start": "cd frontend && NEXT_DIST_DIR=.next-prod npx next start -p 3000",
     "lint": "npm --prefix frontend run lint",
     "api": "uvicorn api.main:app --host 127.0.0.1 --port 8000 --reload"
   }

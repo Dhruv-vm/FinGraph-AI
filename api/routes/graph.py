@@ -53,6 +53,11 @@ def get_kg_companies(
             detail="Knowledge graph is not initialized.",
         )
 
+    # The graph is loaded once at startup and never mutated, so the list is computed once.
+    cached = getattr(pipeline, "_companies_response", None)
+    if cached is not None:
+        return cached
+
     graph = pipeline.graph_retriever.graph
     edge_counts: dict[str, int] = defaultdict(int)
     for edge in graph.edges:
@@ -100,10 +105,12 @@ def get_kg_companies(
 
     all_companies = core_items + other_items
 
-    return CompanyListResponse(
+    response = CompanyListResponse(
         total_companies=len(all_companies),
         companies=all_companies,
     )
+    pipeline._companies_response = response
+    return response
 
 
 @router.get(

@@ -1,5 +1,8 @@
 "use client";
 
+import "reactflow/dist/style.css";
+import "./graph-explorer.css";
+
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ReactFlow, {
   Background,

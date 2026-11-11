@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { HERO_GRAPH, HOME_FILINGS, HOME_SHOWCASE, HOME_TICKERS } from "./homeData";
+import { HOME_FILINGS, HOME_TICKERS, HUB_LINKS } from "./homeData";
 import { easeInOut, range, SplitText, useScrollProgress } from "./motion";
 
 /**
@@ -32,22 +32,7 @@ function pickFilings(perTicker: number) {
 }
 
 /** Issuer-to-issuer links that exist as real edges in the graph snapshot. */
-const hubLinks: [string, string][] = (() => {
-  const tick = new Set<string>(HOME_TICKERS);
-  const seen = new Set<string>();
-  const out: [string, string][] = [];
-  const consider = (s: string, t: string) => {
-    const a = s.replace("company:", ""), b = t.replace("company:", "");
-    if (a === b || !tick.has(a) || !tick.has(b)) return;
-    const k = [a, b].sort().join("|");
-    if (seen.has(k)) return;
-    seen.add(k);
-    out.push([a, b]);
-  };
-  Object.values(HOME_SHOWCASE).forEach((g) => g.edges.forEach((e) => consider(e.s, e.t)));
-  HERO_GRAPH.edges.forEach(([s, t]) => consider(s, t));
-  return out;
-})();
+const hubLinks = HUB_LINKS;
 
 const CAPTIONS = [
   { k: "01", text: "99 filings — 50 8-K, 39 10-Q, 10 10-K. Each one is usually read on its own." },
@@ -110,6 +95,7 @@ export function ProblemSection({ reduced }: { reduced: boolean }) {
   const hubRefs = useRef<(HTMLDivElement | null)[]>([]);
   const hubLineRefs = useRef<(SVGLineElement | null)[]>([]);
   const progress = useRef(reduced ? 1 : 0);
+  const lastCaption = useRef(0);
 
   const apply = (p: number) => {
     progress.current = p;
@@ -118,14 +104,18 @@ export function ProblemSection({ reduced }: { reduced: boolean }) {
     const dotIn = range(p, 0.44, 0.6);
     const cw = compact ? 72 : 104, ch = compact ? 92 : 132;
     geo.docs.forEach((d, i) => {
-      const x = lerp(d.sx, d.tx, move);
-      const y = lerp(d.sy, d.ty, move);
-      const s = lerp(1, 0.18, move);
-      const r = lerp(d.rot, 0, move);
       const c = cardRefs.current[i];
       if (c) {
-        c.style.transform = `translate3d(${(x - cw / 2).toFixed(1)}px, ${(y - ch / 2).toFixed(1)}px, 0) rotate(${r.toFixed(2)}deg) scale(${s.toFixed(3)})`;
-        c.style.opacity = cardFade.toFixed(3);
+        if (cardFade <= 0.001) {
+          c.style.opacity = "0";
+        } else {
+          const x = lerp(d.sx, d.tx, move);
+          const y = lerp(d.sy, d.ty, move);
+          const s = lerp(1, 0.18, move);
+          const r = lerp(d.rot, 0, move);
+          c.style.transform = `translate3d(${(x - cw / 2).toFixed(1)}px, ${(y - ch / 2).toFixed(1)}px, 0) rotate(${r.toFixed(2)}deg) scale(${s.toFixed(3)})`;
+          c.style.opacity = cardFade.toFixed(3);
+        }
       }
       const dot = dotRefs.current[i];
       if (dot) {
@@ -146,7 +136,11 @@ export function ProblemSection({ reduced }: { reduced: boolean }) {
     hubLineRefs.current.forEach((ln, i) => {
       if (ln) ln.style.strokeDashoffset = (1 - range(p, 0.72 + i * 0.01, 0.9 + i * 0.01)).toFixed(3);
     });
-    setCaption(p < 0.36 ? 0 : p < 0.7 ? 1 : 2);
+    const nextCap = p < 0.36 ? 0 : p < 0.7 ? 1 : 2;
+    if (nextCap !== lastCaption.current) {
+      lastCaption.current = nextCap;
+      setCaption(nextCap);
+    }
   };
 
   const wrapRef = useScrollProgress<HTMLDivElement>(apply, "sticky", reduced);

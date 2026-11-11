@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 class QueryRequest(BaseModel):
     query: str = Field(
         ...,
-        min_length=3,
+        min_length=2,
         max_length=1000,
         description="Natural language financial question to answer using SEC corpus and Knowledge Graph.",
         examples=["Did Microsoft acquire Activision Blizzard?", "What risks affected NVIDIA as of June 1, 2025?"],
@@ -39,6 +39,13 @@ class QueryRequest(BaseModel):
             "'benchmark' runs the evaluated Phase 7 configuration. 'assist' (live use) reads longer passages, "
             "accepts relationships evidenced in filing text, and may give a partial, cited answer instead of refusing. "
             "Both modes answer only from retrieved SEC evidence."
+        ),
+    )
+    allow_general: bool = Field(
+        default=True,
+        description=(
+            "Assist mode only: when the filings cannot answer, reply from the model's general knowledge, "
+            "labelled answer_source='general' with no citations. Never used in benchmark mode or with a reference_time."
         ),
     )
 
@@ -94,6 +101,13 @@ class TemporalValidationDetail(BaseModel):
 class QueryResponse(BaseModel):
     query: str
     mode: str = Field(default="benchmark", description="Pipeline mode used for this answer.")
+    answer_source: str = Field(
+        default="filings",
+        description="'filings' (grounded in retrieved SEC evidence), 'general' (model general knowledge, unverified), or 'none' (refused).",
+    )
+    filings_finding: Optional[str] = Field(
+        default=None, description="When answer_source is 'general': what the SEC filing search concluded."
+    )
     decision: str = Field(description="'answer' or 'refuse'")
     answer: str
     insufficient_evidence: bool

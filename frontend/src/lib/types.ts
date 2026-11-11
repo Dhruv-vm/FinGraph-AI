@@ -26,6 +26,8 @@ export interface QueryRequest {
   candidate_pool_size?: number;
   /** "assist" (live default) or "benchmark" (the evaluated Phase 7 configuration). */
   mode?: QueryMode;
+  /** Assist only: fall back to general knowledge when the filings cannot answer. */
+  allow_general?: boolean;
 }
 
 export type QueryMode = "assist" | "benchmark";
@@ -81,6 +83,10 @@ export interface TemporalValidationDetail {
 export interface QueryResponse {
   query: string;
   mode?: QueryMode;
+  /** "filings" = grounded in SEC evidence; "general" = model general knowledge (unverified); "none" = refused. */
+  answer_source?: "filings" | "general" | "none";
+  /** For general answers: what the SEC filing search concluded. */
+  filings_finding?: string | null;
   decision: "answer" | "refuse";
   answer: string;
   insufficient_evidence: boolean;

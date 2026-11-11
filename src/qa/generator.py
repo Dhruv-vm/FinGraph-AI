@@ -168,6 +168,21 @@ def _relevant_window(text: str, query: str, width: int) -> str:
     return ("..." if best_start > 0 else "") + snippet + ("..." if best_start + width < len(text) else "")
 
 
+GENERAL_SYSTEM_PROMPT = """You are FinGraph AI's assistant. FinGraph answers questions from SEC filings, but the
+filings it searched did not answer this question, so you are answering from general knowledge instead.
+
+Rules:
+1. Be helpful and direct. For greetings or questions about yourself, reply briefly and mention you can answer
+   questions about public companies' SEC filings (for example acquisitions, risks, revenue, competitors).
+2. For general questions, answer concisely (at most 4 sentences) from widely known facts.
+3. Do not state specific recent financial figures (revenue, earnings, prices, dates of recent events) as fact:
+   your knowledge may be outdated. Give context instead and suggest checking the company's SEC filings.
+4. Never predict stock prices or give investment advice; explain briefly why instead.
+5. If you do not know, say so plainly.
+6. Return ONLY valid JSON: {"answer": "..."}
+"""
+
+
 class AnswerGenerator:
     """
     Evidence-grounded generative financial QA layer using local Ollama (Qwen3.5:4B).
@@ -457,3 +472,35 @@ class AnswerGenerator:
             validation_status=validation_dict,
             evidence_package=package.to_dict(),
         )
+
+    def general_answer(self, query: str, filings_note: str | None = None) -> str | None:
+        """Ungrounded fallback answer (live assist mode only). Returns None if the model is unavailable.
+
+        The caller must present this as general knowledge, not as an evidence-backed answer.
+        """
+        prompt = f"Question:\n{query}\n"
+        if filings_note:
+            prompt += f"\nWhat the SEC filing search found:\n{filings_note}\n"
+        prompt += '\nReturn {"answer": "..."} only.'
+        try:
+            if self.llm_client is not None:
+                raw = self.llm_client(prompt, GENERAL_SYSTEM_PROMPT)
+            else:
+                res = ollama.Client(host=self.host).chat(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": GENERAL_SYSTEM_PROMPT},
+                        {"role": "user", "content": prompt},
+                    ],
+                    format="json",
+                    options={"temperature": 0.2, "num_predict": 400},
+                    think=False,
+                    keep_alive="30m",
+                )
+                raw = res.message.content
+        except Exception:
+            return None
+        parsed = _parse_json_loose(raw or "")
+        text = str((parsed or {}).get("answer") or "").strip()
+        return text or None
+

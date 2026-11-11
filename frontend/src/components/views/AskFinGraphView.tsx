@@ -58,7 +58,7 @@ import {
 /* Outcome classification                                              */
 /* ------------------------------------------------------------------ */
 
-type OutcomeKind = "supported" | "partial" | "insufficient" | "validation" | "generation";
+type OutcomeKind = "supported" | "partial" | "insufficient" | "validation" | "generation" | "general";
 
 interface Outcome {
   kind: OutcomeKind;
@@ -69,6 +69,16 @@ interface Outcome {
 
 function classify(r: QueryResponse): Outcome {
   const v = r.validation_status as { is_valid?: boolean; errors?: string[]; warnings?: string[] };
+  if (r.answer_source === "general") {
+    return {
+      kind: "general",
+      label: "General knowledge · not from SEC filings",
+      tone: "info",
+      explanation:
+        (r.filings_finding ? `${r.filings_finding} ` : "The indexed SEC filings did not answer this. ") +
+        "This reply comes from the language model's general knowledge: it has no citations and may be outdated or wrong. Verify anything important.",
+    };
+  }
   // The pipeline reports an LLM outage as a refusal (HTTP 200). Separate it from a genuine evidence refusal.
   const generationFailed =
     r.sufficiency.sufficient &&
@@ -132,6 +142,7 @@ const OUTCOME_ICON: Record<OutcomeKind, React.ReactNode> = {
   insufficient: <CircleSlash className="w-4 h-4" />,
   validation: <TriangleAlert className="w-4 h-4" />,
   generation: <TriangleAlert className="w-4 h-4" />,
+  general: <BookOpen className="w-4 h-4" />,
 };
 
 const TONE_TEXT = { pos: "text-pos", warn: "text-warn", neg: "text-neg", info: "text-info" } as const;
@@ -361,7 +372,7 @@ function Result({
             <span className="num">
               {r.retrieval_rounds} retrieval round{r.retrieval_rounds === 1 ? "" : "s"}
             </span>
-            {r.decision === "answer" && (
+            {r.decision === "answer" && r.answer_source !== "general" && (
               <span className="num" title="Model-reported confidence">
                 Confidence {fmtPct(r.confidence, 0)}
               </span>
@@ -390,7 +401,7 @@ function Result({
               ))}
           </p>
           <p className="text-sm text-fg-2 mt-4 max-w-[72ch]">{outcome.explanation}</p>
-          {r.reasoning_summary && (
+          {r.reasoning_summary && r.answer_source !== "general" && (
             <p className="text-sm text-fg-3 mt-2 max-w-[72ch]">
               <span className="text-fg-2">Model rationale:</span> {r.reasoning_summary}
             </p>
@@ -693,7 +704,7 @@ const attemptedFetches = new Set<string>();
 function needsMoreEvidence(r: QueryResponse): boolean {
   if (r.mode !== "assist") return false;
   const coverage = (r.validation_status as Record<string, unknown> | undefined)?.coverage;
-  return r.decision === "refuse" || r.insufficient_evidence || coverage === "partial";
+  return r.decision === "refuse" || r.insufficient_evidence || r.answer_source === "general" || coverage === "partial";
 }
 
 function LiveFetchPanel({
@@ -892,8 +903,8 @@ export function AskFinGraphView({ onNavigate }: { onNavigate: (t: NavTab) => voi
   const refTime = referenceDate ? toReferenceTime(referenceDate) : null;
   const dateInvalid = referenceDate !== "" && refTime === null;
   const trimmed = query.trim();
-  const tooShort = trimmed.length > 0 && trimmed.length < 3;
-  const canRun = !running && trimmed.length >= 3 && trimmed.length <= 1000 && !dateInvalid;
+  const tooShort = trimmed.length > 0 && trimmed.length < 2;
+  const canRun = !running && trimmed.length >= 2 && trimmed.length <= 1000 && !dateInvalid;
 
   const activeRun = runs.find((r) => r.id === activeRunId) ?? null;
   const matchingDemo = (q: string) => demos.data?.questions.find((d) => d.question.trim() === q.trim()) ?? null;
@@ -1025,7 +1036,7 @@ export function AskFinGraphView({ onNavigate }: { onNavigate: (t: NavTab) => voi
                 ? `Only evidence available by ${referenceDate} 00:00 UTC is used.`
                 : "No date: the whole corpus is searchable."}{" "}
               {mode === "assist"
-                ? "Assist reads full passages and gives partial, cited answers where it can."
+                ? "Assist answers from the filings first, then from general knowledge (labelled) if they can't."
                 : "Benchmark runs the evaluated Phase 7 configuration exactly."}
             </p>
             <div className="flex items-center gap-2 ml-auto">
@@ -1042,7 +1053,11 @@ export function AskFinGraphView({ onNavigate }: { onNavigate: (t: NavTab) => voi
           <ProgressBar active={running} />
         </form>
         <div className="flex flex-wrap justify-between gap-2 mt-2 text-xs text-fg-3">
-          <span>{tooShort ? "Questions need at least 3 characters." : "Answers use only the indexed filings and knowledge graph."}</span>
+          <span>{tooShort
+              ? "Questions need at least 2 characters."
+              : mode === "assist"
+              ? "Answers come from the SEC filings with citations; anything they can't cover is answered from general knowledge and labelled."
+              : "Answers use only the indexed filings and knowledge graph."}</span>
           <span className="num">{query.length} / 1000</span>
         </div>
 

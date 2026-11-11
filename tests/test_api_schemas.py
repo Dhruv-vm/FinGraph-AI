@@ -28,9 +28,11 @@ def test_query_request_validation():
     assert req.top_k == 5
     assert req.reference_time is None
 
-    # Too short query (< 3 chars)
+    # Too short query (< 2 chars). Two-character inputs such as "hi" are accepted so the
+    # assist chatbot can reply to greetings.
     with pytest.raises(ValidationError):
-        QueryRequest(query="hi")
+        QueryRequest(query="h")
+    assert QueryRequest(query="hi").query == "hi"
 
     # Invalid top_k (< 1)
     with pytest.raises(ValidationError):
